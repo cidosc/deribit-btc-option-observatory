@@ -6,10 +6,10 @@ import pytest
 
 from btc_option_scanner.alerts import (
     LiveRecommendationSettings,
-    build_onebot_request,
+    build_feishu_payload,
     evaluate_live_recommendations,
     select_coherent_snapshots,
-    validate_onebot_response,
+    validate_feishu_response,
     write_recommendation_unavailable,
 )
 from btc_option_scanner.config import load_config
@@ -18,37 +18,41 @@ from btc_option_scanner.domain import OptionType
 from tests.models.factories import AS_OF, market_snapshot
 
 
-def test_onebot_settings_are_optional_and_partial_configuration_fails_closed() -> None:
+def test_feishu_settings_are_optional_and_webhook_host_fails_closed() -> None:
     settings = LiveRecommendationSettings.from_environment({})
     assert settings.enabled is True
-    assert settings.onebot_enabled is False
-    with pytest.raises(ValueError, match="configured together"):
+    assert settings.feishu_enabled is False
+    configured = LiveRecommendationSettings.from_environment(
+        {
+            "BTC_OPTION_FEISHU_WEBHOOK_URL": (
+                "https://open.feishu.cn/open-apis/bot/v2/hook/test-hook-id"
+            )
+        }
+    )
+    assert configured.feishu_enabled is True
+    assert "test-hook-id" not in repr(configured)
+    with pytest.raises(ValueError, match="approved"):
         LiveRecommendationSettings.from_environment(
-            {"BTC_OPTION_ONEBOT_WS_URL": "ws://127.0.0.1:3001/api"}
+            {"BTC_OPTION_FEISHU_WEBHOOK_URL": "https://example.invalid/hook"}
         )
     with pytest.raises(ValueError, match="requires"):
         LiveRecommendationSettings.from_environment(
-            {"BTC_OPTION_ONEBOT_ACCESS_TOKEN": "test-only-token"}
+            {"BTC_OPTION_FEISHU_SIGNING_SECRET": "test-only-secret"}
         )
 
 
-def test_onebot_v11_request_and_response_contract() -> None:
-    request = build_onebot_request(
-        target_type="group", target_id=123, message="candidate", echo="echo-1"
+def test_feishu_webhook_payload_signing_and_response_contract() -> None:
+    payload = build_feishu_payload(
+        "candidate", signing_secret="test-secret", timestamp=1_700_000_000
     )
-    assert request == {
-        "action": "send_group_msg",
-        "params": {"group_id": 123, "message": "candidate", "auto_escape": True},
-        "echo": "echo-1",
-    }
-    validate_onebot_response(
-        {"status": "ok", "retcode": 0, "echo": "echo-1"}, expected_echo="echo-1"
-    )
+    assert payload["msg_type"] == "text"
+    assert payload["content"] == {"text": "candidate"}
+    assert payload["timestamp"] == "1700000000"
+    assert payload["sign"] == "mbm4Y4oluIPQ00qlBIhX8vAZ0EKv3nw0LuTb91jPL84="
+    validate_feishu_response({"code": 0, "msg": "success"})
+    validate_feishu_response({"StatusCode": 0, "StatusMessage": "success"})
     with pytest.raises(RuntimeError, match="failed"):
-        validate_onebot_response(
-            {"status": "failed", "retcode": 100, "echo": "echo-1"},
-            expected_echo="echo-1",
-        )
+        validate_feishu_response({"code": 19021, "msg": "sign match fail"})
 
 
 def test_coherent_snapshot_selection_excludes_old_exchange_windows() -> None:

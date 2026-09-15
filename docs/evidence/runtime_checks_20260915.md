@@ -6,7 +6,7 @@
 | `python -m compileall -q src tests scripts` | PASS — exit 0 |
 | `python -m pip check` | PASS — no broken requirements |
 | `python -m pytest --cov=btc_option_scanner --cov-report=term -q` | PASS — 85 passed, 1 opt-in live test skipped, 80% total coverage after adding live recommendations and the alert transport |
-| 20-second public live-recommendation smoke | PASS — 30 ticker subscriptions, 8 runs, up to 10 eligible candidates, Top 3 output, post-stop fail-close, SQLite integrity/WAL; OneBot NOT RUN because no endpoint was provided |
+| 20-second public live-recommendation smoke | PASS — 30 ticker subscriptions, 8 runs, up to 10 eligible candidates, Top 3 output, post-stop fail-close, SQLite integrity/WAL; Feishu delivery NOT RUN because no webhook was provided |
 | Fixed-fixture E2E with retained runtime artifacts | PASS — 1 passed |
 | `RUN_DERIBIT_LIVE_SMOKE=1` public REST smoke | PASS — 1 passed in 1.54s |
 | 12-second bounded public collector soak | PASS — 7/7 normalized and actionable, 0 errors |

@@ -1,17 +1,21 @@
-"""Live scanner presentation and optional OneBot v11 WebSocket notifications."""
+"""Live scanner presentation and optional Feishu bot notifications."""
 
 from __future__ import annotations
 
 import asyncio
+import base64
 import hashlib
+import hmac
 import json
 import os
-import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Awaitable, Callable
+from typing import Any
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 
 from .config import AppConfig
 from .data import SqliteRepository
@@ -42,48 +46,41 @@ class LiveRecommendationSettings:
     interval_seconds: float = 60.0
     top_n: int = 3
     reminder_seconds: float = 3_600.0
-    onebot_ws_url: str | None = None
-    onebot_target_type: str | None = None
-    onebot_target_id: int | None = None
-    onebot_access_token: str | None = None
+    feishu_webhook_url: str | None = field(default=None, repr=False)
+    feishu_signing_secret: str | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         if self.interval_seconds <= 0 or self.reminder_seconds <= 0:
             raise ValueError("recommendation and reminder intervals must be positive")
         if self.top_n < 1 or self.top_n > 20:
             raise ValueError("recommendation top_n must be in [1, 20]")
-        configured = (
-            self.onebot_ws_url is not None,
-            self.onebot_target_type is not None,
-            self.onebot_target_id is not None,
-        )
-        if any(configured) and not all(configured):
-            raise ValueError("OneBot URL, target type, and target ID must be configured together")
-        if self.onebot_access_token is not None and self.onebot_ws_url is None:
-            raise ValueError("OneBot access token requires a configured WebSocket URL")
-        if self.onebot_target_type not in {None, "private", "group"}:
-            raise ValueError("OneBot target type must be private or group")
-        if self.onebot_target_id is not None and self.onebot_target_id <= 0:
-            raise ValueError("OneBot target ID must be positive")
-        if self.onebot_ws_url is not None and not self.onebot_ws_url.startswith(("ws://", "wss://")):
-            raise ValueError("OneBot URL must use ws:// or wss://")
+        if self.feishu_signing_secret is not None and self.feishu_webhook_url is None:
+            raise ValueError("Feishu signing secret requires a configured webhook URL")
+        if self.feishu_webhook_url is not None:
+            parsed = urlparse(self.feishu_webhook_url)
+            approved_hosts = {"open.feishu.cn", "open.larksuite.com"}
+            if (
+                parsed.scheme != "https"
+                or parsed.hostname not in approved_hosts
+                or parsed.username is not None
+                or parsed.password is not None
+                or not parsed.path.startswith("/open-apis/bot/v2/hook/")
+            ):
+                raise ValueError("Feishu webhook must be an approved HTTPS bot hook URL")
 
     @classmethod
     def from_environment(
         cls, environment: dict[str, str] | None = None
     ) -> LiveRecommendationSettings:
         source = dict(os.environ if environment is None else environment)
-        raw_target = source.get("BTC_OPTION_ONEBOT_TARGET_ID", "").strip()
         try:
-            target_id = int(raw_target) if raw_target else None
             interval = float(source.get("BTC_OPTION_RECOMMENDATION_INTERVAL_SECONDS", "60"))
             reminder = float(source.get("BTC_OPTION_ALERT_REMINDER_SECONDS", "3600"))
             top_n = int(source.get("BTC_OPTION_RECOMMENDATION_TOP_N", "3"))
         except ValueError as exc:
             raise ValueError("recommendation numeric environment value is invalid") from exc
-        url = source.get("BTC_OPTION_ONEBOT_WS_URL", "").strip() or None
-        target_type = source.get("BTC_OPTION_ONEBOT_TARGET_TYPE", "").strip() or None
-        token = source.get("BTC_OPTION_ONEBOT_ACCESS_TOKEN", "").strip() or None
+        webhook_url = source.get("BTC_OPTION_FEISHU_WEBHOOK_URL", "").strip() or None
+        signing_secret = source.get("BTC_OPTION_FEISHU_SIGNING_SECRET", "").strip() or None
         return cls(
             enabled=_env_bool(source, "BTC_OPTION_RECOMMENDATIONS_ENABLED", True),
             output_path=Path(
@@ -95,83 +92,71 @@ class LiveRecommendationSettings:
             interval_seconds=interval,
             top_n=top_n,
             reminder_seconds=reminder,
-            onebot_ws_url=url,
-            onebot_target_type=target_type,
-            onebot_target_id=target_id,
-            onebot_access_token=token,
+            feishu_webhook_url=webhook_url,
+            feishu_signing_secret=signing_secret,
         )
 
     @property
-    def onebot_enabled(self) -> bool:
-        return self.onebot_ws_url is not None
+    def feishu_enabled(self) -> bool:
+        return self.feishu_webhook_url is not None
 
 
-def build_onebot_request(
-    *, target_type: str, target_id: int, message: str, echo: str
+def build_feishu_payload(
+    message: str,
+    *,
+    signing_secret: str | None = None,
+    timestamp: int | None = None,
 ) -> dict[str, Any]:
-    if target_type not in {"private", "group"}:
-        raise ValueError("OneBot target type must be private or group")
-    id_field = "user_id" if target_type == "private" else "group_id"
-    return {
-        "action": f"send_{target_type}_msg",
-        "params": {id_field: target_id, "message": message, "auto_escape": True},
-        "echo": echo,
-    }
+    payload: dict[str, Any] = {"msg_type": "text", "content": {"text": message}}
+    if signing_secret is not None:
+        seconds = timestamp if timestamp is not None else int(datetime.now(UTC).timestamp())
+        string_to_sign = f"{seconds}\n{signing_secret}".encode()
+        signature = base64.b64encode(
+            hmac.new(string_to_sign, digestmod=hashlib.sha256).digest()
+        ).decode()
+        payload.update({"timestamp": str(seconds), "sign": signature})
+    return payload
 
 
-def validate_onebot_response(response: dict[str, Any], *, expected_echo: str) -> None:
-    if response.get("echo") != expected_echo:
-        raise RuntimeError("OneBot response echo does not match the request")
-    if response.get("status") != "ok" or response.get("retcode") != 0:
-        raise RuntimeError(
-            f"OneBot action failed: status={response.get('status')} "
-            f"retcode={response.get('retcode')}"
-        )
+def validate_feishu_response(response: dict[str, Any]) -> None:
+    code = response.get("code", response.get("StatusCode"))
+    if code != 0:
+        message = response.get("msg", response.get("StatusMessage", "unknown error"))
+        raise RuntimeError(f"Feishu webhook failed: code={code} message={message}")
 
 
-async def send_onebot_message(settings: LiveRecommendationSettings, message: str) -> None:
-    """Send one plain-text action over a OneBot v11 forward WebSocket API."""
-    if not settings.onebot_enabled:
-        return
-    assert settings.onebot_ws_url is not None
-    assert settings.onebot_target_type is not None
-    assert settings.onebot_target_id is not None
+def _post_feishu(settings: LiveRecommendationSettings, message: str) -> None:
+    assert settings.feishu_webhook_url is not None
+    payload = build_feishu_payload(message, signing_secret=settings.feishu_signing_secret)
+    request = Request(
+        settings.feishu_webhook_url,
+        data=json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode(),
+        headers={"Content-Type": "application/json; charset=utf-8"},
+        method="POST",
+    )
     try:
-        from websockets.asyncio.client import connect
-    except ImportError as exc:
-        raise RuntimeError("install collector dependencies to use OneBot WebSocket") from exc
-    echo = str(uuid.uuid4())
-    request = build_onebot_request(
-        target_type=settings.onebot_target_type,
-        target_id=settings.onebot_target_id,
-        message=message,
-        echo=echo,
-    )
-    headers = (
-        {"Authorization": f"Bearer {settings.onebot_access_token}"}
-        if settings.onebot_access_token
-        else None
-    )
-    async with connect(
-        settings.onebot_ws_url,
-        additional_headers=headers,
-        open_timeout=10,
-        close_timeout=5,
-        ping_interval=20,
-        ping_timeout=20,
-        max_size=1024 * 1024,
-    ) as websocket:
-        await websocket.send(json.dumps(request, ensure_ascii=False, separators=(",", ":")))
-        async with asyncio.timeout(10):
-            while True:
-                raw = await websocket.recv()
-                try:
-                    response = json.loads(raw)
-                except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as exc:
-                    raise RuntimeError("OneBot returned invalid JSON") from exc
-                if isinstance(response, dict) and response.get("echo") == echo:
-                    break
-    validate_onebot_response(response, expected_echo=echo)
+        with urlopen(request, timeout=10) as response:  # noqa: S310 - validated host
+            raw = response.read(1024 * 1024 + 1)
+    except HTTPError as exc:
+        raise RuntimeError(f"Feishu webhook returned HTTP {exc.code}") from None
+    except URLError:
+        raise RuntimeError("Feishu webhook connection failed") from None
+    if len(raw) > 1024 * 1024:
+        raise RuntimeError("Feishu webhook response exceeds one MiB")
+    try:
+        decoded = json.loads(raw)
+    except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as exc:
+        raise RuntimeError("Feishu webhook returned invalid JSON") from exc
+    if not isinstance(decoded, dict):
+        raise RuntimeError("Feishu webhook returned a non-object response")
+    validate_feishu_response(decoded)
+
+
+async def send_feishu_message(settings: LiveRecommendationSettings, message: str) -> None:
+    """Send one plain-text message through a Feishu custom-bot HTTPS webhook."""
+    if not settings.feishu_enabled:
+        return
+    await asyncio.to_thread(_post_feishu, settings, message)
 
 
 def _scanner_policy(config: AppConfig) -> ScannerPolicy:
@@ -382,6 +367,3 @@ def evaluate_live_recommendations(
         lines.append(ALERT_DISCLAIMER)
         text = "\n".join(lines)
     return RecommendationResult(payload, text, run_id, len(eligible), fingerprint)
-
-
-Notifier = Callable[[LiveRecommendationSettings, str], Awaitable[None]]

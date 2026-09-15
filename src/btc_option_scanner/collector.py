@@ -23,7 +23,7 @@ from .alerts import (
     LiveRecommendationSettings,
     evaluate_live_recommendations,
     select_coherent_snapshots,
-    send_onebot_message,
+    send_feishu_message,
     write_recommendation_unavailable,
 )
 from .config import load_config
@@ -465,7 +465,7 @@ async def run_collector(
         state.recommendation_candidates = result.candidate_count
         state.recommendation_state = str(result.payload["decision_state"])
         state.last_recommendation_at_utc = now_utc
-        if not recommendation_settings.onebot_enabled or not result.notification_text:
+        if not recommendation_settings.feishu_enabled or not result.notification_text:
             return
         reminder_due = (
             last_alert_monotonic is None
@@ -475,11 +475,11 @@ async def run_collector(
         if result.top_fingerprint == last_alert_fingerprint and not reminder_due:
             return
         try:
-            await send_onebot_message(recommendation_settings, result.notification_text)
+            await send_feishu_message(recommendation_settings, result.notification_text)
         except Exception as exc:
             state.last_alert_error = str(exc)
-            save_system_event("ONEBOT_ALERT_FAILED", {"error": str(exc)}, "ERROR")
-            LOGGER.warning("OneBot alert failed: %s", exc)
+            save_system_event("FEISHU_ALERT_FAILED", {"error": str(exc)}, "ERROR")
+            LOGGER.warning("Feishu alert failed: %s", exc)
         else:
             last_alert_monotonic = now_monotonic
             last_alert_fingerprint = result.top_fingerprint
@@ -699,7 +699,7 @@ async def run_collector(
                     else None
                 ),
                 "output_path": str(recommendation_settings.output_path),
-                "onebot_enabled": recommendation_settings.onebot_enabled,
+                "feishu_enabled": recommendation_settings.feishu_enabled,
                 "alerts_sent": state.alerts_sent,
                 "last_alert_at_utc": (
                     state.last_alert_at_utc.isoformat() if state.last_alert_at_utc else None
@@ -768,10 +768,10 @@ async def run_collector(
             credentials is not None,
         )
         LOGGER.info(
-            "live recommendations: enabled=%s interval=%.1fs onebot=%s",
+            "live recommendations: enabled=%s interval=%.1fs feishu=%s",
             recommendation_settings.enabled,
             recommendation_settings.interval_seconds,
-            recommendation_settings.onebot_enabled,
+            recommendation_settings.feishu_enabled,
         )
         tasks = [
             asyncio.create_task(stream.run(), name="market-stream"),

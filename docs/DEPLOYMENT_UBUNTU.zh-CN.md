@@ -109,10 +109,11 @@ ticker 持久化降采样。只有进行限时证据调查时才启用 `evidence
 `BTC_OPTION_MAX_BOOK_INSTRUMENTS`；延长运行前先观察
 `estimated_database_growth_bytes_per_day`。
 
-实时候选默认写入 `/run/btc-option-observatory/latest-recommendation.json`。需要通过 OneBot
-v11 正向 WebSocket 发送时，在受保护的环境文件中设置 `BTC_OPTION_ONEBOT_WS_URL`、
-`BTC_OPTION_ONEBOT_TARGET_TYPE` 和 `BTC_OPTION_ONEBOT_TARGET_ID`，然后重启服务。可选
-access token 只保存在 root 所有、权限为 `0600` 的环境文件中，不会写入候选 JSON 或日志。
+实时候选默认写入 `/run/btc-option-observatory/latest-recommendation.json`。需要通过飞书群
+自定义机器人发送时，在受保护的环境文件中设置 `BTC_OPTION_FEISHU_WEBHOOK_URL`；若机器人
+启用了签名校验，再设置 `BTC_OPTION_FEISHU_SIGNING_SECRET`，然后重启服务。这些值只保存在
+root 所有、权限为 `0600` 的环境文件中，不会写入候选 JSON 或日志；Webhook URL 本身也应
+视为密钥。飞书 WebSocket 长连接用于接收应用事件，单向通知不需要它。
 
 当空闲磁盘低于 `BTC_OPTION_MIN_FREE_BYTES` 时，服务以 78 退出，并且 systemd 不会自动
 重启。扩容或安全归档后再人工启动。保留期不等于备份，在线一致性备份应使用：

@@ -109,11 +109,12 @@ nonzero `BTC_OPTION_MAX_BOOK_INSTRUMENTS` only for bounded investigations, then 
 `estimated_database_growth_bytes_per_day` before extending the run.
 
 Live candidates are written to `/run/btc-option-observatory/latest-recommendation.json`.
-To send them through a OneBot v11 forward WebSocket endpoint, set
-`BTC_OPTION_ONEBOT_WS_URL`, `BTC_OPTION_ONEBOT_TARGET_TYPE`, and
-`BTC_OPTION_ONEBOT_TARGET_ID` in the protected environment file, then restart the service.
-The optional access token stays in that root-owned `0600` file and is never written to the
-recommendation JSON or logs.
+To send them through a Feishu custom bot, set `BTC_OPTION_FEISHU_WEBHOOK_URL` and,
+when bot signature verification is enabled, `BTC_OPTION_FEISHU_SIGNING_SECRET` in the
+protected environment file, then restart the service. These values stay in that root-owned
+`0600` file and are never written to the recommendation JSON or logs. The webhook URL is
+itself a secret. Feishu's WebSocket long connection receives app events; it is not required
+for this one-way notification path.
 
 The service exits with code 78 and systemd does not restart it when free disk falls below
 `BTC_OPTION_MIN_FREE_BYTES`. Increase capacity or safely archive data before restarting.

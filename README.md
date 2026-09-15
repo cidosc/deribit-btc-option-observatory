@@ -140,18 +140,23 @@ top manual-review candidates, executable Ask, quote size, Delta, DTE, spread, en
 reasons, risks, and complete snapshot/metric/run IDs. If the coherent cohort is too small,
 the status fails closed instead of sending a candidate. Nothing places an order.
 
-Optional robot delivery uses the OneBot v11 forward WebSocket API:
+Optional robot delivery prioritizes a Feishu custom-bot HTTPS webhook:
 
 ```bash
-export BTC_OPTION_ONEBOT_WS_URL=ws://127.0.0.1:3001/api
-export BTC_OPTION_ONEBOT_TARGET_TYPE=group  # or private
-export BTC_OPTION_ONEBOT_TARGET_ID=123456789
-# export BTC_OPTION_ONEBOT_ACCESS_TOKEN=...
+export BTC_OPTION_FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hook/REPLACE_ME
+# Recommended when signature verification is enabled for the bot:
+export BTC_OPTION_FEISHU_SIGNING_SECRET=...
 ```
 
-All three non-token fields are required together. Alerts are plain text, deduplicated when
-the ranked instrument set is unchanged, and repeated after the configured reminder period.
-An alert failure is non-fatal and appears in collector status. Telegram is not included.
+Alerts are plain text, deduplicated when the ranked instrument set is unchanged, and
+repeated after the configured reminder period. Only approved Feishu/Lark HTTPS bot-hook
+hosts are accepted. An alert failure is non-fatal and appears in collector status.
+Telegram and QQ/OneBot are not included.
+
+Feishu's WebSocket long connection is for an enterprise app to receive events and
+callbacks; it isn't needed for this one-way candidate notification. If interactive bot
+commands are added later, implement that event-receiving process separately from the
+read-only market collector.
 
 For capacity planning, the default 60-symbol/60-second profile is expected to be roughly
 **0.5–1.5 GiB/day** when all symbols update and live metric/run lineage is retained. This is
