@@ -11,6 +11,7 @@ from btc_option_scanner.collector import (
     CollectorSettings,
     healthcheck,
     select_collection_universe,
+    ticker_persistence_due,
 )
 from btc_option_scanner.domain import InstrumentState, OptionType
 
@@ -30,6 +31,47 @@ def test_settings_fail_before_exceeding_channel_limit_or_using_unknown_host() ->
         CollectorSettings(max_instruments=480, max_book_instruments=20)
     with pytest.raises(ValueError, match="approved Deribit"):
         CollectorSettings(websocket_url="wss://example.invalid/ws")
+
+
+def test_collection_profiles_make_high_volume_features_opt_in() -> None:
+    lite = CollectorSettings.from_environment({})
+    assert lite.collection_profile == "scanner-lite"
+    assert lite.max_instruments == 60
+    assert lite.max_book_instruments == 0
+    assert lite.ticker_persist_interval_seconds == 20
+
+    evidence = CollectorSettings.from_environment(
+        {"BTC_OPTION_COLLECTION_PROFILE": "evidence"}
+    )
+    assert evidence.max_instruments == 180
+    assert evidence.max_book_instruments == 20
+    assert evidence.ticker_persist_interval_seconds == 0
+
+    customized = CollectorSettings.from_environment(
+        {
+            "BTC_OPTION_COLLECTION_PROFILE": "scanner-lite",
+            "BTC_OPTION_MAX_INSTRUMENTS": "10",
+            "BTC_OPTION_TICKER_PERSIST_INTERVAL_SECONDS": "60",
+        }
+    )
+    assert customized.max_instruments == 10
+    assert customized.ticker_persist_interval_seconds == 60
+
+
+def test_ticker_persistence_sampling_keeps_first_and_due_observations() -> None:
+    last = {"BTC-X": 100.0}
+    assert ticker_persistence_due(
+        "BTC-NEW", now_monotonic=101, last_persisted=last, interval_seconds=20
+    )
+    assert not ticker_persistence_due(
+        "BTC-X", now_monotonic=119.9, last_persisted=last, interval_seconds=20
+    )
+    assert ticker_persistence_due(
+        "BTC-X", now_monotonic=120, last_persisted=last, interval_seconds=20
+    )
+    assert ticker_persistence_due(
+        "BTC-X", now_monotonic=100.1, last_persisted=last, interval_seconds=0
+    )
 
 
 def test_collection_universe_is_open_call_bounded_and_deterministic() -> None:

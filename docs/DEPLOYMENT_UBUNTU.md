@@ -103,6 +103,11 @@ snapshots are protected, and the newest instrument specification is kept. SQLite
 pages are reused; the daemon intentionally does not run a blocking `VACUUM`. Database,
 WAL, and SHM bytes are reported in the status file.
 
+Keep `BTC_OPTION_COLLECTION_PROFILE=scanner-lite` for ordinary operation. Order books
+are disabled in this profile and ticker persistence is sampled. Enable `evidence` or a
+nonzero `BTC_OPTION_MAX_BOOK_INSTRUMENTS` only for bounded investigations, then observe
+`estimated_database_growth_bytes_per_day` before extending the run.
+
 The service exits with code 78 and systemd does not restart it when free disk falls below
 `BTC_OPTION_MIN_FREE_BYTES`. Increase capacity or safely archive data before restarting.
 Retention is not a backup. For a consistent online backup:

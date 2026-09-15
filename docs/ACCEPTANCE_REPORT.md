@@ -52,13 +52,14 @@ No Gate has a failing blocker inside the declared read-only research scope. The 
 | Public WebSocket evidence | `deribit/websocket.py`, `deribit/book.py`, `deribit/lifecycle.py`, ingestion, tests and `scripts/public_websocket_evidence.py` | Added the missing concrete WSS adapter, correct sparse lifecycle handling, book sequence fail-close, fixture provenance, forced-reconnect and retention evidence. |
 | Long-running deployment | `collector.py`, repository, `deploy/`, bilingual README/deployment docs, tests | Added an unbounded supervised daemon, periodic catalog reconciliation, bounded subscriptions, signal shutdown, health status, WAL/busy timeout, lineage-safe retention, low-disk fail-stop, systemd/journal/logrotate configuration and pinned collector constraints. |
 | Optional read-only auth | `deribit/auth.py`, WebSocket adapter, probes and tests | Added environment-only OAuth, explicit effective-scope validation, authenticated raw-book support and fatal handling for invalid/write scopes without adding any private or trading method. |
+| Storage-safe defaults | `collector.py`, environment templates, bilingual README and tests | Added a default `scanner-lite` profile with 60 aggregated tickers, 20-second per-instrument persistence sampling and no books. Full ticker/book evidence capture is now explicit opt-in and status reports estimated daily growth. |
 
 These changes are limited to observed acceptance failures and their tests/documentation; no safety gate was removed or weakened.
 
 ## 4. Test and runtime evidence
 
 - Static/packaging: Ruff PASS; compileall PASS; `pip check` reports no broken requirements.
-- Full suite: **78 passed, 1 skipped**, total line coverage **81%**. The lower aggregate percentage reflects the new service orchestration module; its authentication, configuration, universe selection, health, WAL/retention and fatal-scope paths have direct tests plus live daemon evidence. The skipped test is network-opt-in and was run separately.
+- Full suite: **80 passed, 1 skipped**, total line coverage **81%**. The lower aggregate percentage reflects the new service orchestration module; its authentication, configuration, universe selection, persistence sampling, health, WAL/retention and fatal-scope paths have direct tests plus live daemon evidence. The skipped test is network-opt-in and was run separately.
 - Live public smoke: **1 passed in 1.54s**, no credentials and no private endpoint.
 - Fixed fixture E2E: **1 passed** with retained SQLite and presentation artifacts under `docs/evidence/e2e_runtime/`.
 - Collector soak: **PASS**, 12 requested seconds, 7/7 samples normalized, 7 actionable, 0 errors, 8 new raw events and 7 new market snapshots. See `docs/evidence/collector_soak_20260915.json` and its SQLite companion.
@@ -82,6 +83,7 @@ evidence without growing the repository with mutable database files.
 4. Deribit gamma scale and a universal local BTC pricing conversion remain intentionally unverified. Corresponding production feature gates remain off.
 5. Real fee rules are not approved. Executable roll cash flow therefore remains disabled in normal configuration; tests use an explicit test-only verified fixture schedule.
 6. Ubuntu/systemd behavior has not been executed in this workspace. The supplied service unit, paths and commands are theoretically portable, but target-host validation remains required.
+7. The long-running daemon collects normalized scanner inputs but does not yet schedule scanner evaluations or publish a live candidate/alert snapshot. CLI and Dashboard still consume precomputed presentation data.
 
 ## 6. Data-history research limits
 

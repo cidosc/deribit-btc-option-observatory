@@ -104,6 +104,11 @@ sudo install -o root -g root -m 0644 deploy/logrotate/btc-option-observatory \
 最新一版规格也会保留。删除后的 SQLite 空闲页会复用；常驻进程不会执行可能长时间阻塞的
 `VACUUM`。状态文件会报告数据库、WAL、SHM 的总字节数。
 
+日常运行应保持 `BTC_OPTION_COLLECTION_PROFILE=scanner-lite`。该 profile 不订阅 book，并对
+ticker 持久化降采样。只有进行限时证据调查时才启用 `evidence` 或非零的
+`BTC_OPTION_MAX_BOOK_INSTRUMENTS`；延长运行前先观察
+`estimated_database_growth_bytes_per_day`。
+
 当空闲磁盘低于 `BTC_OPTION_MIN_FREE_BYTES` 时，服务以 78 退出，并且 systemd 不会自动
 重启。扩容或安全归档后再人工启动。保留期不等于备份，在线一致性备份应使用：
 

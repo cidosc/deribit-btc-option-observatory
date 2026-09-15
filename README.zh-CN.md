@@ -88,6 +88,10 @@ SQLite 预期输出为 `ok` 和 `wal`。备份、升级、日志、保留策略�
 - 最低磁盘余量保护；
 - 原子写入健康状态文件。
 
+默认 `scanner-lite` 是低存储模式：订阅 60 个聚合 ticker，每个合约最多每 20 秒持久化一
+条 ticker，不订阅 order book。ticker 中的 best Bid/Ask、两边数量、IV、Greeks、成交量和
+持仓量仍可作为扫描输入。
+
 ```bash
 export BTC_OPTION_SCANNER_CONFIG="$PWD/config.yaml"
 export BTC_OPTION_DB_PATH="$PWD/data/collector.sqlite"
@@ -101,6 +105,21 @@ btc-option-collector
 btc-option-healthcheck --status runtime/collector-status.json
 ```
 
+高流量证据采集必须显式开启：
+
+```bash
+export BTC_OPTION_COLLECTION_PROFILE=evidence
+# 可选的认证未聚合 book，数据增长会非常快：
+export BTC_OPTION_BOOK_INTERVAL=raw
+btc-option-collector
+```
+
+`evidence` 默认订阅 180 个 ticker、20 个 book，并保存每次 ticker 更新。也可分别设置
+`BTC_OPTION_MAX_INSTRUMENTS`、`BTC_OPTION_MAX_BOOK_INSTRUMENTS`、
+`BTC_OPTION_TICKER_PERSIST_INTERVAL_SECONDS` 和 `BTC_OPTION_INSTRUMENTS`。book 数量只要
+不为 0 就属于高流量模式，因为 sequence 校验要求连续保存每个收到的增量。设置 retention
+前请观察状态 JSON 中的 `estimated_database_growth_bytes_per_day`。
+
 默认不需要 API key。需要认证只读采集时，通过进程环境同时设置
 `DERIBIT_CLIENT_ID` 和 `DERIBIT_CLIENT_SECRET`，默认 scope 为
 `connection account:none trade:none wallet:none`。只有认证模式才能把
@@ -113,6 +132,10 @@ btc-option-healthcheck --status runtime/collector-status.json
 
 CLI 和 Dashboard 只读取不可变的 presentation snapshot，不访问 Deribit，
 也不会重新计算核心金融逻辑。
+
+重要边界：daemon 当前负责采集和规范化扫描输入，但尚未定时执行 scanner，也不会生成实时
+候选或提醒文件。CLI 和 Dashboard 仍需要预计算的 presentation snapshot。任何 profile 都
+不会下单。
 
 ```bash
 python -m btc_option_scanner.cli --snapshot snapshot.json scan

@@ -68,8 +68,10 @@ class CollectorSettings:
     websocket_url: str = "wss://www.deribit.com/ws/api/v2"
     ticker_interval: str = "agg2"
     book_interval: str = "100ms"
-    max_instruments: int = 180
-    max_book_instruments: int = 20
+    collection_profile: str = "scanner-lite"
+    max_instruments: int = 60
+    max_book_instruments: int = 0
+    ticker_persist_interval_seconds: float = 20.0
     collection_buffer_days: float = 30.0
     catalog_refresh_seconds: float = 3_600.0
     retention_days: float = 30.0
@@ -88,6 +90,8 @@ class CollectorSettings:
             raise ValueError("ticker interval must be agg2 or 100ms")
         if self.book_interval not in {"agg2", "100ms", "raw"}:
             raise ValueError("book interval must be agg2, 100ms, or raw")
+        if self.collection_profile not in {"scanner-lite", "evidence"}:
+            raise ValueError("collection profile must be scanner-lite or evidence")
         if self.max_instruments < 1 or self.max_book_instruments < 0:
             raise ValueError("instrument limits are outside their allowed range")
         if self.max_book_instruments > self.max_instruments:
@@ -102,7 +106,11 @@ class CollectorSettings:
         }
         if any(value <= 0 for value in positive.values()):
             raise ValueError("collector intervals and retention days must be positive")
-        if self.collection_buffer_days < 0 or self.minimum_free_bytes < 1:
+        if (
+            self.collection_buffer_days < 0
+            or self.ticker_persist_interval_seconds < 0
+            or self.minimum_free_bytes < 1
+        ):
             raise ValueError("collection buffer and minimum free bytes are invalid")
         if self.log_level.upper() not in logging.getLevelNamesMapping():
             raise ValueError("unknown log level")
@@ -112,6 +120,14 @@ class CollectorSettings:
         cls, environment: dict[str, str] | None = None
     ) -> CollectorSettings:
         source = dict(os.environ if environment is None else environment)
+        profile = source.get("BTC_OPTION_COLLECTION_PROFILE", "scanner-lite").strip()
+        profile_defaults = {
+            "scanner-lite": (60, 0, 20.0),
+            "evidence": (180, 20, 0.0),
+        }
+        if profile not in profile_defaults:
+            raise ValueError("BTC_OPTION_COLLECTION_PROFILE must be scanner-lite or evidence")
+        default_instruments, default_books, default_persist_interval = profile_defaults[profile]
         names = tuple(
             item.strip()
             for item in source.get("BTC_OPTION_INSTRUMENTS", "").split(",")
@@ -129,8 +145,18 @@ class CollectorSettings:
             ),
             ticker_interval=source.get("BTC_OPTION_TICKER_INTERVAL", "agg2"),
             book_interval=source.get("BTC_OPTION_BOOK_INTERVAL", "100ms"),
-            max_instruments=_env_int(source, "BTC_OPTION_MAX_INSTRUMENTS", 180),
-            max_book_instruments=_env_int(source, "BTC_OPTION_MAX_BOOK_INSTRUMENTS", 20),
+            collection_profile=profile,
+            max_instruments=_env_int(
+                source, "BTC_OPTION_MAX_INSTRUMENTS", default_instruments
+            ),
+            max_book_instruments=_env_int(
+                source, "BTC_OPTION_MAX_BOOK_INSTRUMENTS", default_books
+            ),
+            ticker_persist_interval_seconds=_env_float(
+                source,
+                "BTC_OPTION_TICKER_PERSIST_INTERVAL_SECONDS",
+                default_persist_interval,
+            ),
             collection_buffer_days=_env_float(
                 source, "BTC_OPTION_COLLECTION_BUFFER_DAYS", 30.0
             ),
@@ -166,6 +192,7 @@ class RuntimeState:
     fatal_error: str | None = None
     fatal_exit_code: int = 1
     ticker_messages: int = 0
+    ticker_messages_persisted: int = 0
     book_messages: int = 0
     lifecycle_messages: int = 0
     sequence_gaps: int = 0
@@ -182,6 +209,21 @@ def _evenly_spaced(items: list[Any], limit: int) -> list[Any]:
         return [items[len(items) // 2]]
     indices = [round(index * (len(items) - 1) / (limit - 1)) for index in range(limit)]
     return [items[index] for index in indices]
+
+
+def ticker_persistence_due(
+    instrument_name: str,
+    *,
+    now_monotonic: float,
+    last_persisted: dict[str, float],
+    interval_seconds: float,
+) -> bool:
+    previous = last_persisted.get(instrument_name)
+    return (
+        previous is None
+        or interval_seconds == 0
+        or now_monotonic - previous >= interval_seconds
+    )
 
 
 def select_collection_universe(
@@ -279,6 +321,8 @@ async def run_collector(
     refresh_event = asyncio.Event()
     stream: ReconnectingTickerStream | None = None
     book_trackers: dict[str, BookSequenceTracker] = {}
+    last_ticker_persisted: dict[str, float] = {}
+    initial_database_size = _database_size(settings.database_path)
 
     def save_system_event(name: str, detail: dict[str, Any], severity: str) -> None:
         observed = datetime.now(UTC)
@@ -333,11 +377,29 @@ async def run_collector(
         try:
             if channel.startswith("ticker."):
                 state.ticker_messages += 1
+                data = params.get("data") if isinstance(params, dict) else None
+                instrument_name = (
+                    data.get("instrument_name") if isinstance(data, dict) else None
+                )
+                now_monotonic = time.monotonic()
+                if (
+                    isinstance(instrument_name, str)
+                    and not ticker_persistence_due(
+                        instrument_name,
+                        now_monotonic=now_monotonic,
+                        last_persisted=last_ticker_persisted,
+                        interval_seconds=settings.ticker_persist_interval_seconds,
+                    )
+                ):
+                    return
                 spine.ingest_ticker(
                     message,
                     transport=SourceTransport.WEBSOCKET_SUBSCRIPTION,
                     channel=channel,
                 )
+                if isinstance(instrument_name, str):
+                    last_ticker_persisted[instrument_name] = now_monotonic
+                state.ticker_messages_persisted += 1
             elif channel.startswith("book."):
                 state.book_messages += 1
                 instrument_name = channel.split(".", 2)[1]
@@ -478,8 +540,15 @@ async def run_collector(
                 continue
 
     def status_payload() -> dict[str, Any]:
+        database_size = _database_size(settings.database_path)
+        elapsed_seconds = max(
+            1.0, (datetime.now(UTC) - state.started_at_utc).total_seconds()
+        )
+        estimated_daily_growth = int(
+            max(0, database_size - initial_database_size) / elapsed_seconds * 86_400
+        )
         return {
-            "schema_version": "collector-status-v1",
+            "schema_version": "collector-status-v2",
             "updated_at_utc": datetime.now(UTC).isoformat(),
             "started_at_utc": state.started_at_utc.isoformat(),
             "connected": state.connected,
@@ -492,13 +561,15 @@ async def run_collector(
             "selected_instrument_count": len(state.selected_instruments),
             "selected_book_instrument_count": len(state.selected_book_instruments),
             "message_counts": {
-                "ticker": state.ticker_messages,
+                "ticker_received": state.ticker_messages,
+                "ticker_persisted": state.ticker_messages_persisted,
                 "book": state.book_messages,
                 "lifecycle": state.lifecycle_messages,
                 "sequence_gaps": state.sequence_gaps,
             },
             "database_counts": repository.counts(),
-            "database_size_bytes": _database_size(settings.database_path),
+            "database_size_bytes": database_size,
+            "estimated_database_growth_bytes_per_day": estimated_daily_growth,
             "disk_free_bytes": shutil.disk_usage(settings.database_path.parent).free,
         }
 
@@ -524,6 +595,7 @@ async def run_collector(
 
     try:
         await refresh_catalog()
+        initial_database_size = _database_size(settings.database_path)
         book_trackers = {
             name: BookSequenceTracker(repository, name)
             for name in state.selected_book_instruments
@@ -548,9 +620,12 @@ async def run_collector(
             }
         )
         LOGGER.info(
-            "collector starting: tickers=%d books=%d authenticated=%s",
+            "collector starting: profile=%s tickers=%d books=%d persist_interval=%.1fs "
+            "authenticated=%s",
+            settings.collection_profile,
             len(state.selected_instruments),
             len(state.selected_book_instruments),
+            settings.ticker_persist_interval_seconds,
             credentials is not None,
         )
         tasks = [

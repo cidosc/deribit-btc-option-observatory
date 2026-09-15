@@ -87,6 +87,11 @@ catalog reconciliation, bounded ticker/book subscriptions, reconnect/resubscribe
 book sequence fail-closure, SQLite WAL persistence, retention, disk-floor checks, and
 atomic health-status updates.
 
+The default `scanner-lite` profile is intentionally low-volume: 60 aggregated ticker
+subscriptions, at most one persisted ticker per instrument every 20 seconds, and no
+order-book subscription. Best Bid/Ask, sizes, IV, Greeks, volume, and open interest from
+ticker messages remain available as scanner inputs.
+
 ```bash
 export BTC_OPTION_SCANNER_CONFIG="$PWD/config.yaml"
 export BTC_OPTION_DB_PATH="$PWD/data/collector.sqlite"
@@ -100,6 +105,22 @@ Check it from another shell:
 btc-option-healthcheck --status runtime/collector-status.json
 ```
 
+High-volume evidence collection is opt-in:
+
+```bash
+export BTC_OPTION_COLLECTION_PROFILE=evidence
+# Optional authenticated unaggregated book; can grow very quickly:
+export BTC_OPTION_BOOK_INTERVAL=raw
+btc-option-collector
+```
+
+`evidence` defaults to 180 tickers, 20 books, and persistence of every ticker update.
+Individual settings can instead be overridden with `BTC_OPTION_MAX_INSTRUMENTS`,
+`BTC_OPTION_MAX_BOOK_INSTRUMENTS`, `BTC_OPTION_TICKER_PERSIST_INTERVAL_SECONDS`, and
+`BTC_OPTION_INSTRUMENTS`. A nonzero book count is always high-volume because sequence
+validation requires every received increment. Monitor
+`estimated_database_growth_bytes_per_day` in the status JSON before choosing retention.
+
 Public-only operation is the default. For optional authenticated read-only collection,
 set both `DERIBIT_CLIENT_ID` and `DERIBIT_CLIENT_SECRET` in the process environment.
 Use the default scope `connection account:none trade:none wallet:none`. Authenticated
@@ -112,6 +133,10 @@ The collector does not load `.env` automatically.
 
 The CLI and dashboard consume an immutable, precomputed presentation snapshot. They do
 not query Deribit or recompute core financial logic.
+
+Important: the daemon currently collects normalized scanner inputs; it does not yet
+schedule scanner runs or publish a live candidate/alert file. The CLI and dashboard still
+require a precomputed presentation snapshot. Nothing in either profile places an order.
 
 ```bash
 python -m btc_option_scanner.cli --snapshot snapshot.json scan
