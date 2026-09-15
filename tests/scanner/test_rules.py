@@ -1,3 +1,4 @@
+from dataclasses import replace
 from decimal import Decimal
 
 from btc_option_scanner.domain import DecisionState, InstrumentState, OptionType
@@ -62,6 +63,15 @@ def test_failed_closure_for_missing_ask_stale_and_nonopen_instruments() -> None:
     assert stale.decision_state is DecisionState.DATA_STALE
     assert non_open.decision_state is DecisionState.DATA_ONLY
     assert all(not candidate.eligible for candidate in (missing_ask, stale, non_open))
+
+
+def test_explicit_delta_band_rejects_cheap_low_delta_calls() -> None:
+    strict = replace(
+        policy(1), min_absolute_delta=Decimal("0.80"), max_absolute_delta=Decimal("0.90")
+    )
+    result = scan_candidates((item("BTC-OTM", delta=Decimal("0.20")),), strict)[0]
+    assert result.eligible is False
+    assert "ABSOLUTE_DELTA_OUTSIDE_POLICY" in result.rejected_reasons
 
 
 def test_cohort_sample_below_policy_has_no_rank() -> None:

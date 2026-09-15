@@ -10,7 +10,7 @@ import json
 import os
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -45,15 +45,39 @@ class LiveRecommendationSettings:
     output_path: Path = Path("runtime/latest-recommendation.json")
     interval_seconds: float = 60.0
     top_n: int = 3
-    reminder_seconds: float = 3_600.0
+    minimum_alert_interval_seconds: float = 1_800.0
+    reminder_seconds: float = 21_600.0
+    min_absolute_delta: Decimal = Decimal("0.80")
+    max_absolute_delta: Decimal = Decimal("0.90")
+    max_relative_spread: Decimal = Decimal("0.05")
+    min_cohort_size: int = 3
     feishu_webhook_url: str | None = field(default=None, repr=False)
     feishu_signing_secret: str | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
-        if self.interval_seconds <= 0 or self.reminder_seconds <= 0:
+        if (
+            self.interval_seconds <= 0
+            or self.minimum_alert_interval_seconds <= 0
+            or self.reminder_seconds < self.minimum_alert_interval_seconds
+        ):
             raise ValueError("recommendation and reminder intervals must be positive")
         if self.top_n < 1 or self.top_n > 20:
             raise ValueError("recommendation top_n must be in [1, 20]")
+        if self.min_cohort_size < 2:
+            raise ValueError("recommendation min cohort size must be at least two")
+        if (
+            not self.min_absolute_delta.is_finite()
+            or not self.max_absolute_delta.is_finite()
+            or self.min_absolute_delta < 0
+            or self.max_absolute_delta > 1
+            or self.min_absolute_delta > self.max_absolute_delta
+        ):
+            raise ValueError("recommendation Delta bounds must satisfy 0 <= min <= max <= 1")
+        if (
+            not self.max_relative_spread.is_finite()
+            or not Decimal("0") < self.max_relative_spread <= Decimal("1")
+        ):
+            raise ValueError("recommendation max relative spread must be in (0, 1]")
         if self.feishu_signing_secret is not None and self.feishu_webhook_url is None:
             raise ValueError("Feishu signing secret requires a configured webhook URL")
         if self.feishu_webhook_url is not None:
@@ -75,9 +99,20 @@ class LiveRecommendationSettings:
         source = dict(os.environ if environment is None else environment)
         try:
             interval = float(source.get("BTC_OPTION_RECOMMENDATION_INTERVAL_SECONDS", "60"))
-            reminder = float(source.get("BTC_OPTION_ALERT_REMINDER_SECONDS", "3600"))
+            minimum_alert_interval = float(
+                source.get("BTC_OPTION_ALERT_MIN_INTERVAL_SECONDS", "1800")
+            )
+            reminder = float(source.get("BTC_OPTION_ALERT_REMINDER_SECONDS", "21600"))
             top_n = int(source.get("BTC_OPTION_RECOMMENDATION_TOP_N", "3"))
-        except ValueError as exc:
+            min_cohort_size = int(
+                source.get("BTC_OPTION_RECOMMENDATION_MIN_COHORT_SIZE", "3")
+            )
+            min_delta = Decimal(source.get("BTC_OPTION_RECOMMENDATION_MIN_DELTA", "0.80"))
+            max_delta = Decimal(source.get("BTC_OPTION_RECOMMENDATION_MAX_DELTA", "0.90"))
+            max_spread = Decimal(
+                source.get("BTC_OPTION_RECOMMENDATION_MAX_RELATIVE_SPREAD", "0.05")
+            )
+        except (InvalidOperation, ValueError) as exc:
             raise ValueError("recommendation numeric environment value is invalid") from exc
         webhook_url = source.get("BTC_OPTION_FEISHU_WEBHOOK_URL", "").strip() or None
         signing_secret = source.get("BTC_OPTION_FEISHU_SIGNING_SECRET", "").strip() or None
@@ -91,7 +126,12 @@ class LiveRecommendationSettings:
             ),
             interval_seconds=interval,
             top_n=top_n,
+            minimum_alert_interval_seconds=minimum_alert_interval,
             reminder_seconds=reminder,
+            min_absolute_delta=min_delta,
+            max_absolute_delta=max_delta,
+            max_relative_spread=max_spread,
+            min_cohort_size=min_cohort_size,
             feishu_webhook_url=webhook_url,
             feishu_signing_secret=signing_secret,
         )
@@ -159,10 +199,19 @@ async def send_feishu_message(settings: LiveRecommendationSettings, message: str
     await asyncio.to_thread(_post_feishu, settings, message)
 
 
-def _scanner_policy(config: AppConfig) -> ScannerPolicy:
+def _scanner_policy(
+    config: AppConfig, recommendation_settings: LiveRecommendationSettings
+) -> ScannerPolicy:
+    quality_version = (
+        "live-quality@1"
+        f":delta={recommendation_settings.min_absolute_delta}"
+        f"-{recommendation_settings.max_absolute_delta}"
+        f":spread={recommendation_settings.max_relative_spread}"
+        f":cohort={recommendation_settings.min_cohort_size}"
+    )
     upper_dte = config.universe.max_dte_days + Decimal("0.000001")
     cohort = CohortPolicy(
-        "live-broad-cohort@1",
+        quality_version,
         (Bucket("delta-all", Decimal("0"), Decimal("1.000001")),),
         (
             Bucket(
@@ -171,17 +220,19 @@ def _scanner_policy(config: AppConfig) -> ScannerPolicy:
                 upper_dte,
             ),
         ),
-        config.scanner.min_cohort_size,
+        recommendation_settings.min_cohort_size,
     )
     return ScannerPolicy(
-        "scanner-lexicographic@0.1.0-experimental",
-        "live-collection-universe@1",
+        f"scanner-lexicographic@0.1.0-experimental+{quality_version}",
+        quality_version,
         config.universe.min_dte_days,
         config.universe.max_dte_days,
         config.scanner.min_open_interest_base_btc,
-        config.scanner.max_spread_fraction,
+        min(config.scanner.max_spread_fraction, recommendation_settings.max_relative_spread),
         cohort,
         config.market_data.max_snapshot_skew_ms,
+        recommendation_settings.min_absolute_delta,
+        recommendation_settings.max_absolute_delta,
     )
 
 
@@ -229,6 +280,24 @@ class RecommendationResult:
     top_fingerprint: str | None
 
 
+def alert_delivery_due(
+    *,
+    now_monotonic: float,
+    last_alert_monotonic: float | None,
+    minimum_interval_seconds: float,
+    reminder_seconds: float,
+    fingerprint: str | None,
+    last_fingerprint: str | None,
+) -> bool:
+    """Enforce a hard minimum interval even when the ranked set changes."""
+    if last_alert_monotonic is None:
+        return True
+    elapsed = now_monotonic - last_alert_monotonic
+    if elapsed < minimum_interval_seconds:
+        return False
+    return fingerprint != last_fingerprint or elapsed >= reminder_seconds
+
+
 def select_coherent_snapshots(
     snapshots: tuple[MarketSnapshot, ...],
     *,
@@ -274,7 +343,7 @@ def evaluate_live_recommendations(
     """Run the existing scanner and persist its exact metric/input lineage."""
     if as_of_utc.tzinfo is None or as_of_utc.utcoffset() != UTC.utcoffset(as_of_utc):
         raise ValueError("recommendation as_of_utc must be aware UTC")
-    policy = _scanner_policy(config)
+    policy = _scanner_policy(config, settings)
     bundles = [
         build_metric_bundle(snapshot, as_of_utc=as_of_utc, config_version=config.config_version)
         for snapshot in snapshots
@@ -327,6 +396,11 @@ def evaluate_live_recommendations(
                 "dte_days": str(metric.dte_days),
                 "entry_dce": str(metric.entry_ask.dce.value),
                 "relative_spread": str(metric.relative_spread.value),
+                "index_price_usd_per_btc": (
+                    str(market.index_price_usd_per_btc.value)
+                    if market.index_price_usd_per_btc.value is not None
+                    else None
+                ),
                 "mark_iv_decimal": (
                     str(market.iv.mark_annual_decimal.value)
                     if market.iv.mark_annual_decimal.value is not None
@@ -345,6 +419,12 @@ def evaluate_live_recommendations(
         "decision_state": decision.value,
         "input_count": len(snapshots),
         "eligible_count": len(eligible),
+        "quality_policy": {
+            "min_absolute_delta": str(settings.min_absolute_delta),
+            "max_absolute_delta": str(settings.max_absolute_delta),
+            "max_relative_spread": str(settings.max_relative_spread),
+            "min_cohort_size": settings.min_cohort_size,
+        },
         "candidates": candidates,
         "disclaimer": ALERT_DISCLAIMER,
     }
@@ -358,11 +438,17 @@ def evaluate_live_recommendations(
         fingerprint = hashlib.sha256(fingerprint_material.encode()).hexdigest()
         lines = ["Deribit BTC Call 实时研究候选"]
         for item in candidates:
+            index_text = (
+                f"${Decimal(item['index_price_usd_per_btc']):,.0f}"
+                if item["index_price_usd_per_btc"] is not None
+                else "unavailable"
+            )
             lines.append(
                 f"#{item['rank']} {item['instrument_name']}"
                 f" | Ask {item['ask_btc_per_contract']} BTC"
                 f" | Δ {item['delta']} | DTE {Decimal(item['dte_days']):.1f}"
                 f" | Spread {Decimal(item['relative_spread']):.2%}"
+                f" | Index {index_text}"
             )
         lines.append(ALERT_DISCLAIMER)
         text = "\n".join(lines)

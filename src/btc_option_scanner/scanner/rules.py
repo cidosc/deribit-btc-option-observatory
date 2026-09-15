@@ -38,6 +38,8 @@ class ScannerPolicy:
     max_relative_spread: Decimal
     cohort_policy: CohortPolicy
     max_snapshot_skew_ms: int = 0
+    min_absolute_delta: Decimal = Decimal("0")
+    max_absolute_delta: Decimal = Decimal("1")
 
     def __post_init__(self) -> None:
         if not self.rule_version.strip() or not self.universe_filter_version.strip():
@@ -50,6 +52,12 @@ class ScannerPolicy:
             raise ValueError("max_relative_spread must be in (0, 1]")
         if self.max_snapshot_skew_ms < 0:
             raise ValueError("max_snapshot_skew_ms cannot be negative")
+        if (
+            self.min_absolute_delta < 0
+            or self.max_absolute_delta > 1
+            or self.min_absolute_delta > self.max_absolute_delta
+        ):
+            raise ValueError("absolute Delta bounds must satisfy 0 <= min <= max <= 1")
 
 
 @dataclass(frozen=True, slots=True)
@@ -165,6 +173,8 @@ def _prequalify(item: ScanInput, policy: ScannerPolicy) -> CandidateEvaluation |
     delta = market.greeks.delta_standard
     if delta.availability is not Availability.AVAILABLE or delta.value is None:
         rejected.append("DERIBIT_DELTA_UNAVAILABLE")
+    elif not policy.min_absolute_delta <= abs(delta.value) <= policy.max_absolute_delta:
+        rejected.append("ABSOLUTE_DELTA_OUTSIDE_POLICY")
     spread = metrics.relative_spread
     if spread.availability is not Availability.AVAILABLE or spread.value is None:
         rejected.append("RELATIVE_SPREAD_UNAVAILABLE")

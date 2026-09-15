@@ -6,6 +6,7 @@ import pytest
 
 from btc_option_scanner.alerts import (
     LiveRecommendationSettings,
+    alert_delivery_due,
     build_feishu_payload,
     evaluate_live_recommendations,
     select_coherent_snapshots,
@@ -22,6 +23,12 @@ def test_feishu_settings_are_optional_and_webhook_host_fails_closed() -> None:
     settings = LiveRecommendationSettings.from_environment({})
     assert settings.enabled is True
     assert settings.feishu_enabled is False
+    assert settings.min_absolute_delta == Decimal("0.80")
+    assert settings.max_absolute_delta == Decimal("0.90")
+    assert settings.max_relative_spread == Decimal("0.05")
+    assert settings.min_cohort_size == 3
+    assert settings.minimum_alert_interval_seconds == 1_800
+    assert settings.reminder_seconds == 21_600
     configured = LiveRecommendationSettings.from_environment(
         {
             "BTC_OPTION_FEISHU_WEBHOOK_URL": (
@@ -53,6 +60,33 @@ def test_feishu_webhook_payload_signing_and_response_contract() -> None:
     validate_feishu_response({"StatusCode": 0, "StatusMessage": "success"})
     with pytest.raises(RuntimeError, match="failed"):
         validate_feishu_response({"code": 19021, "msg": "sign match fail"})
+
+
+def test_alert_minimum_interval_cannot_be_bypassed_by_candidate_changes() -> None:
+    assert not alert_delivery_due(
+        now_monotonic=1_100,
+        last_alert_monotonic=1_000,
+        minimum_interval_seconds=1_800,
+        reminder_seconds=21_600,
+        fingerprint="new-ranking",
+        last_fingerprint="old-ranking",
+    )
+    assert alert_delivery_due(
+        now_monotonic=2_800,
+        last_alert_monotonic=1_000,
+        minimum_interval_seconds=1_800,
+        reminder_seconds=21_600,
+        fingerprint="new-ranking",
+        last_fingerprint="old-ranking",
+    )
+    assert not alert_delivery_due(
+        now_monotonic=3_000,
+        last_alert_monotonic=1_000,
+        minimum_interval_seconds=1_800,
+        reminder_seconds=21_600,
+        fingerprint="same-ranking",
+        last_fingerprint="same-ranking",
+    )
 
 
 def test_coherent_snapshot_selection_excludes_old_exchange_windows() -> None:
@@ -97,10 +131,16 @@ def test_live_recommendation_reuses_scanner_and_persists_lineage(tmp_path) -> No
         scanner=replace(config.scanner, min_cohort_size=2),
     )
     repository = SqliteRepository(tmp_path / "recommendations.sqlite")
-    settings = LiveRecommendationSettings(output_path=tmp_path / "latest.json", top_n=2)
+    settings = LiveRecommendationSettings(
+        output_path=tmp_path / "latest.json", top_n=2, min_cohort_size=2
+    )
     snapshots = (
-        market_snapshot(name="BTC-A", ask=Decimal("0.80")),
-        market_snapshot(name="BTC-B", ask=Decimal("0.75")),
+        market_snapshot(
+            name="BTC-A", ask=Decimal("0.80"), bid=Decimal("0.79"), delta=Decimal("0.85")
+        ),
+        market_snapshot(
+            name="BTC-B", ask=Decimal("0.75"), bid=Decimal("0.74"), delta=Decimal("0.85")
+        ),
     )
     result = evaluate_live_recommendations(
         snapshots,

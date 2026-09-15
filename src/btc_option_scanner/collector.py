@@ -21,6 +21,7 @@ from typing import Any
 
 from .alerts import (
     LiveRecommendationSettings,
+    alert_delivery_due,
     evaluate_live_recommendations,
     select_coherent_snapshots,
     send_feishu_message,
@@ -435,7 +436,7 @@ async def run_collector(
             <= (spec.expiration_timestamp_ms - now_ms) / milliseconds_per_day
             <= float(app_config.universe.max_dte_days)
         )
-        if len(decision_fresh) < app_config.scanner.min_cohort_size:
+        if len(decision_fresh) < recommendation_settings.min_cohort_size:
             state.recommendation_state = "INSUFFICIENT_COHERENT_INPUTS"
             return
         option_types = {name: spec.option_type for name, spec in spine.specs.items()}
@@ -467,12 +468,14 @@ async def run_collector(
         state.last_recommendation_at_utc = now_utc
         if not recommendation_settings.feishu_enabled or not result.notification_text:
             return
-        reminder_due = (
-            last_alert_monotonic is None
-            or now_monotonic - last_alert_monotonic
-            >= recommendation_settings.reminder_seconds
-        )
-        if result.top_fingerprint == last_alert_fingerprint and not reminder_due:
+        if not alert_delivery_due(
+            now_monotonic=now_monotonic,
+            last_alert_monotonic=last_alert_monotonic,
+            minimum_interval_seconds=recommendation_settings.minimum_alert_interval_seconds,
+            reminder_seconds=recommendation_settings.reminder_seconds,
+            fingerprint=result.top_fingerprint,
+            last_fingerprint=last_alert_fingerprint,
+        ):
             return
         try:
             await send_feishu_message(recommendation_settings, result.notification_text)
@@ -705,6 +708,22 @@ async def run_collector(
                     state.last_alert_at_utc.isoformat() if state.last_alert_at_utc else None
                 ),
                 "last_alert_error": state.last_alert_error,
+                "minimum_alert_interval_seconds": (
+                    recommendation_settings.minimum_alert_interval_seconds
+                ),
+                "reminder_seconds": recommendation_settings.reminder_seconds,
+                "quality_policy": {
+                    "min_absolute_delta": str(
+                        recommendation_settings.min_absolute_delta
+                    ),
+                    "max_absolute_delta": str(
+                        recommendation_settings.max_absolute_delta
+                    ),
+                    "max_relative_spread": str(
+                        recommendation_settings.max_relative_spread
+                    ),
+                    "min_cohort_size": recommendation_settings.min_cohort_size,
+                },
             },
             "database_counts": repository.counts(),
             "database_size_bytes": database_size,

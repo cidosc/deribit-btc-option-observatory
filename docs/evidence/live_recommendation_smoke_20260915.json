@@ -1,18 +1,27 @@
 {
   "test": "public_mainnet_live_recommendation_smoke",
-  "observed_at_utc": "2026-09-15T06:14:00Z",
+  "observed_at_utc": "2026-09-15T06:25:00Z",
   "duration_seconds": 20,
   "authentication": false,
-  "ticker_subscriptions": 30,
+  "ticker_subscriptions": 60,
   "book_subscriptions": 0,
   "feishu_delivery": "NOT_RUN_NO_WEBHOOK_PROVIDED",
-  "scanner_runs": 8,
-  "maximum_eligible_candidates": 10,
+  "scanner_runs": 9,
+  "maximum_eligible_candidates": 3,
   "top_candidates_written": 3,
+  "quality_policy": {
+    "min_absolute_delta": "0.80",
+    "max_absolute_delta": "0.90",
+    "max_relative_spread": "0.05",
+    "min_cohort_size": 3
+  },
+  "observed_index_usd_per_btc": "76843.15",
+  "top_candidate_strikes_usd": [60000, 58000, 55000],
+  "top_candidate_deltas": ["0.84605", "0.86698", "0.89404"],
   "post_shutdown_state": "DATA_STALE",
   "post_shutdown_reason": "COLLECTOR_STOPPED",
   "sqlite_integrity_check": "ok",
   "sqlite_journal_mode": "wal",
   "process_exit_code": 0,
-  "notes": "Temporary database was intentionally not committed. No credential, order endpoint, or external message was used."
+  "notes": "Temporary database was intentionally not committed. No credential, order endpoint, or external message was used. Low-Delta 102k-112k calls were excluded."
 }

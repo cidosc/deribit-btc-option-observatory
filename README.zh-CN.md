@@ -138,6 +138,11 @@ daemon 现在会对时间一致且新鲜的 WebSocket snapshot 运行既有规�
 Delta、DTE、spread、entry DCE、理由、风险以及完整 snapshot/metric/run ID。时间一致的 peer
 样本不足时会失败关闭，不会发送候选。程序不会下单。
 
+实时提醒默认采用蓝图中的中长期 ITM 假设：绝对 Delta `0.80–0.90`、相对价差不超过 `5%`，
+并至少有 3 个可比较合约。这样可阻止低 Delta 的便宜 OTM Call 仅仅因为
+`DCE = Delta / Ask` 中 Ask 很小而排到前面。这些都是可通过环境变量修改的实验门槛，不代表
+盈利保证。
+
 可选机器人提醒优先使用飞书群自定义机器人的 HTTPS Webhook：
 
 ```bash
@@ -146,9 +151,11 @@ export BTC_OPTION_FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hoo
 export BTC_OPTION_FEISHU_SIGNING_SECRET=...
 ```
 
-提醒使用纯文本；排名合约集合未变化时去重，并按 reminder 周期重复。程序只接受飞书/Lark
-官方 HTTPS bot hook 域名。发送失败不终止 collector，错误会写入状态文件。本阶段不接
-Telegram，也不再要求部署 QQ/OneBot 运行时。
+提醒使用纯文本。即使排名集合发生变化，也必须满足默认 30 分钟的硬最小间隔；集合未变化时
+默认 6 小时才重复。可用 `BTC_OPTION_ALERT_MIN_INTERVAL_SECONDS` 和
+`BTC_OPTION_ALERT_REMINDER_SECONDS` 调整。程序只接受飞书/Lark 官方 HTTPS bot hook 域名。
+发送失败不终止 collector，错误会写入状态文件。本阶段不接 Telegram，也不再要求部署
+QQ/OneBot 运行时。
 
 飞书 WebSocket 长连接的用途是让企业自建应用接收飞书事件和回调，单向候选通知不需要它。
 以后若增加交互式机器人命令，应把事件接收进程与只读市场 collector 分开实现。

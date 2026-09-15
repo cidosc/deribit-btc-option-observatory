@@ -140,6 +140,12 @@ top manual-review candidates, executable Ask, quote size, Delta, DTE, spread, en
 reasons, risks, and complete snapshot/metric/run IDs. If the coherent cohort is too small,
 the status fails closed instead of sending a candidate. Nothing places an order.
 
+The live alert gate defaults to the blueprint's medium/long-dated ITM hypothesis:
+absolute Delta `0.80–0.90`, relative spread at most `5%`, and at least three comparable
+contracts. This prevents cheap low-Delta OTM calls from winning merely because
+`DCE = Delta / Ask` rewards a small premium. These experimental thresholds are explicit
+environment settings, not claims of profitability.
+
 Optional robot delivery prioritizes a Feishu custom-bot HTTPS webhook:
 
 ```bash
@@ -148,9 +154,11 @@ export BTC_OPTION_FEISHU_WEBHOOK_URL=https://open.feishu.cn/open-apis/bot/v2/hoo
 export BTC_OPTION_FEISHU_SIGNING_SECRET=...
 ```
 
-Alerts are plain text, deduplicated when the ranked instrument set is unchanged, and
-repeated after the configured reminder period. Only approved Feishu/Lark HTTPS bot-hook
-hosts are accepted. An alert failure is non-fatal and appears in collector status.
+Alerts are plain text. A hard 30-minute minimum interval applies even when the ranked set
+changes; an unchanged set is repeated only after six hours. Only approved Feishu/Lark
+HTTPS bot-hook hosts are accepted. An alert failure is non-fatal and appears in collector
+status. Configure these with `BTC_OPTION_ALERT_MIN_INTERVAL_SECONDS` and
+`BTC_OPTION_ALERT_REMINDER_SECONDS`.
 Telegram and QQ/OneBot are not included.
 
 Feishu's WebSocket long connection is for an enterprise app to receive events and
