@@ -14,11 +14,22 @@ from ..domain import (
     QualityFlag,
     QualityScope,
     QualitySeverity,
+    RawMarketEvent,
     SourceTransport,
     SystemEvent,
 )
 from .lifecycle import apply_lifecycle_event
 from .parser import NormalizationError, normalize_instrument, normalize_ticker, record_raw_event
+
+
+class TickerObservation:
+    """One normalized ticker held in memory before any persistence decision."""
+
+    __slots__ = ("raw_event", "snapshot")
+
+    def __init__(self, raw_event: RawMarketEvent, snapshot: Any) -> None:
+        self.raw_event = raw_event
+        self.snapshot = snapshot
 
 
 class PublicDataSpine:
@@ -55,6 +66,40 @@ class PublicDataSpine:
         self.specs[spec.instrument_name] = spec
         return spec
 
+    def observe_ticker(
+        self,
+        envelope: dict[str, Any],
+        *,
+        transport: SourceTransport,
+        channel: str,
+        observed_at: datetime | None = None,
+    ) -> TickerObservation:
+        """Normalize one ticker for the live in-memory cache without DB writes.
+
+        Every legal ticker updates discovery state so the recommendation
+        prefilter is never throttled by the persistence sampling interval.  No
+        raw event, snapshot or failure row is written here; call
+        ``persist_observed_ticker`` at the sampling point to store this exact
+        observation.
+        """
+        observed = observed_at or datetime.now(UTC)
+        try:
+            raw, snapshot = self._normalize_ticker(
+                envelope, transport=transport, channel=channel, observed_at=observed
+            )
+        except NormalizationError as exc:
+            self._record_ticker_failure(
+                exc, "TICKER_NORMALIZATION_FAILED", str(exc), observed
+            )
+            raise
+        return TickerObservation(raw, snapshot)
+
+    def persist_observed_ticker(self, observation: TickerObservation) -> bool:
+        """Persist one previously observed ticker; the raw event is stored first."""
+        new_raw = self.repository.save_raw_event(observation.raw_event)
+        self.repository.save_snapshot(observation.snapshot)
+        return new_raw
+
     def ingest_ticker(
         self,
         envelope: dict[str, Any],
@@ -64,20 +109,44 @@ class PublicDataSpine:
         observed_at: datetime | None = None,
     ):
         observed = observed_at or datetime.now(UTC)
-        raw = record_raw_event(
-            envelope, transport=transport, channel_or_method=channel, observed_at=observed
-        )
+        try:
+            raw, snapshot = self._normalize_ticker(
+                envelope, transport=transport, channel=channel, observed_at=observed
+            )
+        except NormalizationError as exc:
+            self._record_ticker_failure(
+                exc, "TICKER_NORMALIZATION_FAILED", str(exc), observed
+            )
+            raise
         self.repository.save_raw_event(raw)
+        self.repository.save_snapshot(snapshot)
+        return snapshot
+
+    def _normalize_ticker(
+        self,
+        envelope: dict[str, Any],
+        *,
+        transport: SourceTransport,
+        channel: str,
+        observed_at: datetime,
+    ) -> tuple[RawMarketEvent, Any]:
+        raw = record_raw_event(
+            envelope, transport=transport, channel_or_method=channel, observed_at=observed_at
+        )
         data = _ticker_data(envelope)
         name = data.get("instrument_name") if isinstance(data, dict) else None
         if not isinstance(name, str) or name not in self.specs:
-            message = "ticker references an unknown instrument specification"
-            self._failure(raw.raw_event_id, "UNKNOWN_INSTRUMENT", message, observed)
-            raise NormalizationError(message)
+            failure = NormalizationError(
+                "ticker references an unknown instrument specification"
+            )
+            failure.raw_event_id = raw.raw_event_id  # type: ignore[attr-defined]
+            failure.raw_event = raw  # type: ignore[attr-defined]
+            raise failure
         try:
             snapshot = normalize_ticker(envelope, raw, self.specs[name])
         except NormalizationError as exc:
-            self._failure(raw.raw_event_id, "TICKER_NORMALIZATION_FAILED", str(exc), observed)
+            exc.raw_event_id = raw.raw_event_id  # type: ignore[attr-defined]
+            exc.raw_event = raw  # type: ignore[attr-defined]
             raise
         flags = list(snapshot.quality_flags)
         timestamp = snapshot.source.exchange_timestamp_ms
@@ -92,7 +161,7 @@ class PublicDataSpine:
                 )
             )
         if timestamp is not None:
-            age = observed.timestamp() - timestamp / 1000
+            age = observed_at.timestamp() - timestamp / 1000
             if age > self.stale_after_seconds:
                 flags.append(
                     QualityFlag(
@@ -106,8 +175,7 @@ class PublicDataSpine:
             snapshot = replace(snapshot, quality_flags=tuple(flags), actionable=False)
         if timestamp is not None and (previous is None or timestamp >= previous):
             self._latest_timestamp[name] = timestamp
-        self.repository.save_snapshot(snapshot)
-        return snapshot
+        return raw, snapshot
 
     def ingest_lifecycle(
         self,
@@ -171,6 +239,19 @@ class PublicDataSpine:
                 await asyncio.wait_for(stop_event.wait(), timeout=interval_seconds)
             except TimeoutError:
                 continue
+
+    def _record_ticker_failure(
+        self,
+        exc: NormalizationError,
+        code: str,
+        message: str,
+        observed_at: datetime,
+    ) -> None:
+        """Keep the raw event and a typed failure row for a rejected ticker."""
+        raw_event = getattr(exc, "raw_event", None)
+        if raw_event is not None:
+            self.repository.save_raw_event(raw_event)
+        self._failure(getattr(exc, "raw_event_id", ""), code, message, observed_at)
 
     def _failure(
         self, raw_event_id: str, code: str, message: str, observed_at: datetime | None

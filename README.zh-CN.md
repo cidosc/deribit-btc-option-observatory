@@ -90,7 +90,8 @@ SQLite 预期输出为 `ok` 和 `wal`。备份、升级、日志、保留策略�
 
 默认 `scanner-lite` 是低存储模式：订阅 60 个聚合 ticker，每个合约最多每 60 秒持久化一
 条 ticker，不订阅 order book。ticker 中的 best Bid/Ask、两边数量、IV、Greeks、成交量和
-持仓量仍可作为扫描输入。
+持仓量仍可作为扫描输入。每条收到的 ticker 也会立即更新内存中的发现 cache；只有数据库
+持久化才按合约采样。
 
 ```bash
 export BTC_OPTION_SCANNER_CONFIG="$PWD/config.yaml"
@@ -133,10 +134,16 @@ btc-option-collector
 CLI 和 Dashboard 只读取不可变的 presentation snapshot，不访问 Deribit，
 也不会重新计算核心金融逻辑。
 
-daemon 现在会对时间一致且新鲜的 WebSocket snapshot 运行既有规则 scanner，并默认原子写入
-`runtime/latest-recommendation.json`。文件包含供人工复核的 Top 候选、真实 Ask、盘口数量、
-Delta、DTE、spread、entry DCE、理由、风险以及完整 snapshot/metric/run ID。时间一致的 peer
-样本不足时会失败关闭，不会发送候选。程序不会下单。
+daemon 现在会在每个推荐周期通过白名单 `public/ticker` REST 接口（与所配置 WebSocket 相同
+的 Deribit 环境）主动刷新一个有上限的合约集合，再运行既有规则 scanner，并默认原子写入
+`runtime/latest-recommendation.json`。一个带版本的、故意略宽于最终门槛的发现预筛基于
+内存 cache 选择本轮 refresh set，并保留确定性轮转探测槽位，确保暂时缺报价或位于边界外的
+核心合约仍会被重新探测。只有本轮主动刷新成功、交换时间戳 age 通过、且整批处于配置的
+2 秒 skew 窗口内的响应才会交给 scanner；原始响应、规范化 snapshot、metric snapshot 和
+scanner run 先持久化，候选文件引用这些确切 ID。当批次过旧、跨窗、刷新失败、超时或低于
+cohort 下限时，旧候选文件会被原子替换为空候选失败关闭状态（`CACHE_ONLY`、
+`REFRESH_FAILED`、`REFRESH_TIMEOUT`、`SNAPSHOT_SKEW`、`SNAPSHOT_STALE`、
+`COHORT_SAMPLE_BELOW_POLICY`）。程序不会下单。
 
 实时提醒默认采用蓝图中的中长期 ITM 假设：滚动 `120–240` DTE 区间、绝对 Delta
 `0.80–0.90`、相对价差不超过 `5%`，并至少有 3 个可比较合约。DTE 区间读取
@@ -154,7 +161,11 @@ export BTC_OPTION_FEISHU_SIGNING_SECRET=...
 
 提醒使用纯文本。即使排名集合发生变化，也必须满足默认 30 分钟的硬最小间隔；集合未变化时
 默认 6 小时才重复。可用 `BTC_OPTION_ALERT_MIN_INTERVAL_SECONDS` 和
-`BTC_OPTION_ALERT_REMINDER_SECONDS` 调整。程序只接受飞书/Lark 官方 HTTPS bot hook 域名。
+`BTC_OPTION_ALERT_REMINDER_SECONDS` 调整。主动刷新节奏可用
+`BTC_OPTION_REFRESH_LIMIT`、`BTC_OPTION_REFRESH_REQUESTS_PER_SECOND`、
+`BTC_OPTION_REFRESH_TIMEOUT_SECONDS`、`BTC_OPTION_REFRESH_CYCLE_BUDGET_SECONDS` 和
+`BTC_OPTION_REFRESH_MAX_CONCURRENCY` 配置；其活动与写入量在状态文件
+`recommendation.refresh` 下可观察。程序只接受飞书/Lark 官方 HTTPS bot hook 域名。
 发送失败不终止 collector，错误会写入状态文件。本阶段不接 Telegram，也不再要求部署
 QQ/OneBot 运行时。
 
@@ -162,7 +173,9 @@ QQ/OneBot 运行时。
 以后若增加交互式机器人命令，应把事件接收进程与只读市场 collector 分开实现。
 
 容量规划上，默认 60 合约、60 秒持久化，并保存实时指标和扫描 lineage 时，建议按
-**0.5–1.5 GiB/日**预留。这是工程估算而非固定配额；目标机运行数小时后应以状态文件中的
+**0.5–1.5 GiB/日**预留；每分钟一次的主动刷新每轮最多新增 `BTC_OPTION_REFRESH_LIMIT`
+条 raw/snapshot/metric 加一条 scanner run，可在 `recommendation.refresh.writes_total`
+观察。这是工程估算而非固定配额；目标机运行数小时后应以状态文件中的
 `estimated_database_growth_bytes_per_day` 为准。限定具体合约或延长持久化间隔可近似线性
 降低用量；raw book 仍可能达到每日数十 GiB，所以保持按需开启。
 

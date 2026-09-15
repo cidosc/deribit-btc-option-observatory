@@ -47,3 +47,54 @@ public WSS adapter, ticker/book/lifecycle subscription manager, exact ungrouped
 book tracker, client-injected reconnect and close/reopen retention harness are
 covered by tests and a 120-second mainnet evidence run. A naturally occurring
 lifecycle transition and multi-day endurance remain acceptance limitations.
+
+## F-005 — scanner-lite recommendations starve to ~3 inputs after the initial burst
+
+**Status:** RESOLVED 2026-09-15 (P12 live-coherence work package).
+
+**Expected:** scanner-lite should keep producing periodic, coherent, traceable
+recommendation batches while the market is silent or updates are sparse, without
+changing any `domain-contract-v1` gate.
+
+**Actual:** every received ticker only updated memory when its per-instrument
+persistence sample was due (`collector.on_message` returned early otherwise),
+`maybe_recommend` only fired from that persisted branch, and there was no
+independent recommendation schedule. `select_coherent_snapshots` anchors on the
+newest `exchange_timestamp_ms` and keeps only snapshots within the configured
+2-second skew window and 30-second age. With 60 subscribed instruments whose
+last-update times scatter, the window could stably retain about 3 inputs, and
+the cohort minimum then made every round `DATA_ONLY`. The initial subscription
+burst masked this, so a 20-second smoke could not detect it. Separately, the
+60 subscription slots sampled the whole 30-day collection buffer uniformly, so
+buffered DTEs could crowd out core 120–240 DTE instruments.
+
+**Resolution:** keep the three cadences separate and name them: every legal WS
+ticker now updates an in-memory cache (new `PublicDataSpine.observe_ticker`
+splits normalization from persistence), ordinary persistence stays sampled per
+profile, and a dedicated async loop schedules recommendation cycles on its own
+cadence. Each cycle derives a bounded, versioned refresh set (`live-refresh-`
+prefilter@1.0.0`, wider than the final Delta/spread gates, with deterministic
+rotation probes for blind-spot avoidance), actively refreshes it through the
+whitelisted `public/ticker` REST endpoint of the same environment as the
+WebSocket, and only hands same-cycle responses that pass max-age and the
+2-second skew window to the canonical scanner. Refresh raw events, market
+snapshots, metric snapshots and the scanner run persist first; the candidate
+file references those exact IDs. Insufficient cohort, refresh failure, timeout,
+stale, or skew outcomes atomically replace the previous candidate file with a
+fail-closed state and stable reason codes (`CACHE_ONLY`, `REFRESH_FAILED`,
+`REFRESH_TIMEOUT`, `SNAPSHOT_SKEW`, `SNAPSHOT_STALE`,
+`COHORT_SAMPLE_BELOW_POLICY`, `ENVIRONMENT_MISMATCH`). Subscription selection
+now prioritizes core 120–240 DTE instruments and only fills leftover slots from
+the collection buffer; the core/buffer split is reported in status. Alert
+throttling (30-minute hard minimum, 6-hour unchanged reminder) and every
+scanner gate are unchanged.
+
+**Reproduction / evidence:**
+
+```powershell
+python -m pytest tests/test_live_refresh.py -q
+python scripts/silent_steady_regression.py --cycles 10 \
+  --report docs/evidence/silent_steady_regression_20260915.json
+python scripts/public_scanner_lite_soak.py --duration-seconds 780 \
+  --report docs/evidence/live_scanner_lite_soak_20260915.json
+```

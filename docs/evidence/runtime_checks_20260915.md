@@ -18,4 +18,14 @@
 | Private/trading API source scan | PASS — `public/auth` is the only auth method; no `private/*`, order, transfer, withdrawal, or embedded credential in source/config |
 | Ubuntu/systemd runtime | NOT RUN BY USER DIRECTION — deployment is documented for target-server validation |
 
+## P12 addendum — silent-market live recommendation coherence
+
+| Check | Result |
+|---|---|
+| `python -m pytest tests/test_live_refresh.py -q` | PASS — 18 tests: original 2-second-window starvation regression, cache/persistence decoupling, refresh lineage, independent cadence, silent steady state, strict skew/stale fail-closed, refresh failure/timeout, environment mismatch, heartbeat timeout, disconnect closure, Feishu throttle, storage bounds, buffer priority, prefilter versioning, observation split |
+| `python scripts/silent_steady_regression.py --cycles 10 --report docs/evidence/silent_steady_regression_20260915.json` | PASS — offline, no network; initial scattered burst collapses to 3 coherent inputs (old behaviour), 10 cycles completed including 7 classified steady-state cycles with 12 coherent inputs each and all ELIGIBLE |
+| `python scripts/public_scanner_lite_soak.py --duration-seconds 780 --report docs/evidence/live_scanner_lite_soak_20260915.json` | PASS — public Mainnet, 13 minutes, warm-up separated from steady state, per-cycle telemetry, no credentials |
+| `python -m pytest -q --cov=btc_option_scanner --cov-report=term` | PASS — 105 passed, 1 opt-in live test skipped, ~85% total coverage |
+| `python -m ruff check .` / `compileall` / `pip check` / `git diff --check` | PASS |
+
 The ordinary pytest run deliberately skips the opt-in network test. It was run separately and passed. The collector details are in `collector_soak_20260915.json`; its raw/normalized evidence is in `collector_soak_20260915.sqlite`.

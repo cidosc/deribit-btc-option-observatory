@@ -20,10 +20,20 @@ from pathlib import Path
 from typing import Any
 
 from .alerts import (
+    REASON_CACHE_ONLY,
+    REASON_COHORT_SAMPLE_BELOW_POLICY,
+    REASON_ENVIRONMENT_MISMATCH,
+    REASON_REFRESH_FAILED,
+    REASON_REFRESH_TIMEOUT,
+    REASON_SNAPSHOT_SKEW,
+    REASON_SNAPSHOT_STALE,
     LiveRecommendationSettings,
     alert_delivery_due,
+    build_refresh_prefilter_policy,
+    build_refresh_set,
     evaluate_live_recommendations,
-    select_coherent_snapshots,
+    prefilter_refresh_candidates,
+    select_coherent_snapshots_with_diagnostics,
     send_feishu_message,
     write_recommendation_unavailable,
 )
@@ -37,10 +47,12 @@ from .deribit import (
     DeribitPublicRestClient,
     NormalizationError,
     PublicDataSpine,
+    RateLimitConfig,
     ReadOnlyWebSocketAuthenticator,
     ReconnectingTickerStream,
     TickerSubscription,
     connect_public_websocket,
+    rest_base_url_for_websocket,
 )
 from .deribit.parser import record_raw_event
 from .domain import DecisionState, InstrumentState, OptionType, SourceTransport, SystemEvent
@@ -81,6 +93,11 @@ class CollectorSettings:
     max_book_instruments: int = 0
     ticker_persist_interval_seconds: float = 60.0
     collection_buffer_days: float = 30.0
+    refresh_limit: int = 12
+    refresh_requests_per_second: float = 20.0
+    refresh_timeout_seconds: float = 5.0
+    refresh_cycle_budget_seconds: float = 6.0
+    refresh_max_concurrency: int = 12
     catalog_refresh_seconds: float = 3_600.0
     retention_days: float = 30.0
     retention_check_seconds: float = 3_600.0
@@ -120,6 +137,14 @@ class CollectorSettings:
             or self.minimum_free_bytes < 1
         ):
             raise ValueError("collection buffer and minimum free bytes are invalid")
+        if self.refresh_limit < 1 or self.refresh_limit > self.max_instruments:
+            raise ValueError("refresh limit must be within [1, max instruments]")
+        if self.refresh_requests_per_second <= 0:
+            raise ValueError("refresh requests per second must be positive")
+        if self.refresh_timeout_seconds <= 0 or self.refresh_cycle_budget_seconds <= 0:
+            raise ValueError("refresh timeout and cycle budget must be positive")
+        if self.refresh_max_concurrency < 1:
+            raise ValueError("refresh max concurrency must be at least one")
         if self.log_level.upper() not in logging.getLevelNamesMapping():
             raise ValueError("unknown log level")
 
@@ -142,6 +167,8 @@ class CollectorSettings:
             if item.strip()
         )
         log_file = source.get("BTC_OPTION_LOG_FILE", "").strip()
+        max_instruments = _env_int(source, "BTC_OPTION_MAX_INSTRUMENTS", default_instruments)
+        default_refresh_limit = min(12, max_instruments)
         return cls(
             database_path=Path(source.get("BTC_OPTION_DB_PATH", "data/collector.sqlite")),
             status_path=Path(
@@ -154,9 +181,7 @@ class CollectorSettings:
             ticker_interval=source.get("BTC_OPTION_TICKER_INTERVAL", "agg2"),
             book_interval=source.get("BTC_OPTION_BOOK_INTERVAL", "100ms"),
             collection_profile=profile,
-            max_instruments=_env_int(
-                source, "BTC_OPTION_MAX_INSTRUMENTS", default_instruments
-            ),
+            max_instruments=max_instruments,
             max_book_instruments=_env_int(
                 source, "BTC_OPTION_MAX_BOOK_INSTRUMENTS", default_books
             ),
@@ -167,6 +192,19 @@ class CollectorSettings:
             ),
             collection_buffer_days=_env_float(
                 source, "BTC_OPTION_COLLECTION_BUFFER_DAYS", 30.0
+            ),
+            refresh_limit=_env_int(source, "BTC_OPTION_REFRESH_LIMIT", default_refresh_limit),
+            refresh_requests_per_second=_env_float(
+                source, "BTC_OPTION_REFRESH_REQUESTS_PER_SECOND", 20.0
+            ),
+            refresh_timeout_seconds=_env_float(
+                source, "BTC_OPTION_REFRESH_TIMEOUT_SECONDS", 5.0
+            ),
+            refresh_cycle_budget_seconds=_env_float(
+                source, "BTC_OPTION_REFRESH_CYCLE_BUDGET_SECONDS", 6.0
+            ),
+            refresh_max_concurrency=_env_int(
+                source, "BTC_OPTION_REFRESH_MAX_CONCURRENCY", 12
             ),
             catalog_refresh_seconds=_env_float(
                 source, "BTC_OPTION_CATALOG_REFRESH_SECONDS", 3_600.0
@@ -211,6 +249,15 @@ class RuntimeState:
     last_recommendation_at_utc: datetime | None = None
     last_alert_at_utc: datetime | None = None
     last_alert_error: str | None = None
+    refresh_requests: int = 0
+    refresh_successes: int = 0
+    refresh_writes: int = 0
+    coherent_input_count: int = 0
+    last_stream_event: str | None = None
+    rejected_counts: dict[str, int] = field(default_factory=dict)
+    last_refresh_reason: str | None = None
+    last_refresh_diagnostics: dict[str, Any] = field(default_factory=dict)
+    subscription_split: dict[str, int] = field(default_factory=dict)
     selected_instruments: tuple[str, ...] = ()
     selected_book_instruments: tuple[str, ...] = ()
 
@@ -251,29 +298,125 @@ def select_collection_universe(
     limit: int,
     explicit_names: tuple[str, ...] = (),
 ) -> tuple[str, ...]:
+    """Choose subscribed instruments with core decision-range priority.
+
+    In non-explicit mode the core ``[min_dte, max_dte]`` decision range is
+    selected first; only leftover slots are filled from the collection buffer
+    window (``buffer_days`` around the core).  Buffered DTEs are research
+    warm-up data and never relax the final decision-universe gate.
+    """
     now_ms = int(now.timestamp() * 1000)
-    min_ms = float(min_dte_days) * 86_400_000 - buffer_days * 86_400_000
-    max_ms = float(max_dte_days) * 86_400_000 + buffer_days * 86_400_000
+    core_min_ms = float(min_dte_days) * 86_400_000
+    core_max_ms = float(max_dte_days) * 86_400_000
+    buffer_min_ms = core_min_ms - buffer_days * 86_400_000
+    buffer_max_ms = core_max_ms + buffer_days * 86_400_000
     explicit = set(explicit_names)
-    candidates = [
-        spec
-        for spec in specs.values()
-        if spec.option_type == OptionType.CALL
-        and spec.state == InstrumentState.OPEN
-        and (
-            spec.instrument_name in explicit
-            if explicit
-            else min_ms <= spec.expiration_timestamp_ms - now_ms <= max_ms
-        )
-    ]
-    candidates.sort(
+    core: list[Any] = []
+    buffered: list[Any] = []
+    for spec in specs.values():
+        if spec.option_type != OptionType.CALL or spec.state != InstrumentState.OPEN:
+            continue
+        if explicit:
+            if spec.instrument_name in explicit:
+                core.append(spec)
+            continue
+        remaining_ms = spec.expiration_timestamp_ms - now_ms
+        if core_min_ms <= remaining_ms <= core_max_ms:
+            core.append(spec)
+        elif buffer_min_ms <= remaining_ms <= buffer_max_ms:
+            buffered.append(spec)
+    core.sort(
         key=lambda item: (
             item.expiration_timestamp_ms,
             item.strike_usd_per_btc,
             item.instrument_name,
         )
     )
-    return tuple(item.instrument_name for item in _evenly_spaced(candidates, limit))
+    buffered.sort(
+        key=lambda item: (
+            item.expiration_timestamp_ms,
+            item.strike_usd_per_btc,
+            item.instrument_name,
+        )
+    )
+    if explicit or len(core) >= limit:
+        return tuple(item.instrument_name for item in _evenly_spaced(core, limit))
+    selected = [item.instrument_name for item in core]
+    buffered_selected = _evenly_spaced(buffered, limit - len(selected))
+    return tuple(selected + [item.instrument_name for item in buffered_selected])
+
+
+def subscription_split_counts(
+    specs: dict[str, Any],
+    selected_names: tuple[str, ...],
+    *,
+    now: datetime,
+    min_dte_days: Decimal,
+    max_dte_days: Decimal,
+) -> dict[str, int]:
+    """Report how many subscription slots serve the core vs the buffer window."""
+    now_ms = int(now.timestamp() * 1000)
+    core_min_ms = float(min_dte_days) * 86_400_000
+    core_max_ms = float(max_dte_days) * 86_400_000
+    core = 0
+    buffer_count = 0
+    for name in selected_names:
+        spec = specs.get(name)
+        if spec is None:
+            continue
+        remaining_ms = spec.expiration_timestamp_ms - now_ms
+        if core_min_ms <= remaining_ms <= core_max_ms:
+            core += 1
+        else:
+            buffer_count += 1
+    return {"core": core, "buffer": buffer_count}
+
+
+async def refresh_instrument_batch(
+    rest_client: Any,
+    spine: PublicDataSpine,
+    instrument_names: tuple[str, ...],
+    *,
+    max_concurrency: int,
+    budget_seconds: float,
+) -> tuple[dict[str, Any], list[str]]:
+    """Actively fetch ``public/ticker`` for one bounded recommendation refresh set.
+
+    Every successful response is persisted raw-first so a later ScannerRun can
+    always resolve its lineage, even when the cycle itself is subsequently
+    rejected as stale, skewed, or below cohort.  Total requests are bounded by
+    the refresh set, in-flight work by the concurrency cap, and the whole batch
+    by the per-cycle budget; any failure raises through to the caller.
+    """
+    semaphore = asyncio.Semaphore(max_concurrency)
+    observed: dict[str, Any] = {}
+    errors: list[str] = []
+
+    async def refresh_one(name: str) -> None:
+        async with semaphore:
+            try:
+                envelope = await asyncio.to_thread(rest_client.ticker, name)
+                observation = spine.ingest_ticker(
+                    envelope,
+                    transport=SourceTransport.HTTPS_REST,
+                    channel="public/ticker",
+                )
+            except Exception as exc:
+                errors.append(f"{name}: {type(exc).__name__}: {exc}")
+                return
+            observed[name] = observation
+
+    tasks = [asyncio.create_task(refresh_one(name)) for name in instrument_names]
+    if not tasks:
+        return observed, errors
+    try:
+        await asyncio.wait_for(asyncio.gather(*tasks), timeout=budget_seconds)
+    except TimeoutError:
+        for task in tasks:
+            task.cancel()
+        await asyncio.gather(*tasks, return_exceptions=True)
+        raise
+    return observed, errors
 
 
 def _configure_logging(settings: CollectorSettings) -> None:
@@ -314,6 +457,8 @@ async def run_collector(
     stop_event: asyncio.Event | None = None,
     credentials: DeribitCredentials | None = None,
     recommendation_settings: LiveRecommendationSettings | None = None,
+    rest_client: DeribitPublicRestClient | Any | None = None,
+    websocket_factory: Any | None = None,
 ) -> int:
     _configure_logging(settings)
     settings.database_path.parent.mkdir(parents=True, exist_ok=True)
@@ -342,7 +487,7 @@ async def run_collector(
     book_trackers: dict[str, BookSequenceTracker] = {}
     last_ticker_persisted: dict[str, float] = {}
     latest_snapshots: dict[str, Any] = {}
-    last_recommendation_monotonic: float | None = None
+    probe_offset = 0
     last_alert_monotonic: float | None = None
     last_alert_fingerprint: str | None = None
     initial_database_size = _database_size(settings.database_path)
@@ -382,6 +527,7 @@ async def run_collector(
             state.last_error = str(detail.get("error") or name)
             state.recommendation_state = "DATA_UNAVAILABLE"
             state.recommendation_candidates = 0
+            state.last_stream_event = name
             if recommendation_settings.enabled:
                 write_recommendation_unavailable(
                     recommendation_settings,
@@ -406,51 +552,132 @@ async def run_collector(
             detail,
         )
 
-    async def maybe_recommend(now_monotonic: float) -> None:
-        nonlocal last_recommendation_monotonic, last_alert_monotonic
-        nonlocal last_alert_fingerprint
+    prefilter_policy = build_refresh_prefilter_policy(app_config, recommendation_settings)
+    if (
+        recommendation_settings.enabled
+        and settings.refresh_limit < recommendation_settings.min_cohort_size
+    ):
+        raise ValueError("refresh limit must be at least the recommendation cohort minimum")
+
+    async def run_recommendation_cycle() -> None:
+        nonlocal last_alert_monotonic, last_alert_fingerprint, probe_offset
         if not recommendation_settings.enabled:
             state.recommendation_state = "DISABLED"
             return
-        if (
-            last_recommendation_monotonic is not None
-            and now_monotonic - last_recommendation_monotonic
-            < recommendation_settings.interval_seconds
-        ):
-            return
         now_utc = datetime.now(UTC)
-        fresh = select_coherent_snapshots(
-            tuple(latest_snapshots.values()),
-            as_of_utc=now_utc,
+        if not state.connected:
+            state.recommendation_state = "DATA_UNAVAILABLE"
+            state.recommendation_candidates = 0
+            write_recommendation_unavailable(
+                recommendation_settings,
+                state=DecisionState.DATA_STALE.value,
+                reason=state.last_stream_event or "DISCONNECTED",
+            )
+            return
+        cache = {name: observation.snapshot for name, observation in latest_snapshots.items()}
+        subscribed_specs = {
+            name: spine.specs[name]
+            for name in state.selected_instruments
+            if name in spine.specs
+        }
+        discovery = prefilter_refresh_candidates(
+            subscribed_specs, cache, now_utc=now_utc, policy=prefilter_policy
+        )
+        refresh_names, rotation_count = build_refresh_set(
+            discovery.proxy_valid,
+            discovery.probe_pool,
+            limit=settings.refresh_limit,
+            probe_offset=probe_offset,
+        )
+        probe_offset += max(1, rotation_count)
+        diagnostics = {
+            "prefilter_policy_version": prefilter_policy.version,
+            "decision_universe_count": len(discovery.decision_universe),
+            "cache_instrument_count": len(cache),
+            "proxy_valid_count": len(discovery.proxy_valid),
+            "rotation_probe_count": rotation_count,
+            "refresh_set_count": len(refresh_names),
+        }
+
+        def record_unavailable(reason: str, decision_state: DecisionState) -> None:
+            diagnostics["reason"] = reason
+            state.recommendation_state = reason
+            state.recommendation_candidates = 0
+            state.coherent_input_count = 0
+            state.last_refresh_reason = reason
+            state.last_refresh_diagnostics = dict(diagnostics)
+            write_recommendation_unavailable(
+                recommendation_settings,
+                state=decision_state.value,
+                reason=reason,
+                diagnostics=diagnostics,
+            )
+
+        if len(refresh_names) < recommendation_settings.min_cohort_size:
+            record_unavailable(REASON_CACHE_ONLY, DecisionState.DATA_ONLY)
+            return
+        if rest_client.base_url != rest_base_url_for_websocket(settings.websocket_url):
+            record_unavailable(REASON_ENVIRONMENT_MISMATCH, DecisionState.DATA_ONLY)
+            return
+        state.refresh_requests += len(refresh_names)
+        refresh_started_monotonic = time.monotonic()
+        try:
+            refreshed, errors = await refresh_instrument_batch(
+                rest_client,
+                spine,
+                refresh_names,
+                max_concurrency=settings.refresh_max_concurrency,
+                budget_seconds=settings.refresh_cycle_budget_seconds,
+            )
+        except TimeoutError:
+            record_unavailable(REASON_REFRESH_TIMEOUT, DecisionState.DATA_ONLY)
+            return
+        diagnostics["refresh_duration_seconds"] = round(
+            time.monotonic() - refresh_started_monotonic, 3
+        )
+        state.refresh_successes += len(refreshed)
+        state.refresh_writes += len(refreshed)
+        diagnostics["refresh_success_count"] = len(refreshed)
+        if errors:
+            diagnostics["refresh_errors"] = errors[:10]
+            record_unavailable(REASON_REFRESH_FAILED, DecisionState.DATA_ONLY)
+            return
+        evaluation_as_of_utc = datetime.now(UTC)
+        coherent, rejected = select_coherent_snapshots_with_diagnostics(
+            tuple(refreshed.values()),
+            as_of_utc=evaluation_as_of_utc,
             max_snapshot_skew_ms=app_config.market_data.max_snapshot_skew_ms,
             max_age_seconds=float(app_config.market_data.ticker_max_age_seconds),
         )
-        now_ms = int(now_utc.timestamp() * 1000)
-        milliseconds_per_day = 24 * 60 * 60 * 1000
-        decision_fresh = tuple(
-            snapshot
-            for snapshot in fresh
-            if (spec := spine.specs.get(snapshot.instrument_name)) is not None
-            and spec.option_type is OptionType.CALL
-            and float(app_config.universe.min_dte_days)
-            <= (spec.expiration_timestamp_ms - now_ms) / milliseconds_per_day
-            <= float(app_config.universe.max_dte_days)
-        )
-        if len(decision_fresh) < recommendation_settings.min_cohort_size:
-            state.recommendation_state = "INSUFFICIENT_COHERENT_INPUTS"
+        for code, count in rejected.items():
+            if count:
+                state.rejected_counts[code] = state.rejected_counts.get(code, 0) + count
+        diagnostics["coherent_input_count"] = len(coherent)
+        diagnostics["rejected_counts"] = rejected
+        state.coherent_input_count = len(coherent)
+        if len(coherent) < recommendation_settings.min_cohort_size:
+            if not coherent and rejected.get(REASON_SNAPSHOT_SKEW, 0):
+                reason = REASON_SNAPSHOT_SKEW
+                decision_state = DecisionState.DATA_ONLY
+            elif not coherent and rejected.get(REASON_SNAPSHOT_STALE, 0):
+                reason = REASON_SNAPSHOT_STALE
+                decision_state = DecisionState.DATA_STALE
+            else:
+                reason = REASON_COHORT_SAMPLE_BELOW_POLICY
+                decision_state = DecisionState.DATA_ONLY
+            record_unavailable(reason, decision_state)
             return
         option_types = {name: spec.option_type for name, spec in spine.specs.items()}
         try:
             result = evaluate_live_recommendations(
-                decision_fresh,
+                coherent,
                 option_types,
                 config=app_config,
                 repository=repository,
                 settings=recommendation_settings,
-                as_of_utc=now_utc,
+                as_of_utc=evaluation_as_of_utc,
             )
         except Exception as exc:
-            last_recommendation_monotonic = now_monotonic
             state.recommendation_state = "FAILED_INTERNAL"
             state.recommendation_candidates = 0
             save_system_event("RECOMMENDATION_FAILED", {"error": str(exc)}, "ERROR")
@@ -461,15 +688,16 @@ async def run_collector(
             )
             LOGGER.exception("live recommendation failed")
             return
-        last_recommendation_monotonic = now_monotonic
         state.recommendation_runs += 1
         state.recommendation_candidates = result.candidate_count
         state.recommendation_state = str(result.payload["decision_state"])
-        state.last_recommendation_at_utc = now_utc
+        state.last_recommendation_at_utc = evaluation_as_of_utc
+        state.last_refresh_reason = None
+        state.last_refresh_diagnostics = dict(diagnostics)
         if not recommendation_settings.feishu_enabled or not result.notification_text:
             return
         if not alert_delivery_due(
-            now_monotonic=now_monotonic,
+            now_monotonic=time.monotonic(),
             last_alert_monotonic=last_alert_monotonic,
             minimum_interval_seconds=recommendation_settings.minimum_alert_interval_seconds,
             reminder_seconds=recommendation_settings.reminder_seconds,
@@ -484,7 +712,7 @@ async def run_collector(
             save_system_event("FEISHU_ALERT_FAILED", {"error": str(exc)}, "ERROR")
             LOGGER.warning("Feishu alert failed: %s", exc)
         else:
-            last_alert_monotonic = now_monotonic
+            last_alert_monotonic = time.monotonic()
             last_alert_fingerprint = result.top_fingerprint
             state.alerts_sent += 1
             state.last_alert_at_utc = now_utc
@@ -503,27 +731,27 @@ async def run_collector(
                 instrument_name = (
                     data.get("instrument_name") if isinstance(data, dict) else None
                 )
-                now_monotonic = time.monotonic()
-                if (
-                    isinstance(instrument_name, str)
-                    and not ticker_persistence_due(
-                        instrument_name,
-                        now_monotonic=now_monotonic,
-                        last_persisted=last_ticker_persisted,
-                        interval_seconds=settings.ticker_persist_interval_seconds,
-                    )
-                ):
-                    return
-                snapshot = spine.ingest_ticker(
+                # Every legal ticker updates the in-memory discovery cache first;
+                # persistence stays independently sampled per instrument.
+                observation = spine.observe_ticker(
                     message,
                     transport=SourceTransport.WEBSOCKET_SUBSCRIPTION,
                     channel=channel,
                 )
-                if isinstance(instrument_name, str):
-                    last_ticker_persisted[instrument_name] = now_monotonic
-                    latest_snapshots[instrument_name] = snapshot
+                if not isinstance(instrument_name, str):
+                    return
+                latest_snapshots[instrument_name] = observation
+                now_monotonic = time.monotonic()
+                if not ticker_persistence_due(
+                    instrument_name,
+                    now_monotonic=now_monotonic,
+                    last_persisted=last_ticker_persisted,
+                    interval_seconds=settings.ticker_persist_interval_seconds,
+                ):
+                    return
+                spine.persist_observed_ticker(observation)
+                last_ticker_persisted[instrument_name] = now_monotonic
                 state.ticker_messages_persisted += 1
-                await maybe_recommend(now_monotonic)
             elif channel.startswith("book."):
                 state.book_messages += 1
                 instrument_name = channel.split(".", 2)[1]
@@ -552,7 +780,13 @@ async def run_collector(
             if channel == "instrument.state.option.BTC":
                 refresh_event.set()
 
-    rest_client = DeribitPublicRestClient()
+    rest_client = rest_client or DeribitPublicRestClient(
+        rest_base_url_for_websocket(settings.websocket_url),
+        config=RateLimitConfig(
+            requests_per_second=settings.refresh_requests_per_second,
+            timeout_seconds=settings.refresh_timeout_seconds,
+        ),
+    )
 
     async def refresh_catalog() -> bool:
         response = await asyncio.to_thread(rest_client.get_instruments, "BTC", False)
@@ -581,6 +815,13 @@ async def run_collector(
         )
         state.selected_instruments = selected
         state.selected_book_instruments = books
+        state.subscription_split = subscription_split_counts(
+            spine.specs,
+            selected,
+            now=datetime.now(UTC),
+            min_dte_days=app_config.universe.min_dte_days,
+            max_dte_days=app_config.universe.max_dte_days,
+        )
         return changed
 
     async def catalog_loop() -> None:
@@ -626,6 +867,18 @@ async def run_collector(
                 state.last_error = f"catalog refresh failed: {exc}"
                 save_system_event("CATALOG_REFRESH_FAILED", {"error": str(exc)}, "ERROR")
                 LOGGER.exception("catalog refresh failed")
+
+    async def recommendation_loop() -> None:
+        """Independent recommendation cadence; never depends on a ticker callback."""
+        while not stop_event.is_set():
+            try:
+                await asyncio.wait_for(
+                    stop_event.wait(), timeout=recommendation_settings.interval_seconds
+                )
+            except TimeoutError:
+                await run_recommendation_cycle()
+                continue
+            return
 
     async def maintenance_loop() -> None:
         while not stop_event.is_set():
@@ -684,6 +937,8 @@ async def run_collector(
             "seconds_since_message": stream.seconds_since_message if stream is not None else None,
             "selected_instrument_count": len(state.selected_instruments),
             "selected_book_instrument_count": len(state.selected_book_instruments),
+            "subscription_split": dict(state.subscription_split),
+            "cache_instrument_count": len(latest_snapshots),
             "message_counts": {
                 "ticker_received": state.ticker_messages,
                 "ticker_persisted": state.ticker_messages_persisted,
@@ -712,6 +967,21 @@ async def run_collector(
                     recommendation_settings.minimum_alert_interval_seconds
                 ),
                 "reminder_seconds": recommendation_settings.reminder_seconds,
+                "refresh": {
+                    "prefilter_policy_version": prefilter_policy.version,
+                    "limit": settings.refresh_limit,
+                    "requests_per_second": settings.refresh_requests_per_second,
+                    "request_timeout_seconds": settings.refresh_timeout_seconds,
+                    "cycle_budget_seconds": settings.refresh_cycle_budget_seconds,
+                    "max_concurrency": settings.refresh_max_concurrency,
+                    "requests_total": state.refresh_requests,
+                    "successes_total": state.refresh_successes,
+                    "writes_total": state.refresh_writes,
+                    "coherent_input_count": state.coherent_input_count,
+                    "rejected_counts": dict(state.rejected_counts),
+                    "last_reason": state.last_refresh_reason,
+                    "last_diagnostics": dict(state.last_refresh_diagnostics),
+                },
                 "quality_policy": {
                     "min_dte_days": str(app_config.universe.min_dte_days),
                     "max_dte_days": str(app_config.universe.max_dte_days),
@@ -761,7 +1031,8 @@ async def run_collector(
             for name in state.selected_book_instruments
         }
         stream = ReconnectingTickerStream(
-            lambda: connect_public_websocket(settings.websocket_url),
+            websocket_factory
+            or (lambda: connect_public_websocket(settings.websocket_url)),
             on_message,
             on_system_event,
             heartbeat_timeout_seconds=float(app_config.market_data.heartbeat_timeout_seconds),
@@ -797,6 +1068,7 @@ async def run_collector(
         tasks = [
             asyncio.create_task(stream.run(), name="market-stream"),
             asyncio.create_task(catalog_loop(), name="catalog-refresh"),
+            asyncio.create_task(recommendation_loop(), name="recommendation"),
             asyncio.create_task(maintenance_loop(), name="retention"),
             asyncio.create_task(status_loop(), name="status"),
         ]

@@ -90,7 +90,8 @@ atomic health-status updates.
 The default `scanner-lite` profile is intentionally low-volume: 60 aggregated ticker
 subscriptions, at most one persisted ticker per instrument every 60 seconds, and no
 order-book subscription. Best Bid/Ask, sizes, IV, Greeks, volume, and open interest from
-ticker messages remain available as scanner inputs.
+ticker messages remain available as scanner inputs. Every received ticker also updates
+an in-memory discovery cache immediately; only database persistence is sampled.
 
 ```bash
 export BTC_OPTION_SCANNER_CONFIG="$PWD/config.yaml"
@@ -134,11 +135,19 @@ The collector does not load `.env` automatically.
 The CLI and dashboard consume an immutable, precomputed presentation snapshot. They do
 not query Deribit or recompute core financial logic.
 
-The daemon runs the existing rule scanner on coherent, fresh WebSocket snapshots and
-atomically writes `runtime/latest-recommendation.json` by default. The file contains the
-top manual-review candidates, executable Ask, quote size, Delta, DTE, spread, entry DCE,
-reasons, risks, and complete snapshot/metric/run IDs. If the coherent cohort is too small,
-the status fails closed instead of sending a candidate. Nothing places an order.
+The daemon runs the existing rule scanner on batches it actively refreshes through the
+whitelisted `public/ticker` REST endpoint (same Deribit environment as the configured
+WebSocket) and atomically writes `runtime/latest-recommendation.json` by default. A
+versioned, deliberately wider discovery prefilter over the in-memory cache chooses a
+bounded refresh set each recommendation interval, with deterministic rotation probes so
+quiet or temporarily quote-less core contracts are still re-probed. Only same-cycle
+responses inside the configured 2-second exchange-time skew window are scanned; the raw
+response, normalized snapshot, metric snapshot and scanner run are persisted first and
+the candidate file references those exact IDs. When the batch is stale, skewed,
+refresh-failed, timed out, or below the cohort minimum, the previous candidate file is
+atomically replaced with an empty fail-closed state (`CACHE_ONLY`, `REFRESH_FAILED`,
+`REFRESH_TIMEOUT`, `SNAPSHOT_SKEW`, `SNAPSHOT_STALE`, `COHORT_SAMPLE_BELOW_POLICY`).
+Nothing places an order.
 
 The live alert gate defaults to the blueprint's medium/long-dated ITM hypothesis:
 a rolling `120–240` DTE interval, absolute Delta `0.80–0.90`, relative spread at most
@@ -160,7 +169,11 @@ Alerts are plain text. A hard 30-minute minimum interval applies even when the r
 changes; an unchanged set is repeated only after six hours. Only approved Feishu/Lark
 HTTPS bot-hook hosts are accepted. An alert failure is non-fatal and appears in collector
 status. Configure these with `BTC_OPTION_ALERT_MIN_INTERVAL_SECONDS` and
-`BTC_OPTION_ALERT_REMINDER_SECONDS`.
+`BTC_OPTION_ALERT_REMINDER_SECONDS`. The refresh cadence is configured with
+`BTC_OPTION_REFRESH_LIMIT`, `BTC_OPTION_REFRESH_REQUESTS_PER_SECOND`,
+`BTC_OPTION_REFRESH_TIMEOUT_SECONDS`, `BTC_OPTION_REFRESH_CYCLE_BUDGET_SECONDS`, and
+`BTC_OPTION_REFRESH_MAX_CONCURRENCY`; its activity and write volume are observable under
+`recommendation.refresh` in the collector status.
 Telegram and QQ/OneBot are not included.
 
 Feishu's WebSocket long connection is for an enterprise app to receive events and
@@ -169,11 +182,13 @@ commands are added later, implement that event-receiving process separately from
 read-only market collector.
 
 For capacity planning, the default 60-symbol/60-second profile is expected to be roughly
-**0.5–1.5 GiB/day** when all symbols update and live metric/run lineage is retained. This is
-an engineering range, not a quota: use the status field
-`estimated_database_growth_bytes_per_day` after several hours on the target host. An exact
-instrument list or longer persistence interval reduces it linearly. Raw books can still
-reach tens of GiB/day and remain opt-in.
+**0.5–1.5 GiB/day** when all symbols update and live metric/run lineage is retained; the
+bounded per-minute active refresh adds at most `BTC_OPTION_REFRESH_LIMIT` persisted
+raw/snapshot/metric rows plus one scanner run per cycle, observable under
+`recommendation.refresh.writes_total`. This is an engineering range, not a quota: use the
+status field `estimated_database_growth_bytes_per_day` after several hours on the target
+host. An exact instrument list or longer persistence interval reduces it linearly. Raw
+books can still reach tens of GiB/day and remain opt-in.
 
 Keep the live SQLite database and its WAL on a local block filesystem such as ext4/XFS.
 Cloud block volumes such as EBS or Persistent Disk are suitable. Do not put the active WAL

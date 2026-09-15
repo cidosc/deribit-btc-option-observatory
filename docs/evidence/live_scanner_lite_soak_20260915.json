@@ -1,0 +1,5915 @@
+{
+  "actual_duration_seconds": 791.4,
+  "cycles": [
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 70.1,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 3263
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 130.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 6614
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 190.3,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 9546
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 250.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 292,
+      "ticker_received": 12466
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 315.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 16019
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 375.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 19390
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 435.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 22550
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 495.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 25111
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 560.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 28547
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 621.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 31711
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 681.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 33895
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 741.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 36768
+    }
+  ],
+  "cycles_completed_total": 12,
+  "database_counts_final": {
+    "derived_entities": 149,
+    "instruments": 896,
+    "market_snapshots": 924,
+    "raw_market_events": 1820,
+    "system_events": 1
+  },
+  "database_growth_bytes_total": 13594224,
+  "database_size_bytes_final": 13594224,
+  "disconnect_events": 0,
+  "environment": "mainnet",
+  "estimated_growth_bytes_per_day": 761170397,
+  "exit_code": 0,
+  "fatal_error": null,
+  "final_eligible_candidates": 0,
+  "final_recommendation_state": "DATA_UNAVAILABLE",
+  "finished_at_utc": "2026-09-15T12:05:11.780650+00:00",
+  "network_access": "required",
+  "profile": "scanner-lite",
+  "public_only": true,
+  "requested_duration_seconds": 780.0,
+  "rest_base_url_from_websocket": "https://www.deribit.com/api/v2",
+  "schema": "scanner-lite-steady-soak-v1",
+  "started_at_utc": "2026-09-15T11:52:00.376245+00:00",
+  "status": "PASS",
+  "steady_state_cycle_count": 12,
+  "steady_state_eligible_cycle_count": 4,
+  "timeline": [
+    {
+      "cache_instrument_count": 0,
+      "connected": false,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 5.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "STARTING",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 0,
+      "ticker_received": 0
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 10.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 300
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 15.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 549
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 20.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 737
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 25.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 1024
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 30.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 1277
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 35.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 1402
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 40.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 1643
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 45.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 1943
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 50.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 2243
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 55.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "warmup",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 2543
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 60.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 0,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 2843
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 6884904,
+      "elapsed_seconds": 65.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {},
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 0,
+      "recommendation_state": "WAITING_FOR_COHERENT_INPUTS",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 0,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 60,
+      "ticker_received": 3083
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 70.1,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 3263
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 75.1,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 3503
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 80.1,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 3803
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 85.1,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 4047
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 90.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 4343
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 95.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 4643
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 100.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 4943
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 105.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 5243
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 110.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 5543
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 115.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 5783
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 120.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 6025
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 7523880,
+      "elapsed_seconds": 125.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.307,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 1,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 12,
+      "refresh_successes_total": 12,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 120,
+      "ticker_received": 6325
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 130.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 6614
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 135.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 6865
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 140.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 7061
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 145.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 7320
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 150.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 7620
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 155.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 7800
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 160.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 8092
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 165.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 8341
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 170.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 8634
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 175.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 8874
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 180.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 9114
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8076840,
+      "elapsed_seconds": 185.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.173,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 2,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 24,
+      "refresh_successes_total": 24,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 180,
+      "ticker_received": 9406
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 190.3,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 9546
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 195.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 9837
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 200.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 10069
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 205.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 10313
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 210.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 10553
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 215.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 10735
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 220.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 10975
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 225.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 11095
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 230.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 11335
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 235.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 11635
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 240.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 11894
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 8601128,
+      "elapsed_seconds": 245.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 5,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.244,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 7,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 3,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 36,
+      "refresh_successes_total": 36,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 240,
+      "ticker_received": 12175
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 250.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 292,
+      "ticker_received": 12466
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 255.4,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 12723
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 260.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 13023
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 265.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 13323
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 270.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 13623
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 275.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 13923
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 280.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 14223
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 285.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 14464
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 290.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 14649
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 295.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 14900
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 300.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 15187
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 305.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 48,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 300,
+      "ticker_received": 15419
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9166376,
+      "elapsed_seconds": 310.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.177,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 4,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 48,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 309,
+      "ticker_received": 15719
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 315.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 16019
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 320.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 16310
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 325.5,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 16610
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 330.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 16907
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 335.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 17163
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 340.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 17454
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 345.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 17725
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 350.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 17994
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 355.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 18294
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 360.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 18543
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 365.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 360,
+      "ticker_received": 18843
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 9707096,
+      "elapsed_seconds": 370.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.585,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 5,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 60,
+      "refresh_successes_total": 60,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 369,
+      "ticker_received": 19143
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 375.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 19390
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 380.6,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 19690
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 385.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 19990
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 390.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 20221
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 395.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 20463
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 400.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 20630
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 405.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 20930
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 410.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 21170
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 415.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 21410
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 420.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 21710
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 425.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 420,
+      "ticker_received": 21950
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10268248,
+      "elapsed_seconds": 430.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.182,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 6,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 72,
+      "refresh_successes_total": 72,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 429,
+      "ticker_received": 22250
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 435.7,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 22550
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 440.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 22661
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 445.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 22792
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 450.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23083
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 455.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23263
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 460.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23439
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 465.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23620
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 470.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23800
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 475.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 23980
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 480.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 24280
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 485.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 480,
+      "ticker_received": 24511
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 10837592,
+      "elapsed_seconds": 490.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.595,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 7,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 84,
+      "refresh_successes_total": 84,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 489,
+      "ticker_received": 24811
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 495.8,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 25111
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 500.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 25411
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 505.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 25711
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 510.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 26011
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 515.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 26191
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 520.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 26491
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 525.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 26681
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 530.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 26981
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 535.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 27223
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 540.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 27463
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 545.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 540,
+      "ticker_received": 27763
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 550.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 96,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 549,
+      "ticker_received": 28045
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11406936,
+      "elapsed_seconds": 555.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.393,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 8,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 96,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 28307
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 560.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 28547
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 565.9,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 28847
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 571.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 29147
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 576.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 29366
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 581.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 29666
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 586.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 29966
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 591.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 30266
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 596.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 30448
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 601.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 30687
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 606.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 30937
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 611.0,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 600,
+      "ticker_received": 31171
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 11951704,
+      "elapsed_seconds": 616.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.436,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 9,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 108,
+      "refresh_successes_total": 108,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 31471
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 621.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 31711
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 626.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 31951
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 631.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 32071
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 636.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 32252
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 641.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 32500
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 646.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 32800
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 651.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 33031
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 656.1,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 33271
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 661.2,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 33289
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 666.2,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 660,
+      "ticker_received": 33520
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 671.2,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 661,
+      "ticker_received": 33710
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 12484184,
+      "elapsed_seconds": 676.2,
+      "eligible_candidates": 0,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 5,
+        "refresh_duration_seconds": 1.206,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 7
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 10,
+      "recommendation_state": "DATA_ONLY",
+      "refresh_requests_total": 120,
+      "refresh_successes_total": 120,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 684,
+      "ticker_received": 33735
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 681.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 33895
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 686.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 34186
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 691.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 34315
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 696.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 34555
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 701.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 34846
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 706.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 35077
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 711.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 35266
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 716.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 35508
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 721.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 35808
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 726.2,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 36043
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 731.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 720,
+      "ticker_received": 36288
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13053552,
+      "elapsed_seconds": 736.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.798,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 11,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 132,
+      "refresh_successes_total": 132,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 725,
+      "ticker_received": 36588
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "cycle_completed": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 741.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 36768
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 746.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 37068
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 751.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 37368
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 756.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 37668
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 761.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 37968
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 766.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 38268
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 771.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 38568
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 776.3,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 38808
+    },
+    {
+      "cache_instrument_count": 60,
+      "connected": true,
+      "database_size_bytes": 13594224,
+      "elapsed_seconds": 781.4,
+      "eligible_candidates": 5,
+      "last_refresh_diagnostics": {
+        "cache_instrument_count": 60,
+        "coherent_input_count": 12,
+        "decision_universe_count": 51,
+        "prefilter_policy_version": "live-refresh-prefilter@1.0.0:dte=120-240:delta=0.75-0.95:spread<=0.075:oi>=1.0",
+        "proxy_valid_count": 10,
+        "refresh_duration_seconds": 1.479,
+        "refresh_set_count": 12,
+        "refresh_success_count": 12,
+        "rejected_counts": {
+          "EXCHANGE_TIMESTAMP_ABSENT": 0,
+          "SNAPSHOT_SKEW": 0,
+          "SNAPSHOT_STALE": 0
+        },
+        "rotation_probe_count": 2
+      },
+      "last_refresh_reason": null,
+      "phase": "steady_state",
+      "recommendation_runs": 12,
+      "recommendation_state": "ELIGIBLE",
+      "refresh_requests_total": 144,
+      "refresh_successes_total": 144,
+      "selected_instrument_count": 60,
+      "subscription_split": {
+        "buffer": 9,
+        "core": 51
+      },
+      "ticker_persisted": 780,
+      "ticker_received": 39052
+    }
+  ],
+  "warmup_cycle_count": 0,
+  "warmup_seconds": 60.0,
+  "websocket_url": "wss://www.deribit.com/ws/api/v2"
+}

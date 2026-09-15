@@ -7,7 +7,7 @@ import time
 from dataclasses import dataclass
 from threading import Lock
 from typing import Any
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from urllib.request import Request, urlopen
 
 PUBLIC_METHODS = frozenset(
@@ -19,6 +19,42 @@ PUBLIC_METHODS = frozenset(
         "public/get_index_price",
     }
 )
+
+APPROVED_REST_HOSTS = frozenset({"www.deribit.com", "test.deribit.com"})
+
+WEBSOCKET_TO_REST_BASE_URL = {
+    "wss://www.deribit.com/ws/api/v2": "https://www.deribit.com/api/v2",
+    "wss://test.deribit.com/ws/api/v2": "https://test.deribit.com/api/v2",
+}
+
+
+def rest_base_url_for_websocket(websocket_url: str) -> str:
+    """Map an approved WebSocket endpoint to the matching public REST environment.
+
+    The HTTPS ticker refresh endpoint must always sit in the same environment as
+    the configured WebSocket, so a testnet stream can never be silently paired
+    with Mainnet REST requests.
+    """
+    try:
+        return WEBSOCKET_TO_REST_BASE_URL[websocket_url]
+    except KeyError as exc:
+        raise ValueError(
+            f"WebSocket URL {websocket_url!r} is not an approved Deribit endpoint"
+        ) from exc
+
+
+def _validated_base_url(base_url: str) -> str:
+    parsed = urlparse(base_url)
+    if (
+        parsed.scheme != "https"
+        or parsed.hostname not in APPROVED_REST_HOSTS
+        or parsed.path.rstrip("/") != "/api/v2"
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+    ):
+        raise ValueError("REST base URL must be an approved Deribit public HTTPS endpoint")
+    return base_url.rstrip("/")
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,7 +75,7 @@ class DeribitPublicRestClient:
         base_url: str = "https://www.deribit.com/api/v2",
         config: RateLimitConfig | None = None,
     ) -> None:
-        self.base_url = base_url.rstrip("/")
+        self.base_url = _validated_base_url(base_url)
         self.config = config or RateLimitConfig()
         self._lock = Lock()
         self._next_request_at = 0.0

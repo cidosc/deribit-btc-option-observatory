@@ -1,0 +1,65 @@
+{
+  "as_of_utc": {
+    "__datetime__": "2026-09-15T12:04:16.932051+00:00"
+  },
+  "decision_state": "ELIGIBLE",
+  "market_snapshot_ids": [
+    "snapshot:7ff7e6c20656c028e93a7e78180fffcbf1634b165c4f26c4f8d9afe973de5e19",
+    "snapshot:0747ab358e6fc5f651c1ec745b513380127ab80235092698da9a88bd30486e97",
+    "snapshot:cdaeaa72ac852c5c58f8470699c091c5cb6e2e2079f3a78963962c0b494505d5",
+    "snapshot:d9e862cededa2a1443236092fbb7537bab100491e142ca9ad2e3b5c4507de9bc",
+    "snapshot:dae457ed63abeff8d2af5422363f5bf3ef10ffe67801874f0ffdad8e9918d69a",
+    "snapshot:9db60d4cf4ffdb4a95f9162f99f1640f326972a8e2d109d33f3e6f3beb70ab26",
+    "snapshot:7206356f8c36d59feef626cf7b055765ab40950c5c317db92e72867e0139073c",
+    "snapshot:a6217eb81390992ad14828a9c594fc98db66edaa3f3a5bf500a5dcd26d202624",
+    "snapshot:3cca3eed3072dc518b3a3bd1db6eae3fa6229f2792f751adece77f67a0495274",
+    "snapshot:cf07230025ae1bcfacc4e339362ce04971d327b2e795e2dabd7117eb59f1565b",
+    "snapshot:147ec1354b4c5d540b592e3b0bb796c2ee5bf39646a320671546c768b6cdf04a",
+    "snapshot:5651ac46f91551c083c5bca4a0bd73ca31f329064db84cd4315f0e693eed150f"
+  ],
+  "metric_resolutions": {
+    "quant-metrics@0.1.0-experimental-4e8acada553c285226bb73cf": true,
+    "quant-metrics@0.1.0-experimental-55d3aefdfa15f09e2c40a600": true,
+    "quant-metrics@0.1.0-experimental-5a049236d109e6cc25dc9e22": true,
+    "quant-metrics@0.1.0-experimental-610c127f51f33259fc1bc711": true,
+    "quant-metrics@0.1.0-experimental-6e5a9ef4dcc1c9fe906a2aa2": true,
+    "quant-metrics@0.1.0-experimental-7be64fd324397a38c3d0b599": true,
+    "quant-metrics@0.1.0-experimental-8a7766470a61bed2dabdf753": true,
+    "quant-metrics@0.1.0-experimental-a67b2ccd582809202cd51599": true,
+    "quant-metrics@0.1.0-experimental-b2f0db7c08226436d31c9ca7": true,
+    "quant-metrics@0.1.0-experimental-b38d173baa632d79f22b7db7": true,
+    "quant-metrics@0.1.0-experimental-b5757908bbc93dd7f9b74a50": true,
+    "quant-metrics@0.1.0-experimental-ba0a88827bb08a03f56548c8": true
+  },
+  "metric_snapshot_ids": [
+    "quant-metrics@0.1.0-experimental-6e5a9ef4dcc1c9fe906a2aa2",
+    "quant-metrics@0.1.0-experimental-5a049236d109e6cc25dc9e22",
+    "quant-metrics@0.1.0-experimental-b38d173baa632d79f22b7db7",
+    "quant-metrics@0.1.0-experimental-8a7766470a61bed2dabdf753",
+    "quant-metrics@0.1.0-experimental-ba0a88827bb08a03f56548c8",
+    "quant-metrics@0.1.0-experimental-7be64fd324397a38c3d0b599",
+    "quant-metrics@0.1.0-experimental-55d3aefdfa15f09e2c40a600",
+    "quant-metrics@0.1.0-experimental-610c127f51f33259fc1bc711",
+    "quant-metrics@0.1.0-experimental-b5757908bbc93dd7f9b74a50",
+    "quant-metrics@0.1.0-experimental-b2f0db7c08226436d31c9ca7",
+    "quant-metrics@0.1.0-experimental-4e8acada553c285226bb73cf",
+    "quant-metrics@0.1.0-experimental-a67b2ccd582809202cd51599"
+  ],
+  "raw_resolutions": {
+    "snapshot:0747ab358e6fc5f651c1ec745b513380127ab80235092698da9a88bd30486e97": true,
+    "snapshot:147ec1354b4c5d540b592e3b0bb796c2ee5bf39646a320671546c768b6cdf04a": true,
+    "snapshot:3cca3eed3072dc518b3a3bd1db6eae3fa6229f2792f751adece77f67a0495274": true,
+    "snapshot:5651ac46f91551c083c5bca4a0bd73ca31f329064db84cd4315f0e693eed150f": true,
+    "snapshot:7206356f8c36d59feef626cf7b055765ab40950c5c317db92e72867e0139073c": true,
+    "snapshot:7ff7e6c20656c028e93a7e78180fffcbf1634b165c4f26c4f8d9afe973de5e19": true,
+    "snapshot:9db60d4cf4ffdb4a95f9162f99f1640f326972a8e2d109d33f3e6f3beb70ab26": true,
+    "snapshot:a6217eb81390992ad14828a9c594fc98db66edaa3f3a5bf500a5dcd26d202624": true,
+    "snapshot:cdaeaa72ac852c5c58f8470699c091c5cb6e2e2079f3a78963962c0b494505d5": true,
+    "snapshot:cf07230025ae1bcfacc4e339362ce04971d327b2e795e2dabd7117eb59f1565b": true,
+    "snapshot:d9e862cededa2a1443236092fbb7537bab100491e142ca9ad2e3b5c4507de9bc": true,
+    "snapshot:dae457ed63abeff8d2af5422363f5bf3ef10ffe67801874f0ffdad8e9918d69a": true
+  },
+  "scanner_run_id": "scanner:d23717dc379dd0ea94af6807af5a9f6e62cf3d0f921b64986cdbbceec093087e",
+  "schema": "live-lineage-verification-v1",
+  "status": "PASS"
+}

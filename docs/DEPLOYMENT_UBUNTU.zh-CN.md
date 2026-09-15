@@ -109,7 +109,13 @@ ticker 持久化降采样。只有进行限时证据调查时才启用 `evidence
 `BTC_OPTION_MAX_BOOK_INSTRUMENTS`；延长运行前先观察
 `estimated_database_growth_bytes_per_day`。
 
-实时候选默认写入 `/run/btc-option-observatory/latest-recommendation.json`。需要通过飞书群
+实时候选默认写入 `/run/btc-option-observatory/latest-recommendation.json`。每个推荐周期会
+通过与所配置 WebSocket 相同 Deribit 环境的公开 `public/ticker` REST 接口主动刷新一个有上
+限的核心合约集合；刷新参数（`BTC_OPTION_REFRESH_LIMIT`、
+`BTC_OPTION_REFRESH_REQUESTS_PER_SECOND`、`BTC_OPTION_REFRESH_TIMEOUT_SECONDS`、
+`BTC_OPTION_REFRESH_CYCLE_BUDGET_SECONDS`、`BTC_OPTION_REFRESH_MAX_CONCURRENCY`）与写入量
+在状态文件的 `recommendation.refresh` 下可观察。当一轮过旧、跨窗、超时、失败或低于 cohort
+下限时，旧候选文件会被原子替换为空候选失败关闭状态。需要通过飞书群
 自定义机器人发送时，在受保护的环境文件中设置 `BTC_OPTION_FEISHU_WEBHOOK_URL`；若机器人
 启用了签名校验，再设置 `BTC_OPTION_FEISHU_SIGNING_SECRET`，然后重启服务。这些值只保存在
 root 所有、权限为 `0600` 的环境文件中，不会写入候选 JSON 或日志；Webhook URL 本身也应

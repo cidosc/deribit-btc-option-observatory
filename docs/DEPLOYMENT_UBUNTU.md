@@ -109,6 +109,14 @@ nonzero `BTC_OPTION_MAX_BOOK_INSTRUMENTS` only for bounded investigations, then 
 `estimated_database_growth_bytes_per_day` before extending the run.
 
 Live candidates are written to `/run/btc-option-observatory/latest-recommendation.json`.
+Each recommendation cycle actively refreshes a bounded set of core instruments through the
+public `public/ticker` REST endpoint of the same Deribit environment as the configured
+WebSocket; refresh knobs (`BTC_OPTION_REFRESH_LIMIT`, `BTC_OPTION_REFRESH_REQUESTS_PER_SECOND`,
+`BTC_OPTION_REFRESH_TIMEOUT_SECONDS`, `BTC_OPTION_REFRESH_CYCLE_BUDGET_SECONDS`,
+`BTC_OPTION_REFRESH_MAX_CONCURRENCY`) and the resulting write volume are visible under
+`recommendation.refresh` in the status file. When a round is stale, skewed, timed out,
+failed, or below the cohort minimum, the previous candidate file is atomically replaced
+with an empty fail-closed state.
 To send them through a Feishu custom bot, set `BTC_OPTION_FEISHU_WEBHOOK_URL` and,
 when bot signature verification is enabled, `BTC_OPTION_FEISHU_SIGNING_SECRET` in the
 protected environment file, then restart the service. These values stay in that root-owned

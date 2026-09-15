@@ -4,6 +4,47 @@
 > Contract: `domain-contract-v1` / `domain-schema-v1`  
 > Verdict: **Accepted for the current read-only research scope and as a supervised Linux deployment candidate, with explicit data-history, lifecycle, and target-host limitations. It is not accepted as a production trading system.**
 
+## 0. P12 addendum — silent-market live recommendation coherence (2026-09-15)
+
+After this report, the P12 work package fixed the live-path acceptance blocker
+documented in `INTEGRATION_FINDINGS.md` F-005: scanner-lite recommendations
+starved to about three coherent inputs (then DATA_ONLY forever) once the initial
+subscription burst faded and per-instrument exchange timestamps scattered.
+The fix keeps every `domain-contract-v1` gate unchanged and separates three
+named cadences: in-memory receive/cache (every legal ticker), sampled per-
+instrument persistence, and an independent recommendation loop. Each cycle
+actively refreshes a bounded, versioned refresh set through whitelisted
+`public/ticker` REST of the same Deribit environment as the WebSocket, applies
+max-age and the configured 2-second skew window, persists raw → normalized →
+metric → run lineage first, and writes the candidate file only from those
+persisted IDs. Insufficient cohort, refresh failure/timeout, stale or skew
+rounds atomically replace the old candidate file with stable reason codes
+(`CACHE_ONLY`, `REFRESH_FAILED`, `REFRESH_TIMEOUT`, `SNAPSHOT_SKEW`,
+`SNAPSHOT_STALE`, `COHORT_SAMPLE_BELOW_POLICY`, `ENVIRONMENT_MISMATCH`), and
+subscription selection now prioritizes core 120–240 DTE slots before the
+collection buffer.
+
+Evidence:
+
+- Offline fixed-fixture silent steady-state regression:
+  `docs/evidence/silent_steady_regression_20260915.json` (10 cycles total,
+  including 7 classified steady-state cycles with 12 coherent inputs per cycle,
+  all ELIGIBLE, no network access).
+- Live Mainnet scanner-lite soak (13 minutes, public only, no credentials):
+  `docs/evidence/live_scanner_lite_soak_20260915.json` with warm-up and
+  steady-state phases separated and per-cycle telemetry.
+- New regression suite: `tests/test_live_refresh.py` (18 tests) plus existing
+  suites; full pytest, ruff, compileall and pip check rerun after the change.
+
+Final integration review additionally moved the ScannerRun decision clock to
+after active refresh completion, restricted discovery to the actually
+subscribed set, and made both proxy and probe allocations rotate when their
+pools exceed the refresh limit. These corrections have deterministic regression
+coverage; the 13-minute live evidence predates only these narrow review fixes.
+
+No contract change was required; this is an implementation-level fix inside the
+failing semantics, not a relaxation of them.
+
 ## 1. Gate result
 
 | Gate | Result | Acceptance evidence |
@@ -61,7 +102,7 @@ These changes are limited to observed acceptance failures and their tests/docume
 ## 4. Test and runtime evidence
 
 - Static/packaging: Ruff PASS; compileall PASS; `pip check` reports no broken requirements.
-- Full suite: **87 passed, 1 skipped**, total line coverage **80%**. The lower aggregate percentage reflects the service orchestration and new alert transport; authentication, configuration, universe selection, persistence sampling, recommendation quality/frequency gates, Feishu payload/signature validation, health, WAL/retention and fatal-scope paths have direct tests plus live daemon evidence. The skipped test is network-opt-in and was run separately.
+- Full suite after P12 final review: **105 passed, 1 skipped**, total line coverage **85%**. The remaining uncovered paths are primarily service orchestration and optional transports; authentication, configuration, universe selection, cache/persistence separation, active refresh coherence and lineage, recommendation quality/frequency gates, Feishu payload/signature validation, health, WAL/retention and fatal-scope paths have direct tests plus live daemon evidence. The skipped test is network-opt-in and was run separately.
 - Live public smoke: **1 passed in 1.54s**, no credentials and no private endpoint.
 - Fixed fixture E2E: **1 passed** with retained SQLite and presentation artifacts under `docs/evidence/e2e_runtime/`.
 - Collector soak: **PASS**, 12 requested seconds, 7/7 samples normalized, 7 actionable, 0 errors, 8 new raw events and 7 new market snapshots. See `docs/evidence/collector_soak_20260915.json` and its SQLite companion.

@@ -12,19 +12,43 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 from .config import AppConfig
 from .data import SqliteRepository
-from .domain import DecisionState, MarketSnapshot, OptionType, RunStatus, ScannerRun
+from .domain import (
+    Availability,
+    DecisionState,
+    InstrumentState,
+    MarketSnapshot,
+    OptionType,
+    RunStatus,
+    ScannerRun,
+)
 from .models.metrics import build_metric_bundle
 from .scanner import Bucket, CohortPolicy, ScanInput, ScannerPolicy, scan_candidates
 
 ALERT_SCHEMA_VERSION = "live-recommendation-v1"
 ALERT_DISCLAIMER = "研究候选，仅供人工复核；不是交易指令，程序不会下单。"
+
+# Stable fail-closed reason codes surfaced in status and the candidate file.
+REASON_CACHE_ONLY = "CACHE_ONLY"
+REASON_REFRESH_FAILED = "REFRESH_FAILED"
+REASON_REFRESH_TIMEOUT = "REFRESH_TIMEOUT"
+REASON_SNAPSHOT_SKEW = "SNAPSHOT_SKEW"
+REASON_SNAPSHOT_STALE = "SNAPSHOT_STALE"
+REASON_COHORT_SAMPLE_BELOW_POLICY = "COHORT_SAMPLE_BELOW_POLICY"
+REASON_ENVIRONMENT_MISMATCH = "ENVIRONMENT_MISMATCH"
+
+# Discovery-only prefilter bounds.  They are deliberately wider than the final
+# Delta/spread gates so refreshed candidates are never dropped before the
+# canonical scanner sees them; only the canonical policy produces candidates.
+REFRESH_PREFILTER_DELTA_MARGIN = Decimal("0.05")
+REFRESH_PREFILTER_SPREAD_MULTIPLIER = Decimal("1.5")
+_MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
 
 
 def _env_bool(environment: dict[str, str], name: str, default: bool) -> bool:
@@ -141,6 +165,53 @@ class LiveRecommendationSettings:
         return self.feishu_webhook_url is not None
 
 
+def select_coherent_snapshots_with_diagnostics(
+    snapshots: tuple[MarketSnapshot, ...],
+    *,
+    as_of_utc: datetime,
+    max_snapshot_skew_ms: int,
+    max_age_seconds: float,
+) -> tuple[tuple[MarketSnapshot, ...], dict[str, int]]:
+    """Same-window rule as ``select_coherent_snapshots`` plus rejection counts.
+
+    Adds an exchange-timestamp age gate on top of the observed-age gate, so an
+    actively refreshed response carrying an old exchange timestamp is rejected
+    as SNAPSHOT_STALE instead of silently entering a run.
+    """
+    if max_snapshot_skew_ms < 0 or max_age_seconds <= 0:
+        raise ValueError("snapshot skew and age bounds are invalid")
+    rejected: dict[str, int] = {
+        "EXCHANGE_TIMESTAMP_ABSENT": 0,
+        REASON_SNAPSHOT_SKEW: 0,
+        REASON_SNAPSHOT_STALE: 0,
+    }
+    timestamps = [
+        snapshot.source.exchange_timestamp_ms
+        for snapshot in snapshots
+        if snapshot.source.exchange_timestamp_ms is not None
+    ]
+    if not timestamps:
+        return (), rejected
+    newest = max(timestamps)
+    selected: list[MarketSnapshot] = []
+    as_of_ms = as_of_utc.timestamp() * 1000
+    for snapshot in sorted(snapshots, key=lambda item: item.instrument_name):
+        exchange_timestamp_ms = snapshot.source.exchange_timestamp_ms
+        if exchange_timestamp_ms is None:
+            rejected["EXCHANGE_TIMESTAMP_ABSENT"] += 1
+            continue
+        if newest - exchange_timestamp_ms > max_snapshot_skew_ms:
+            rejected[REASON_SNAPSHOT_SKEW] += 1
+            continue
+        exchange_age_seconds = (as_of_ms - exchange_timestamp_ms) / 1000
+        observed_age_seconds = (as_of_utc - snapshot.source.observed_at_utc).total_seconds()
+        if exchange_age_seconds > max_age_seconds or observed_age_seconds > max_age_seconds:
+            rejected[REASON_SNAPSHOT_STALE] += 1
+            continue
+        selected.append(snapshot)
+    return tuple(selected), rejected
+
+
 def build_feishu_payload(
     message: str,
     *,
@@ -252,23 +323,24 @@ def write_recommendation_unavailable(
     state: str,
     reason: str,
     generated_at_utc: datetime | None = None,
+    diagnostics: dict[str, Any] | None = None,
 ) -> None:
     """Replace any previous candidate file when live actionability is unavailable."""
     observed = generated_at_utc or datetime.now(UTC)
-    _atomic_json(
-        settings.output_path,
-        {
-            "schema_version": ALERT_SCHEMA_VERSION,
-            "generated_at_utc": observed.isoformat(),
-            "scanner_run_id": None,
-            "decision_state": state,
-            "input_count": 0,
-            "eligible_count": 0,
-            "candidates": [],
-            "unavailable_reason": reason,
-            "disclaimer": ALERT_DISCLAIMER,
-        },
-    )
+    payload = {
+        "schema_version": ALERT_SCHEMA_VERSION,
+        "generated_at_utc": observed.isoformat(),
+        "scanner_run_id": None,
+        "decision_state": state,
+        "input_count": 0,
+        "eligible_count": 0,
+        "candidates": [],
+        "unavailable_reason": reason,
+        "disclaimer": ALERT_DISCLAIMER,
+    }
+    if diagnostics is not None:
+        payload["diagnostics"] = diagnostics
+    _atomic_json(settings.output_path, payload)
 
 
 @dataclass(frozen=True, slots=True)
@@ -329,6 +401,169 @@ def select_coherent_snapshots(
             key=lambda snapshot: snapshot.instrument_name,
         )
     )
+
+
+@dataclass(frozen=True, slots=True)
+class RefreshPrefilterPolicy:
+    """Versioned, deliberately wider discovery bounds used only to pick refresh targets."""
+
+    version: str
+    min_dte_days: Decimal
+    max_dte_days: Decimal
+    min_absolute_delta: Decimal
+    max_absolute_delta: Decimal
+    max_relative_spread: Decimal
+    min_open_interest_base_btc: Decimal
+
+    def __post_init__(self) -> None:
+        if not self.version.strip():
+            raise ValueError("prefilter policy version must not be empty")
+        if self.min_dte_days < 0 or self.max_dte_days < self.min_dte_days:
+            raise ValueError("prefilter DTE bounds are invalid")
+        if self.min_absolute_delta < 0 or self.max_absolute_delta > 1:
+            raise ValueError("prefilter Delta bounds must stay within [0, 1]")
+        if not Decimal("0") < self.max_relative_spread <= Decimal("1"):
+            raise ValueError("prefilter spread bound must be in (0, 1]")
+        if self.min_open_interest_base_btc < 0:
+            raise ValueError("prefilter open interest bound must be non-negative")
+
+
+def build_refresh_prefilter_policy(
+    config: AppConfig, settings: LiveRecommendationSettings
+) -> RefreshPrefilterPolicy:
+    """Derive the versioned prefilter from the unchanged final policy gates."""
+    min_delta = max(
+        Decimal("0"), settings.min_absolute_delta - REFRESH_PREFILTER_DELTA_MARGIN
+    )
+    max_delta = min(
+        Decimal("1"), settings.max_absolute_delta + REFRESH_PREFILTER_DELTA_MARGIN
+    )
+    max_spread = min(
+        Decimal("1"), settings.max_relative_spread * REFRESH_PREFILTER_SPREAD_MULTIPLIER
+    )
+    version = (
+        "live-refresh-prefilter@1.0.0"
+        f":dte={config.universe.min_dte_days}-{config.universe.max_dte_days}"
+        f":delta={min_delta}-{max_delta}"
+        f":spread<={max_spread}"
+        f":oi>={config.scanner.min_open_interest_base_btc}"
+    )
+    return RefreshPrefilterPolicy(
+        version,
+        config.universe.min_dte_days,
+        config.universe.max_dte_days,
+        min_delta,
+        max_delta,
+        max_spread,
+        config.scanner.min_open_interest_base_btc,
+    )
+
+
+def _passes_discovery_prefilter(
+    snapshot: MarketSnapshot | None, policy: RefreshPrefilterPolicy
+) -> bool:
+    """Cheap cache-side proxy for the final policy; never produces candidates."""
+    if snapshot is None or not snapshot.actionable:
+        return False
+    ask, bid = snapshot.ask, snapshot.bid
+    for side in (ask, bid):
+        if (
+            side.price_btc_per_contract.availability is not Availability.AVAILABLE
+            or side.price_btc_per_contract.value is None
+            or side.amount_base_btc.availability is not Availability.AVAILABLE
+            or side.amount_base_btc.value is None
+        ):
+            return False
+    ask_price, bid_price = ask.price_btc_per_contract.value, bid.price_btc_per_contract.value
+    assert ask_price is not None and bid_price is not None and bid_price <= ask_price
+    mid = (ask_price + bid_price) / Decimal("2")
+    relative_spread = (ask_price - bid_price) / mid
+    if relative_spread > policy.max_relative_spread:
+        return False
+    delta = snapshot.greeks.delta_standard
+    if delta.availability is not Availability.AVAILABLE or delta.value is None:
+        return False
+    if not policy.min_absolute_delta <= abs(delta.value) <= policy.max_absolute_delta:
+        return False
+    oi = snapshot.open_interest_amount_base_btc
+    return (
+        oi.availability is Availability.AVAILABLE
+        and oi.value is not None
+        and oi.value >= policy.min_open_interest_base_btc
+    )
+
+
+@dataclass(frozen=True, slots=True)
+class RefreshPrefilterResult:
+    """Discovery output: who looks policy-valid, and the deterministic probe pool."""
+
+    decision_universe: tuple[str, ...]
+    proxy_valid: tuple[str, ...]
+    probe_pool: tuple[str, ...]
+
+
+def prefilter_refresh_candidates(
+    specs: Mapping[str, Any],
+    cache: Mapping[str, MarketSnapshot],
+    *,
+    now_utc: datetime,
+    policy: RefreshPrefilterPolicy,
+) -> RefreshPrefilterResult:
+    """Split subscribed decision-range calls into proxy-valid and probe pools.
+
+    Only the subscribed universe is considered, and the DTE range is the same
+    configured decision interval; collection-buffer instruments never enter.
+    """
+    now_ms = int(now_utc.timestamp() * 1000)
+    decision: list[str] = []
+    proxy: list[str] = []
+    probe: list[str] = []
+    for name, spec in sorted(specs.items()):
+        if spec.option_type is not OptionType.CALL or spec.state is not InstrumentState.OPEN:
+            continue
+        dte_days = Decimal(spec.expiration_timestamp_ms - now_ms) / Decimal(_MILLISECONDS_PER_DAY)
+        if not policy.min_dte_days <= dte_days <= policy.max_dte_days:
+            continue
+        decision.append(name)
+        if _passes_discovery_prefilter(cache.get(name), policy):
+            proxy.append(name)
+        else:
+            probe.append(name)
+    return RefreshPrefilterResult(tuple(decision), tuple(proxy), tuple(probe))
+
+
+def build_refresh_set(
+    proxy_valid: tuple[str, ...],
+    probe_pool: tuple[str, ...],
+    *,
+    limit: int,
+    probe_offset: int,
+) -> tuple[tuple[str, ...], int]:
+    """Select the bounded per-cycle refresh set with a deterministic rotation.
+
+    Proxy-valid instruments fill the set first; remaining slots rotate through
+    the probe pool so temporarily quote-less or boundary-outside core contracts
+    are re-probed instead of becoming a permanent blind spot.
+    """
+    if limit <= 0:
+        raise ValueError("refresh limit must be positive")
+    def rotating_slice(pool: tuple[str, ...], count: int) -> list[str]:
+        if not pool or count <= 0:
+            return []
+        return [pool[(probe_offset + index) % len(pool)] for index in range(count)]
+
+    # Keep a small rotating probe allocation even when cached proxy-valid names
+    # exceed the limit. Rotate the proxy allocation as well, otherwise the
+    # alphabetically first names could permanently monopolize every refresh.
+    reserved_probe_slots = (
+        min(len(probe_pool), max(1, limit // 6)) if probe_pool else 0
+    )
+    proxy_slots = min(len(proxy_valid), limit - reserved_probe_slots)
+    names = rotating_slice(proxy_valid, proxy_slots)
+    remaining = limit - len(names)
+    rotation = min(remaining, len(probe_pool))
+    names.extend(rotating_slice(probe_pool, rotation))
+    return tuple(names), rotation
 
 
 def evaluate_live_recommendations(
