@@ -108,6 +108,13 @@ are disabled in this profile and ticker persistence is sampled. Enable `evidence
 nonzero `BTC_OPTION_MAX_BOOK_INSTRUMENTS` only for bounded investigations, then observe
 `estimated_database_growth_bytes_per_day` before extending the run.
 
+Live candidates are written to `/run/btc-option-observatory/latest-recommendation.json`.
+To send them through a OneBot v11 forward WebSocket endpoint, set
+`BTC_OPTION_ONEBOT_WS_URL`, `BTC_OPTION_ONEBOT_TARGET_TYPE`, and
+`BTC_OPTION_ONEBOT_TARGET_ID` in the protected environment file, then restart the service.
+The optional access token stays in that root-owned `0600` file and is never written to the
+recommendation JSON or logs.
+
 The service exits with code 78 and systemd does not restart it when free disk falls below
 `BTC_OPTION_MIN_FREE_BYTES`. Increase capacity or safely archive data before restarting.
 Retention is not a backup. For a consistent online backup:
@@ -118,7 +125,12 @@ sudo -u btc-option sqlite3 /var/lib/btc-option-observatory/collector.sqlite \
   ".backup '/var/backups/btc-option-observatory/collector-$(date -u +%Y%m%dT%H%M%SZ).sqlite'"
 ```
 
-Encrypt and copy backups off-host according to your own retention policy.
+Encrypt and copy backups off-host according to your own retention policy. The active
+database, `-wal`, and `-shm` files must remain together on a local Linux block filesystem;
+a cloud VM block volume is acceptable. Consumer sync drives, rclone/FUSE, SMB/NFS shares,
+and object-storage mounts are not supported as the live SQLite path. Mount cloud storage
+only for completed backup/archive output. Never copy only the database file while the
+service is writing.
 
 ## 6. Upgrade and rollback
 

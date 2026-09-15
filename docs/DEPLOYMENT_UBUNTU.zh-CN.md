@@ -109,6 +109,11 @@ ticker 持久化降采样。只有进行限时证据调查时才启用 `evidence
 `BTC_OPTION_MAX_BOOK_INSTRUMENTS`；延长运行前先观察
 `estimated_database_growth_bytes_per_day`。
 
+实时候选默认写入 `/run/btc-option-observatory/latest-recommendation.json`。需要通过 OneBot
+v11 正向 WebSocket 发送时，在受保护的环境文件中设置 `BTC_OPTION_ONEBOT_WS_URL`、
+`BTC_OPTION_ONEBOT_TARGET_TYPE` 和 `BTC_OPTION_ONEBOT_TARGET_ID`，然后重启服务。可选
+access token 只保存在 root 所有、权限为 `0600` 的环境文件中，不会写入候选 JSON 或日志。
+
 当空闲磁盘低于 `BTC_OPTION_MIN_FREE_BYTES` 时，服务以 78 退出，并且 systemd 不会自动
 重启。扩容或安全归档后再人工启动。保留期不等于备份，在线一致性备份应使用：
 
@@ -118,7 +123,10 @@ sudo -u btc-option sqlite3 /var/lib/btc-option-observatory/collector.sqlite \
   ".backup '/var/backups/btc-option-observatory/collector-$(date -u +%Y%m%dT%H%M%SZ).sqlite'"
 ```
 
-备份应加密并复制到其他主机或对象存储。
+备份应加密并复制到其他主机或对象存储。活动数据库、`-wal` 和 `-shm` 必须一起放在 Linux
+本地块文件系统；云主机块存储可以使用。不支持把 OneDrive/Dropbox、rclone/FUSE、SMB/NFS
+或对象存储挂载点作为活动 SQLite 路径。云盘只用于已经完成的一致性备份或归档输出；服务
+正在写入时不要只复制主数据库文件。
 
 ## 6. 升级和回滚
 

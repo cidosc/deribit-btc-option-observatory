@@ -38,7 +38,7 @@ def test_collection_profiles_make_high_volume_features_opt_in() -> None:
     assert lite.collection_profile == "scanner-lite"
     assert lite.max_instruments == 60
     assert lite.max_book_instruments == 0
-    assert lite.ticker_persist_interval_seconds == 20
+    assert lite.ticker_persist_interval_seconds == 60
 
     evidence = CollectorSettings.from_environment(
         {"BTC_OPTION_COLLECTION_PROFILE": "evidence"}

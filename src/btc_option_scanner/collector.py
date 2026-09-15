@@ -19,6 +19,13 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
+from .alerts import (
+    LiveRecommendationSettings,
+    evaluate_live_recommendations,
+    select_coherent_snapshots,
+    send_onebot_message,
+    write_recommendation_unavailable,
+)
 from .config import load_config
 from .data import SqliteRepository
 from .deribit import (
@@ -35,7 +42,7 @@ from .deribit import (
     connect_public_websocket,
 )
 from .deribit.parser import record_raw_event
-from .domain import InstrumentState, OptionType, SourceTransport, SystemEvent
+from .domain import DecisionState, InstrumentState, OptionType, SourceTransport, SystemEvent
 
 LOGGER = logging.getLogger("btc_option_scanner.collector")
 APPROVED_WS_URLS = {
@@ -71,7 +78,7 @@ class CollectorSettings:
     collection_profile: str = "scanner-lite"
     max_instruments: int = 60
     max_book_instruments: int = 0
-    ticker_persist_interval_seconds: float = 20.0
+    ticker_persist_interval_seconds: float = 60.0
     collection_buffer_days: float = 30.0
     catalog_refresh_seconds: float = 3_600.0
     retention_days: float = 30.0
@@ -122,7 +129,7 @@ class CollectorSettings:
         source = dict(os.environ if environment is None else environment)
         profile = source.get("BTC_OPTION_COLLECTION_PROFILE", "scanner-lite").strip()
         profile_defaults = {
-            "scanner-lite": (60, 0, 20.0),
+            "scanner-lite": (60, 0, 60.0),
             "evidence": (180, 20, 0.0),
         }
         if profile not in profile_defaults:
@@ -196,6 +203,13 @@ class RuntimeState:
     book_messages: int = 0
     lifecycle_messages: int = 0
     sequence_gaps: int = 0
+    recommendation_runs: int = 0
+    recommendation_candidates: int = 0
+    alerts_sent: int = 0
+    recommendation_state: str = "STARTING"
+    last_recommendation_at_utc: datetime | None = None
+    last_alert_at_utc: datetime | None = None
+    last_alert_error: str | None = None
     selected_instruments: tuple[str, ...] = ()
     selected_book_instruments: tuple[str, ...] = ()
 
@@ -298,11 +312,15 @@ async def run_collector(
     *,
     stop_event: asyncio.Event | None = None,
     credentials: DeribitCredentials | None = None,
+    recommendation_settings: LiveRecommendationSettings | None = None,
 ) -> int:
     _configure_logging(settings)
     settings.database_path.parent.mkdir(parents=True, exist_ok=True)
     repository = SqliteRepository(settings.database_path)
     app_config = load_config(settings.config_path)
+    recommendation_settings = (
+        recommendation_settings or LiveRecommendationSettings.from_environment()
+    )
     spine = PublicDataSpine(
         repository,
         stale_after_seconds=float(app_config.market_data.ticker_max_age_seconds),
@@ -322,6 +340,10 @@ async def run_collector(
     stream: ReconnectingTickerStream | None = None
     book_trackers: dict[str, BookSequenceTracker] = {}
     last_ticker_persisted: dict[str, float] = {}
+    latest_snapshots: dict[str, Any] = {}
+    last_recommendation_monotonic: float | None = None
+    last_alert_monotonic: float | None = None
+    last_alert_fingerprint: str | None = None
     initial_database_size = _database_size(settings.database_path)
 
     def save_system_event(name: str, detail: dict[str, Any], severity: str) -> None:
@@ -343,6 +365,13 @@ async def run_collector(
         if name == "CONNECTED":
             state.connected = True
             state.last_error = None
+            state.recommendation_state = "WAITING_FOR_COHERENT_INPUTS"
+            if recommendation_settings.enabled:
+                write_recommendation_unavailable(
+                    recommendation_settings,
+                    state=DecisionState.DATA_ONLY.value,
+                    reason="CONNECTED_WAITING_FOR_COHERENT_INPUTS",
+                )
         elif name == "AUTHENTICATED":
             state.authenticated = True
             state.effective_scope = str(detail.get("scope"))
@@ -350,6 +379,14 @@ async def run_collector(
             state.connected = False
             state.authenticated = False
             state.last_error = str(detail.get("error") or name)
+            state.recommendation_state = "DATA_UNAVAILABLE"
+            state.recommendation_candidates = 0
+            if recommendation_settings.enabled:
+                write_recommendation_unavailable(
+                    recommendation_settings,
+                    state=DecisionState.DATA_STALE.value,
+                    reason=name,
+                )
         if name == "AUTHENTICATION_FAILED":
             severity = "ERROR"
         elif name in {"DISCONNECTED", "HEARTBEAT_TIMEOUT"}:
@@ -367,6 +404,88 @@ async def run_collector(
             name,
             detail,
         )
+
+    async def maybe_recommend(now_monotonic: float) -> None:
+        nonlocal last_recommendation_monotonic, last_alert_monotonic
+        nonlocal last_alert_fingerprint
+        if not recommendation_settings.enabled:
+            state.recommendation_state = "DISABLED"
+            return
+        if (
+            last_recommendation_monotonic is not None
+            and now_monotonic - last_recommendation_monotonic
+            < recommendation_settings.interval_seconds
+        ):
+            return
+        now_utc = datetime.now(UTC)
+        fresh = select_coherent_snapshots(
+            tuple(latest_snapshots.values()),
+            as_of_utc=now_utc,
+            max_snapshot_skew_ms=app_config.market_data.max_snapshot_skew_ms,
+            max_age_seconds=float(app_config.market_data.ticker_max_age_seconds),
+        )
+        now_ms = int(now_utc.timestamp() * 1000)
+        milliseconds_per_day = 24 * 60 * 60 * 1000
+        decision_fresh = tuple(
+            snapshot
+            for snapshot in fresh
+            if (spec := spine.specs.get(snapshot.instrument_name)) is not None
+            and spec.option_type is OptionType.CALL
+            and float(app_config.universe.min_dte_days)
+            <= (spec.expiration_timestamp_ms - now_ms) / milliseconds_per_day
+            <= float(app_config.universe.max_dte_days)
+        )
+        if len(decision_fresh) < app_config.scanner.min_cohort_size:
+            state.recommendation_state = "INSUFFICIENT_COHERENT_INPUTS"
+            return
+        option_types = {name: spec.option_type for name, spec in spine.specs.items()}
+        try:
+            result = evaluate_live_recommendations(
+                decision_fresh,
+                option_types,
+                config=app_config,
+                repository=repository,
+                settings=recommendation_settings,
+                as_of_utc=now_utc,
+            )
+        except Exception as exc:
+            last_recommendation_monotonic = now_monotonic
+            state.recommendation_state = "FAILED_INTERNAL"
+            state.recommendation_candidates = 0
+            save_system_event("RECOMMENDATION_FAILED", {"error": str(exc)}, "ERROR")
+            write_recommendation_unavailable(
+                recommendation_settings,
+                state=DecisionState.DATA_ONLY.value,
+                reason="RECOMMENDATION_FAILED",
+            )
+            LOGGER.exception("live recommendation failed")
+            return
+        last_recommendation_monotonic = now_monotonic
+        state.recommendation_runs += 1
+        state.recommendation_candidates = result.candidate_count
+        state.recommendation_state = str(result.payload["decision_state"])
+        state.last_recommendation_at_utc = now_utc
+        if not recommendation_settings.onebot_enabled or not result.notification_text:
+            return
+        reminder_due = (
+            last_alert_monotonic is None
+            or now_monotonic - last_alert_monotonic
+            >= recommendation_settings.reminder_seconds
+        )
+        if result.top_fingerprint == last_alert_fingerprint and not reminder_due:
+            return
+        try:
+            await send_onebot_message(recommendation_settings, result.notification_text)
+        except Exception as exc:
+            state.last_alert_error = str(exc)
+            save_system_event("ONEBOT_ALERT_FAILED", {"error": str(exc)}, "ERROR")
+            LOGGER.warning("OneBot alert failed: %s", exc)
+        else:
+            last_alert_monotonic = now_monotonic
+            last_alert_fingerprint = result.top_fingerprint
+            state.alerts_sent += 1
+            state.last_alert_at_utc = now_utc
+            state.last_alert_error = None
 
     async def on_message(message: dict[str, Any]) -> None:
         nonlocal stream
@@ -392,14 +511,16 @@ async def run_collector(
                     )
                 ):
                     return
-                spine.ingest_ticker(
+                snapshot = spine.ingest_ticker(
                     message,
                     transport=SourceTransport.WEBSOCKET_SUBSCRIPTION,
                     channel=channel,
                 )
                 if isinstance(instrument_name, str):
                     last_ticker_persisted[instrument_name] = now_monotonic
+                    latest_snapshots[instrument_name] = snapshot
                 state.ticker_messages_persisted += 1
+                await maybe_recommend(now_monotonic)
             elif channel.startswith("book."):
                 state.book_messages += 1
                 instrument_name = channel.split(".", 2)[1]
@@ -548,7 +669,7 @@ async def run_collector(
             max(0, database_size - initial_database_size) / elapsed_seconds * 86_400
         )
         return {
-            "schema_version": "collector-status-v2",
+            "schema_version": "collector-status-v3",
             "updated_at_utc": datetime.now(UTC).isoformat(),
             "started_at_utc": state.started_at_utc.isoformat(),
             "connected": state.connected,
@@ -566,6 +687,24 @@ async def run_collector(
                 "book": state.book_messages,
                 "lifecycle": state.lifecycle_messages,
                 "sequence_gaps": state.sequence_gaps,
+            },
+            "recommendation": {
+                "enabled": recommendation_settings.enabled,
+                "state": state.recommendation_state,
+                "runs": state.recommendation_runs,
+                "eligible_candidates": state.recommendation_candidates,
+                "last_run_at_utc": (
+                    state.last_recommendation_at_utc.isoformat()
+                    if state.last_recommendation_at_utc
+                    else None
+                ),
+                "output_path": str(recommendation_settings.output_path),
+                "onebot_enabled": recommendation_settings.onebot_enabled,
+                "alerts_sent": state.alerts_sent,
+                "last_alert_at_utc": (
+                    state.last_alert_at_utc.isoformat() if state.last_alert_at_utc else None
+                ),
+                "last_alert_error": state.last_alert_error,
             },
             "database_counts": repository.counts(),
             "database_size_bytes": database_size,
@@ -628,6 +767,12 @@ async def run_collector(
             settings.ticker_persist_interval_seconds,
             credentials is not None,
         )
+        LOGGER.info(
+            "live recommendations: enabled=%s interval=%.1fs onebot=%s",
+            recommendation_settings.enabled,
+            recommendation_settings.interval_seconds,
+            recommendation_settings.onebot_enabled,
+        )
         tasks = [
             asyncio.create_task(stream.run(), name="market-stream"),
             asyncio.create_task(catalog_loop(), name="catalog-refresh"),
@@ -653,12 +798,26 @@ async def run_collector(
         await asyncio.gather(stop_wait, return_exceptions=True)
         state.connected = False
         state.authenticated = False
+        state.recommendation_state = "DATA_UNAVAILABLE"
+        state.recommendation_candidates = 0
+        if recommendation_settings.enabled:
+            write_recommendation_unavailable(
+                recommendation_settings,
+                state=DecisionState.DATA_STALE.value,
+                reason="COLLECTOR_STOPPED",
+            )
         _write_json_atomic(settings.status_path, status_payload())
         return state.fatal_exit_code if state.fatal_error else 0
     except Exception as exc:
         state.fatal_error = str(exc)
         LOGGER.exception("collector failed during startup")
         try:
+            if recommendation_settings.enabled:
+                write_recommendation_unavailable(
+                    recommendation_settings,
+                    state=DecisionState.DATA_STALE.value,
+                    reason="COLLECTOR_FAILED",
+                )
             _write_json_atomic(settings.status_path, status_payload())
         except Exception:
             LOGGER.exception("could not write failed startup status")

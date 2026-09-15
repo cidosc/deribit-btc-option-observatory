@@ -88,7 +88,7 @@ SQLite 预期输出为 `ok` 和 `wal`。备份、升级、日志、保留策略�
 - 最低磁盘余量保护；
 - 原子写入健康状态文件。
 
-默认 `scanner-lite` 是低存储模式：订阅 60 个聚合 ticker，每个合约最多每 20 秒持久化一
+默认 `scanner-lite` 是低存储模式：订阅 60 个聚合 ticker，每个合约最多每 60 秒持久化一
 条 ticker，不订阅 order book。ticker 中的 best Bid/Ask、两边数量、IV、Greeks、成交量和
 持仓量仍可作为扫描输入。
 
@@ -133,9 +133,32 @@ btc-option-collector
 CLI 和 Dashboard 只读取不可变的 presentation snapshot，不访问 Deribit，
 也不会重新计算核心金融逻辑。
 
-重要边界：daemon 当前负责采集和规范化扫描输入，但尚未定时执行 scanner，也不会生成实时
-候选或提醒文件。CLI 和 Dashboard 仍需要预计算的 presentation snapshot。任何 profile 都
-不会下单。
+daemon 现在会对时间一致且新鲜的 WebSocket snapshot 运行既有规则 scanner，并默认原子写入
+`runtime/latest-recommendation.json`。文件包含供人工复核的 Top 候选、真实 Ask、盘口数量、
+Delta、DTE、spread、entry DCE、理由、风险以及完整 snapshot/metric/run ID。时间一致的 peer
+样本不足时会失败关闭，不会发送候选。程序不会下单。
+
+可选机器人提醒使用 OneBot v11 正向 WebSocket API：
+
+```bash
+export BTC_OPTION_ONEBOT_WS_URL=ws://127.0.0.1:3001/api
+export BTC_OPTION_ONEBOT_TARGET_TYPE=group  # 也可为 private
+export BTC_OPTION_ONEBOT_TARGET_ID=123456789
+# export BTC_OPTION_ONEBOT_ACCESS_TOKEN=...
+```
+
+除 token 外的三项必须同时配置。提醒使用纯文本；排名合约集合未变化时去重，并按 reminder
+周期重复。发送失败不终止 collector，错误会写入状态文件。本阶段不接 Telegram。
+
+容量规划上，默认 60 合约、60 秒持久化，并保存实时指标和扫描 lineage 时，建议按
+**0.5–1.5 GiB/日**预留。这是工程估算而非固定配额；目标机运行数小时后应以状态文件中的
+`estimated_database_growth_bytes_per_day` 为准。限定具体合约或延长持久化间隔可近似线性
+降低用量；raw book 仍可能达到每日数十 GiB，所以保持按需开启。
+
+活动 SQLite、WAL 和 SHM 应放在本地 ext4/XFS 等块文件系统。EBS、云硬盘等块设备可以使用；
+不要把活动数据库直接放到 OneDrive、Dropbox、rclone/FUSE、SMB 或对象存储上，这些系统的
+锁和同步语义可能导致 SQLite 卡顿或损坏。应把一致性备份或压缩归档上传到云盘，具体方式见
+Ubuntu 部署文档。
 
 ```bash
 python -m btc_option_scanner.cli --snapshot snapshot.json scan

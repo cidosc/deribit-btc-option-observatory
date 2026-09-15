@@ -88,7 +88,7 @@ book sequence fail-closure, SQLite WAL persistence, retention, disk-floor checks
 atomic health-status updates.
 
 The default `scanner-lite` profile is intentionally low-volume: 60 aggregated ticker
-subscriptions, at most one persisted ticker per instrument every 20 seconds, and no
+subscriptions, at most one persisted ticker per instrument every 60 seconds, and no
 order-book subscription. Best Bid/Ask, sizes, IV, Greeks, volume, and open interest from
 ticker messages remain available as scanner inputs.
 
@@ -134,9 +134,37 @@ The collector does not load `.env` automatically.
 The CLI and dashboard consume an immutable, precomputed presentation snapshot. They do
 not query Deribit or recompute core financial logic.
 
-Important: the daemon currently collects normalized scanner inputs; it does not yet
-schedule scanner runs or publish a live candidate/alert file. The CLI and dashboard still
-require a precomputed presentation snapshot. Nothing in either profile places an order.
+The daemon runs the existing rule scanner on coherent, fresh WebSocket snapshots and
+atomically writes `runtime/latest-recommendation.json` by default. The file contains the
+top manual-review candidates, executable Ask, quote size, Delta, DTE, spread, entry DCE,
+reasons, risks, and complete snapshot/metric/run IDs. If the coherent cohort is too small,
+the status fails closed instead of sending a candidate. Nothing places an order.
+
+Optional robot delivery uses the OneBot v11 forward WebSocket API:
+
+```bash
+export BTC_OPTION_ONEBOT_WS_URL=ws://127.0.0.1:3001/api
+export BTC_OPTION_ONEBOT_TARGET_TYPE=group  # or private
+export BTC_OPTION_ONEBOT_TARGET_ID=123456789
+# export BTC_OPTION_ONEBOT_ACCESS_TOKEN=...
+```
+
+All three non-token fields are required together. Alerts are plain text, deduplicated when
+the ranked instrument set is unchanged, and repeated after the configured reminder period.
+An alert failure is non-fatal and appears in collector status. Telegram is not included.
+
+For capacity planning, the default 60-symbol/60-second profile is expected to be roughly
+**0.5–1.5 GiB/day** when all symbols update and live metric/run lineage is retained. This is
+an engineering range, not a quota: use the status field
+`estimated_database_growth_bytes_per_day` after several hours on the target host. An exact
+instrument list or longer persistence interval reduces it linearly. Raw books can still
+reach tens of GiB/day and remain opt-in.
+
+Keep the live SQLite database and its WAL on a local block filesystem such as ext4/XFS.
+Cloud block volumes such as EBS or Persistent Disk are suitable. Do not put the active WAL
+database on OneDrive/Dropbox/rclone/FUSE, SMB, or ordinary object storage: sync semantics
+and file locking can corrupt or stall SQLite. Upload consistent SQLite backup files or
+compressed archives to cloud storage instead; see the Ubuntu deployment guide.
 
 ```bash
 python -m btc_option_scanner.cli --snapshot snapshot.json scan
