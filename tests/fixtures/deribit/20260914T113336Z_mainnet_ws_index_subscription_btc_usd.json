@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","method":"subscription","params":{"channel":"deribit_price_index.btc_usd","data":{"timestamp":1789388016512,"price":77812.24,"index_name":"btc_usd"}}}

@@ -1,0 +1,17 @@
+{
+  "actionable_samples": 7,
+  "database": "D:\\Softerware\\AHack\\OPT\\docs\\evidence\\collector_soak_20260915.sqlite",
+  "deduplicated_samples": 0,
+  "errors": [],
+  "finished_at_utc": "2026-09-14T16:35:30.608834+00:00",
+  "instrument_name": "BTC-16SEP26-68000-C",
+  "interval_seconds": 2.0,
+  "new_market_snapshots": 7,
+  "new_raw_events": 8,
+  "public_only": true,
+  "requested_duration_seconds": 12.0,
+  "samples_attempted": 7,
+  "samples_normalized": 7,
+  "started_at_utc": "2026-09-14T16:35:15.880589+00:00",
+  "status": "PASS"
+}

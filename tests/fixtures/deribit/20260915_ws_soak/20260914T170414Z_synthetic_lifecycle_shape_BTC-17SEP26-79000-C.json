@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","method":"subscription","params":{"channel":"instrument.state.option.BTC","data":{"timestamp":1789405578044,"state":"open","instrument_name":"BTC-17SEP26-79000-C"}},"_fixture_provenance":"SYNTHETIC_SHAPE_FROM_LIVE_CATALOG: not a received lifecycle notification"}

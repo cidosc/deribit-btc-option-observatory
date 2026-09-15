@@ -1,0 +1,49 @@
+{
+  "schema_version": "deployment-smoke-v1",
+  "recorded_at_utc": "2026-09-15T04:11:00+00:00",
+  "platform": "Windows 11, Python 3.13.5",
+  "public_daemon": {
+    "status": "PASS",
+    "authenticated": false,
+    "selected_tickers": 5,
+    "selected_books": 2,
+    "ticker_messages": 128,
+    "book_messages": 7,
+    "database_integrity": "ok",
+    "journal_mode": "wal",
+    "fatal_error": null,
+    "graceful_state_written": true
+  },
+  "authenticated_raw_daemon": {
+    "status": "PASS",
+    "duration_seconds": 20,
+    "process_exit_code": 0,
+    "environment": "mainnet",
+    "effective_authority": [
+      "connection",
+      "mainaccount",
+      "block_rfq:read",
+      "block_trade:read",
+      "custody:read"
+    ],
+    "write_authority_observed": false,
+    "selected_tickers": 3,
+    "selected_raw_books": 1,
+    "ticker_messages": 52,
+    "raw_book_snapshots": 1,
+    "raw_book_changes": 1,
+    "database_integrity": "ok",
+    "journal_mode": "wal",
+    "fatal_error": null,
+    "credential_persisted": false
+  },
+  "testnet_authentication": {
+    "status": "REJECTED_BY_DERIBIT",
+    "interpretation": "The supplied credential is a mainnet credential; Deribit environments are separate."
+  },
+  "linux_runtime": {
+    "status": "NOT_RUN_BY_USER_DIRECTION",
+    "classification": "THEORETICAL_PORTABILITY_ONLY",
+    "remaining_validation": "systemd permissions, SIGTERM, network faults, and multi-day capacity on the target server"
+  }
+}

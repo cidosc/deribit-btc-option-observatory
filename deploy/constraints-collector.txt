@@ -1,0 +1,3 @@
+# Tested deployment dependency set. Update deliberately after running the full suite and live smoke.
+PyYAML==6.0.3
+websockets==16.1

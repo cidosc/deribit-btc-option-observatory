@@ -1,0 +1,69 @@
+{
+  "connected_events": 2,
+  "connection_attempts": 2,
+  "database": "D:\\Softerware\\AHack\\OPT\\docs\\evidence\\ws_probe_20260915.sqlite",
+  "database_counts": {
+    "derived_entities": 0,
+    "instruments": 1,
+    "market_snapshots": 18,
+    "raw_market_events": 33,
+    "system_events": 0
+  },
+  "finished_at_utc": "2026-09-14T17:03:05.872609+00:00",
+  "fixtures": {
+    "book_gap_injected": "D:\\Softerware\\AHack\\OPT\\tests\\fixtures\\deribit\\live_20260915\\20260914T170242Z_synthetic_book_sequence_gap_BTC-17SEP26-79000-C.json",
+    "book_increment": "D:\\Softerware\\AHack\\OPT\\tests\\fixtures\\deribit\\live_20260915\\20260914T170242Z_mainnet_ws_book_100ms_increment_BTC-17SEP26-79000-C.json",
+    "book_snapshot": "D:\\Softerware\\AHack\\OPT\\tests\\fixtures\\deribit\\live_20260915\\20260914T170242Z_mainnet_ws_book_100ms_snapshot_BTC-17SEP26-79000-C.json"
+  },
+  "forced_reconnect_after_messages": 15,
+  "injected_disconnect_seen": true,
+  "instrument_name": "BTC-17SEP26-79000-C",
+  "lifecycle_observation": "NOT_OBSERVED",
+  "message_counts": {
+    "book_change": 12,
+    "book_gap": 0,
+    "book_snapshot": 2,
+    "lifecycle": 0,
+    "other": 5,
+    "ticker": 18
+  },
+  "public_only": true,
+  "replayable_raw_events": 33,
+  "requested_duration_seconds": 20.0,
+  "retention_ok": true,
+  "started_at_utc": "2026-09-14T17:02:42.020205+00:00",
+  "status": "PASS",
+  "system_events": [
+    {
+      "at_utc": "2026-09-14T17:02:45.855608+00:00",
+      "detail": {
+        "channels": [
+          "book.BTC-17SEP26-79000-C.100ms",
+          "instrument.state.option.BTC",
+          "ticker.BTC-17SEP26-79000-C.agg2"
+        ]
+      },
+      "name": "CONNECTED"
+    },
+    {
+      "at_utc": "2026-09-14T17:02:51.853796+00:00",
+      "detail": {
+        "error": "INJECTED_RECONNECT_PROBE",
+        "retry_in_seconds": 0.25
+      },
+      "name": "DISCONNECTED"
+    },
+    {
+      "at_utc": "2026-09-14T17:02:52.988035+00:00",
+      "detail": {
+        "channels": [
+          "book.BTC-17SEP26-79000-C.100ms",
+          "instrument.state.option.BTC",
+          "ticker.BTC-17SEP26-79000-C.agg2"
+        ]
+      },
+      "name": "CONNECTED"
+    }
+  ],
+  "websocket_url": "wss://www.deribit.com/ws/api/v2"
+}

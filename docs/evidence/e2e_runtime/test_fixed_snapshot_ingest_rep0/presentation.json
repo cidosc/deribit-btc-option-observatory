@@ -1,0 +1,670 @@
+{
+  "config_version": "e2e-fixture+sha256:fixed-public-snapshot",
+  "model_version": "core-metrics@1.0.0",
+  "schema_version": "presentation-snapshot@1.0.0",
+  "sections": {
+    "portfolio": {
+      "application_version": "portfolio-valuation@1.0.0",
+      "greeks": {
+        "deribit_gamma_raw": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "0.0"
+        },
+        "gamma_standard_per_usd": {
+          "availability": "UNAVAILABLE",
+          "reason": {
+            "code": "GREEK_UNIT_UNVERIFIED",
+            "message": "gamma is unavailable for a non-zero portfolio leg"
+          },
+          "value": null
+        },
+        "standard_delta": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "1.99630"
+        },
+        "theta_usd_per_effective_horizon": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "-2.37878"
+        },
+        "vega_usd_per_vol_point": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "4.92796"
+        }
+      },
+      "notes": [
+        "premium_paid_btc_total is a historic cost basis and is excluded from NAV.",
+        "Gamma is withheld when the frozen contract marks its normalized unit unverified."
+      ],
+      "option_liquidation_value_btc": {
+        "availability": "AVAILABLE",
+        "reason": null,
+        "value": "1.4910"
+      },
+      "option_mark_value_btc": {
+        "availability": "AVAILABLE",
+        "reason": null,
+        "value": "1.4934"
+      },
+      "positions": [
+        {
+          "instrument_name": "BTC-25DEC26-20000-C",
+          "liquidation_value_btc": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1.4910"
+          },
+          "mark_value_btc": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1.4934"
+          },
+          "market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+          "premium_paid_btc": "1.495",
+          "quantity_contracts": "2"
+        }
+      ],
+      "premium_paid_btc_total": "1.495",
+      "snapshot": {
+        "as_of_utc": "2026-09-14T12:00:00+00:00",
+        "config_version": "e2e-fixture+sha256:fixed-public-snapshot",
+        "legs": [
+          {
+            "instrument_name": "BTC-25DEC26-20000-C",
+            "market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+            "quantity_contracts": "2"
+          }
+        ],
+        "metric_version": "core-metrics@1.0.0",
+        "nav_btc_liquidation": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "2.4910"
+        },
+        "nav_btc_mark": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "2.4934"
+        },
+        "nav_usd_liquidation": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "193830.140380"
+        },
+        "nav_usd_mark": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "194016.889612"
+        },
+        "portfolio_definition_id": "e2e-portfolio",
+        "portfolio_snapshot_id": "portfolio-a11cdb9938145ce10e5cc65b",
+        "quality_flags": [
+          {
+            "code": "IV_NOT_AVAILABLE",
+            "message": "bid IV is unavailable",
+            "scope": "VALUE",
+            "severity": "BLOCK_VALUE"
+          },
+          {
+            "code": "EMPTY_STATS_OR_NO_TRADE",
+            "message": "24 hour trade statistics are empty",
+            "scope": "SNAPSHOT",
+            "severity": "WARNING"
+          }
+        ],
+        "reserve_btc": "1",
+        "schema_version": "domain-schema-v1",
+        "usd_conversion_index_price_usd_per_btc": {
+          "availability": "AVAILABLE",
+          "reason": null,
+          "value": "77812.18"
+        }
+      }
+    },
+    "roll": {
+      "evaluations": [
+        {
+          "aging": {
+            "price_aging": true,
+            "reasons": [
+              "PRICE_AGING_DELTA_TRIGGERED"
+            ],
+            "time_aging": false
+          },
+          "application_version": "roll-state-machine@1.0.0",
+          "as_of_utc": "2026-09-14T12:00:00+00:00",
+          "cashflow": {
+            "accounting_identity_holds": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": true
+            },
+            "fee_new_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.006"
+            },
+            "fee_old_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.014910"
+            },
+            "net_reserve_release_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.870090"
+            },
+            "new_purchase_cost_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.6"
+            },
+            "old_sale_proceeds_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.4910"
+            },
+            "reserve_after_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.870090"
+            },
+            "reserve_required_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0"
+            }
+          },
+          "evaluation": {
+            "config_version": "e2e-fixture+sha256:fixed-public-snapshot",
+            "decision_state": "ROLL_CANDIDATE",
+            "fee_new_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.006"
+            },
+            "fee_old_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.014910"
+            },
+            "fee_schedule_version": "fixture-fee@1",
+            "metric_version": "core-metrics@1.0.0",
+            "net_reserve_release_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.870090"
+            },
+            "new_ask_btc_per_contract": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.3"
+            },
+            "new_instrument_name": "BTC-25DEC26-50000-C",
+            "new_market_snapshot_id": "snapshot:6a119b97d1f2e46d59c636b0a2138886bdd14a8547a4f71c1535849c67e352a1",
+            "new_metric_snapshot_id": "quant-metrics@0.1.0-experimental-d623ec18c38b681d130c5e11",
+            "new_purchase_cost_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.6"
+            },
+            "new_quantity_executable_contracts": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "2"
+            },
+            "new_quantity_theoretical_contracts": "2",
+            "old_bid_btc_per_contract": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "0.7455"
+            },
+            "old_instrument_name": "BTC-25DEC26-20000-C",
+            "old_market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+            "old_metric_snapshot_id": "quant-metrics@0.1.0-experimental-a9669f21774617e88be9643f",
+            "old_quantity_contracts": "2",
+            "old_sale_proceeds_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.4910"
+            },
+            "portfolio_snapshot_id": "portfolio-a11cdb9938145ce10e5cc65b",
+            "quality_flags": [
+              {
+                "code": "IV_NOT_AVAILABLE",
+                "message": "bid IV is unavailable",
+                "scope": "VALUE",
+                "severity": "BLOCK_VALUE"
+              },
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              },
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              }
+            ],
+            "quantity_mode": "EQUAL_CONTRACTS",
+            "reasons": [
+              "ALL_INDEPENDENT_ROLL_GATES_PASSED"
+            ],
+            "reserve_after_btc": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.870090"
+            },
+            "reserve_before_btc": "1",
+            "risks": [
+              "Research-only comparison; this output is not an order."
+            ],
+            "roll_evaluation_id": "roll-adbfb3014e0f9111522ba831",
+            "rounding_policy_version": "fixture-round@1",
+            "schema_version": "domain-schema-v1",
+            "standard_delta_after_executable": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.6"
+            },
+            "standard_delta_after_theoretical": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.6"
+            },
+            "standard_delta_before": {
+              "availability": "AVAILABLE",
+              "reason": null,
+              "value": "1.99630"
+            }
+          },
+          "gates": {
+            "aging": true,
+            "data": true,
+            "explanations": [
+              "ALL_INDEPENDENT_ROLL_GATES_PASSED"
+            ],
+            "exposure": true,
+            "interval": true,
+            "iv": true,
+            "transaction_cost": true,
+            "utility": true
+          },
+          "standard_delta_rounding_error": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "-0.39630"
+          },
+          "transaction_spread_cost_btc": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "0.0120"
+          }
+        }
+      ]
+    },
+    "scanner": {
+      "candidates": [
+        {
+          "cohort_id": "e2e-peers@1:delta-highxdte",
+          "cohort_size": 2,
+          "eligible": true,
+          "entry_dce_peer_percentile": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "50"
+          },
+          "entry_dce_peer_rank": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "2"
+          },
+          "instrument_name": "BTC-25DEC26-20000-C",
+          "market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+          "metric_snapshot_id": "quant-metrics@0.1.0-experimental-a9669f21774617e88be9643f",
+          "quality_flags": [
+            {
+              "code": "IV_NOT_AVAILABLE",
+              "message": "bid IV is unavailable",
+              "scope": "VALUE",
+              "severity": "BLOCK_VALUE"
+            },
+            {
+              "code": "EMPTY_STATS_OR_NO_TRADE",
+              "message": "24 hour trade statistics are empty",
+              "scope": "SNAPSHOT",
+              "severity": "WARNING"
+            },
+            {
+              "code": "IV_NOT_AVAILABLE",
+              "message": "bid IV is unavailable",
+              "scope": "VALUE",
+              "severity": "BLOCK_VALUE"
+            },
+            {
+              "code": "EMPTY_STATS_OR_NO_TRADE",
+              "message": "24 hour trade statistics are empty",
+              "scope": "SNAPSHOT",
+              "severity": "WARNING"
+            }
+          ],
+          "rank": 2,
+          "reasons": [
+            "ENTRY_DCE=1.335317725752508361204013378 (primary lexicographic key)",
+            "DCE_PEER_PERCENTILE=50",
+            "RELATIVE_SPREAD=0.002679169457468184862692565305 (tertiary key)"
+          ],
+          "rejected_reasons": [],
+          "risks": [
+            "Experimental rule ranking; no utility score or trade instruction."
+          ],
+          "state": "ELIGIBLE"
+        },
+        {
+          "cohort_id": "e2e-peers@1:delta-highxdte",
+          "cohort_size": 2,
+          "eligible": true,
+          "entry_dce_peer_percentile": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "100"
+          },
+          "entry_dce_peer_rank": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1"
+          },
+          "instrument_name": "BTC-25DEC26-50000-C",
+          "market_snapshot_id": "snapshot:6a119b97d1f2e46d59c636b0a2138886bdd14a8547a4f71c1535849c67e352a1",
+          "metric_snapshot_id": "quant-metrics@0.1.0-experimental-d623ec18c38b681d130c5e11",
+          "quality_flags": [
+            {
+              "code": "EMPTY_STATS_OR_NO_TRADE",
+              "message": "24 hour trade statistics are empty",
+              "scope": "SNAPSHOT",
+              "severity": "WARNING"
+            },
+            {
+              "code": "EMPTY_STATS_OR_NO_TRADE",
+              "message": "24 hour trade statistics are empty",
+              "scope": "SNAPSHOT",
+              "severity": "WARNING"
+            },
+            {
+              "code": "NEGATIVE_EXTRINSIC",
+              "message": "ENTRY_ASK premium is below same-snapshot index intrinsic",
+              "scope": "VALUE",
+              "severity": "WARNING"
+            },
+            {
+              "code": "NEGATIVE_EXTRINSIC",
+              "message": "LIQUIDATION_BID premium is below same-snapshot index intrinsic",
+              "scope": "VALUE",
+              "severity": "WARNING"
+            },
+            {
+              "code": "NEGATIVE_EXTRINSIC",
+              "message": "THEORETICAL_MARK premium is below same-snapshot index intrinsic",
+              "scope": "VALUE",
+              "severity": "WARNING"
+            }
+          ],
+          "rank": 1,
+          "reasons": [
+            "ENTRY_DCE=2.666666666666666666666666667 (primary lexicographic key)",
+            "DCE_PEER_PERCENTILE=100",
+            "RELATIVE_SPREAD=0.03389830508474576271186440678 (tertiary key)"
+          ],
+          "rejected_reasons": [],
+          "risks": [
+            "Experimental rule ranking; no utility score or trade instruction."
+          ],
+          "state": "ELIGIBLE"
+        }
+      ],
+      "run": {
+        "as_of_utc": "2026-09-14T12:00:00+00:00",
+        "candidate_evaluations": [
+          {
+            "cohort_id": "e2e-peers@1:delta-highxdte",
+            "cohort_size": 2,
+            "decision_state": "ELIGIBLE",
+            "eligible": true,
+            "instrument_name": "BTC-25DEC26-20000-C",
+            "market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+            "metric_snapshot_id": "quant-metrics@0.1.0-experimental-a9669f21774617e88be9643f",
+            "quality_flags": [
+              {
+                "code": "IV_NOT_AVAILABLE",
+                "message": "bid IV is unavailable",
+                "scope": "VALUE",
+                "severity": "BLOCK_VALUE"
+              },
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              },
+              {
+                "code": "IV_NOT_AVAILABLE",
+                "message": "bid IV is unavailable",
+                "scope": "VALUE",
+                "severity": "BLOCK_VALUE"
+              },
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              }
+            ],
+            "rank": 2,
+            "reasons": [
+              "ENTRY_DCE=1.335317725752508361204013378 (primary lexicographic key)",
+              "DCE_PEER_PERCENTILE=50",
+              "RELATIVE_SPREAD=0.002679169457468184862692565305 (tertiary key)"
+            ],
+            "rejected_reasons": [],
+            "risks": [
+              "Experimental rule ranking; no utility score or trade instruction."
+            ]
+          },
+          {
+            "cohort_id": "e2e-peers@1:delta-highxdte",
+            "cohort_size": 2,
+            "decision_state": "ELIGIBLE",
+            "eligible": true,
+            "instrument_name": "BTC-25DEC26-50000-C",
+            "market_snapshot_id": "snapshot:6a119b97d1f2e46d59c636b0a2138886bdd14a8547a4f71c1535849c67e352a1",
+            "metric_snapshot_id": "quant-metrics@0.1.0-experimental-d623ec18c38b681d130c5e11",
+            "quality_flags": [
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              },
+              {
+                "code": "EMPTY_STATS_OR_NO_TRADE",
+                "message": "24 hour trade statistics are empty",
+                "scope": "SNAPSHOT",
+                "severity": "WARNING"
+              },
+              {
+                "code": "NEGATIVE_EXTRINSIC",
+                "message": "ENTRY_ASK premium is below same-snapshot index intrinsic",
+                "scope": "VALUE",
+                "severity": "WARNING"
+              },
+              {
+                "code": "NEGATIVE_EXTRINSIC",
+                "message": "LIQUIDATION_BID premium is below same-snapshot index intrinsic",
+                "scope": "VALUE",
+                "severity": "WARNING"
+              },
+              {
+                "code": "NEGATIVE_EXTRINSIC",
+                "message": "THEORETICAL_MARK premium is below same-snapshot index intrinsic",
+                "scope": "VALUE",
+                "severity": "WARNING"
+              }
+            ],
+            "rank": 1,
+            "reasons": [
+              "ENTRY_DCE=2.666666666666666666666666667 (primary lexicographic key)",
+              "DCE_PEER_PERCENTILE=100",
+              "RELATIVE_SPREAD=0.03389830508474576271186440678 (tertiary key)"
+            ],
+            "rejected_reasons": [],
+            "risks": [
+              "Experimental rule ranking; no utility score or trade instruction."
+            ]
+          }
+        ],
+        "config_version": "e2e-fixture+sha256:fixed-public-snapshot",
+        "decision_state": "ELIGIBLE",
+        "market_snapshot_ids": [
+          "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+          "snapshot:6a119b97d1f2e46d59c636b0a2138886bdd14a8547a4f71c1535849c67e352a1"
+        ],
+        "max_snapshot_skew_ms": 0,
+        "metric_snapshot_ids": [
+          "quant-metrics@0.1.0-experimental-a9669f21774617e88be9643f",
+          "quant-metrics@0.1.0-experimental-d623ec18c38b681d130c5e11"
+        ],
+        "metric_version": "core-metrics@1.0.0",
+        "quality_flags": [],
+        "run_status": "COMPLETED",
+        "scanner_run_id": "e2e-scanner",
+        "schema_version": "domain-schema-v1",
+        "universe_filter_version": "e2e-universe@1"
+      }
+    },
+    "stress": {
+      "application_version": "conditional-stress@1.0.0",
+      "as_of_utc": "2026-09-14T12:00:00+00:00",
+      "notes": [
+        "Stress is a conditional revaluation, not a prediction.",
+        "All stressed USD values use the shocked index; BTC reserve is unchanged."
+      ],
+      "results": [
+        {
+          "conditional_label": "MODEL_CONDITIONAL_NOT_EXECUTABLE_REPRICE",
+          "leg_results": [
+            {
+              "expired_or_crossed_expiry": false,
+              "instrument_name": "BTC-25DEC26-20000-C",
+              "market_snapshot_id": "snapshot:34f0d03aa0f63513a7d2892f6b061d8182e94fe21040337b8d61900265c946bc",
+              "model_greeks": {
+                "delta_per_forward_usd": "0.9991225498990085",
+                "gamma_per_forward_usd": "1.208158513193412E-7",
+                "rho_usd_per_rate_point": "-84.8263703185188",
+                "theta_usd_per_day": "-0.5137100730788438",
+                "vega_usd_per_vol_point": "0.8358212212041587"
+              },
+              "notes": [
+                "Black-76 conditional reprice; it is not a forecast or executable option price.",
+                "smile_policy=sticky_strike_parallel; IV shock is absolute vol points."
+              ],
+              "quantity_contracts": "2",
+              "stressed_option_value_btc": {
+                "availability": "AVAILABLE",
+                "reason": null,
+                "value": "1.3848098843222402"
+              },
+              "stressed_option_value_usd": {
+                "availability": "AVAILABLE",
+                "reason": null,
+                "value": "86204.0607877290659565088"
+              }
+            }
+          ],
+          "model_gamma_per_forward_usd": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "2.416317026386824E-7"
+          },
+          "model_standard_delta": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1.9982450997980170"
+          },
+          "model_theta_usd_per_day": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "-1.0274201461576876"
+          },
+          "model_vega_usd_per_vol_point": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1.6716424424083174"
+          },
+          "scenario": {
+            "absolute_iv_vol_point_shock": "-10",
+            "elapsed_days": "30",
+            "explicit_forward_usd_per_btc": null,
+            "forward_policy": "preserve_basis_ratio",
+            "forward_policy_version": "forward@1",
+            "index_return_decimal": "-0.2",
+            "rate_policy_version": "rate@1",
+            "risk_free_rate_annual_decimal": "0",
+            "scenario_id": "spot-down",
+            "smile_policy": "sticky_strike_parallel",
+            "smile_policy_version": "smile@1"
+          },
+          "stressed_index_price_usd_per_btc": "62249.744",
+          "stressed_nav_btc": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "2.3848098843222402"
+          },
+          "stressed_nav_usd": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "148453.8047877290659565088"
+          },
+          "stressed_option_value_btc": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "1.3848098843222402"
+          },
+          "stressed_option_value_usd": {
+            "availability": "AVAILABLE",
+            "reason": null,
+            "value": "86204.0607877290659565088"
+          }
+        }
+      ],
+      "stress_run": {
+        "conditional_result_ids": [
+          "stress-85aeca41730eb8de1acbee79"
+        ],
+        "config_version": "e2e-fixture+sha256:fixed-public-snapshot",
+        "metric_version": "core-metrics@1.0.0",
+        "portfolio_snapshot_id": "portfolio-a11cdb9938145ce10e5cc65b",
+        "pricing_model_version": "black76-reporting@1.0.0",
+        "quality_flags": [],
+        "scenario_points": [
+          {
+            "absolute_iv_vol_point_shock": "-10",
+            "elapsed_days": "30",
+            "forward_policy_version": "forward@1",
+            "index_return_decimal": "-0.2",
+            "rate_policy_version": "rate@1",
+            "smile_policy_version": "smile@1"
+          }
+        ],
+        "schema_version": "domain-schema-v1",
+        "stress_run_id": "stress-4174a880846995b32fe16ada"
+      }
+    }
+  },
+  "snapshot_time": "2026-09-14T12:00:00+00:00"
+}

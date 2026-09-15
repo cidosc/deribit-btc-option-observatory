@@ -1,0 +1,12 @@
+# Used only when BTC_OPTION_LOG_FILE is enabled. The default systemd unit logs to journald.
+/var/log/btc-option-observatory/*.log {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    su btc-option btc-option
+    create 0600 btc-option btc-option
+}
