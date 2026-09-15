@@ -154,6 +154,8 @@ def test_live_recommendation_reuses_scanner_and_persists_lineage(tmp_path) -> No
     assert result.candidate_count == 2
     assert payload["candidates"][0]["instrument_name"] == "BTC-B"
     assert payload["candidates"][0]["ask_btc_per_contract"] == "0.75"
+    assert payload["quality_policy"]["min_dte_days"] == "90"
+    assert payload["quality_policy"]["max_dte_days"] == "200"
     assert "不是交易指令" in payload["disclaimer"]
     assert len(repository.derived_entity_rows("MetricSnapshot")) == 2
     runs = repository.derived_entity_rows("ScannerRun")

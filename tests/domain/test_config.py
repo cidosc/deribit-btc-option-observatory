@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from decimal import Decimal
 from pathlib import Path
 
 import pytest
@@ -14,6 +15,8 @@ def test_default_configuration_is_research_only_and_fingerprinted(project_root: 
     assert config.execution.mode == "research_only"
     assert config.feature_gates.automatic_execution is False
     assert config.feature_gates.executable_roll_cashflows is False
+    assert config.universe.min_dte_days == Decimal("120")
+    assert config.universe.max_dte_days == Decimal("240")
     assert config.config_version.startswith("experimental-defaults-v1+sha256:")
     assert config.config_version == load_config(project_root / "config.yaml").config_version
 

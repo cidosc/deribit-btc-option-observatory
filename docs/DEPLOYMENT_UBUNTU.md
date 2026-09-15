@@ -116,10 +116,12 @@ protected environment file, then restart the service. These values stay in that 
 itself a secret. Feishu's WebSocket long connection receives app events; it is not required
 for this one-way notification path.
 
-The shipped alert defaults are Delta 0.80–0.90, relative spread no more than 5%, a
-three-contract peer cohort, a hard 30-minute minimum notification interval, and a six-hour
-unchanged reminder. Keep these defaults for the first deployment; tune only after reviewing
-rejection reasons and retained history.
+The shipped alert defaults are a rolling 120–240 DTE interval, Delta 0.80–0.90, relative
+spread no more than 5%, a three-contract peer cohort, a hard 30-minute minimum notification
+interval, and a six-hour unchanged reminder. The DTE bounds come from
+`universe.min_dte_days` and `universe.max_dte_days` in `config.yaml`; they do not pin one
+expiry. Keep these defaults for the first deployment; tune only after reviewing rejection
+reasons and retained history.
 
 The service exits with code 78 and systemd does not restart it when free disk falls below
 `BTC_OPTION_MIN_FREE_BYTES`. Increase capacity or safely archive data before restarting.

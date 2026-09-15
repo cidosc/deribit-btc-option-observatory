@@ -420,6 +420,8 @@ def evaluate_live_recommendations(
         "input_count": len(snapshots),
         "eligible_count": len(eligible),
         "quality_policy": {
+            "min_dte_days": str(config.universe.min_dte_days),
+            "max_dte_days": str(config.universe.max_dte_days),
             "min_absolute_delta": str(settings.min_absolute_delta),
             "max_absolute_delta": str(settings.max_absolute_delta),
             "max_relative_spread": str(settings.max_relative_spread),

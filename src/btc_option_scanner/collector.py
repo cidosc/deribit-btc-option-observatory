@@ -713,6 +713,8 @@ async def run_collector(
                 ),
                 "reminder_seconds": recommendation_settings.reminder_seconds,
                 "quality_policy": {
+                    "min_dte_days": str(app_config.universe.min_dte_days),
+                    "max_dte_days": str(app_config.universe.max_dte_days),
                     "min_absolute_delta": str(
                         recommendation_settings.min_absolute_delta
                     ),

@@ -141,10 +141,12 @@ reasons, risks, and complete snapshot/metric/run IDs. If the coherent cohort is 
 the status fails closed instead of sending a candidate. Nothing places an order.
 
 The live alert gate defaults to the blueprint's medium/long-dated ITM hypothesis:
-absolute Delta `0.80–0.90`, relative spread at most `5%`, and at least three comparable
-contracts. This prevents cheap low-Delta OTM calls from winning merely because
+a rolling `120–240` DTE interval, absolute Delta `0.80–0.90`, relative spread at most
+`5%`, and at least three comparable contracts. The DTE interval is read from
+`universe.min_dte_days` and `universe.max_dte_days` in `config.yaml`; it is not a fixed
+expiry date. This prevents cheap low-Delta OTM calls from winning merely because
 `DCE = Delta / Ask` rewards a small premium. These experimental thresholds are explicit
-environment settings, not claims of profitability.
+configuration settings, not claims of profitability.
 
 Optional robot delivery prioritizes a Feishu custom-bot HTTPS webhook:
 

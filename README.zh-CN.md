@@ -138,10 +138,11 @@ daemon 现在会对时间一致且新鲜的 WebSocket snapshot 运行既有规�
 Delta、DTE、spread、entry DCE、理由、风险以及完整 snapshot/metric/run ID。时间一致的 peer
 样本不足时会失败关闭，不会发送候选。程序不会下单。
 
-实时提醒默认采用蓝图中的中长期 ITM 假设：绝对 Delta `0.80–0.90`、相对价差不超过 `5%`，
-并至少有 3 个可比较合约。这样可阻止低 Delta 的便宜 OTM Call 仅仅因为
-`DCE = Delta / Ask` 中 Ask 很小而排到前面。这些都是可通过环境变量修改的实验门槛，不代表
-盈利保证。
+实时提醒默认采用蓝图中的中长期 ITM 假设：滚动 `120–240` DTE 区间、绝对 Delta
+`0.80–0.90`、相对价差不超过 `5%`，并至少有 3 个可比较合约。DTE 区间读取
+`config.yaml` 的 `universe.min_dte_days` 与 `universe.max_dte_days`，不是固定某个到期日。
+这样可阻止低 Delta 的便宜 OTM Call 仅仅因为 `DCE = Delta / Ask` 中 Ask 很小而排到前面。
+这些都是可配置的实验门槛，不代表盈利保证。
 
 可选机器人提醒优先使用飞书群自定义机器人的 HTTPS Webhook：
 
